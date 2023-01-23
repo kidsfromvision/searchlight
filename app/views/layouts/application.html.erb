@@ -5,21 +5,16 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-  	<%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
 
   <body>
-  	<main class="container mx-auto mt-28 px-5 flex flex-col">
-			<p class=""><%= notice %></p>
-      <p class=""><%= alert %></p>
-			<% if user_signed_in? %>
-				<%= button_to "Sign out", destroy_user_session_path, method: :delete %>
-
-			<%else%>
-				<a href="/users/sign_in">Sign in</a>
-			<%end%>
+    <main class="container mx-auto mt-28 px-5">
+			<p><%= notice %></p> 
+			<p><%= alert %></p>
       <%= yield %>
     </main>
   </body>

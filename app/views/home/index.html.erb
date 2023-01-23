@@ -1,4 +1,10 @@
 <div>
-  <h1 class="font-bold text-4xl">Searchlight</h1>
-  <p>Welcome to Searchlight.</p>
+	<% if user_signed_in? %> 
+	 <div> Welcome <%= current_user.email %> </div> 
+	  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
+	<% else %>
+	  <%= link_to "Sign in", new_user_session_path %> 
+	<% end %>
+  <h1 class="font-bold text-4xl">Home</h1>
+  <p>Find me in app/views/home/index.html.erb</p>
 </div>
