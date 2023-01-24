@@ -14,10 +14,9 @@
 							<tr>
             	  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0"><%= song.name%></td>
             	  <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%=song.artist%></td>
-            	  <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%=song.status%></td>
+            	  <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%=get_readable_status(song.status)%></td>
             	</tr>
 						<%end%>
-            <!-- More people... -->
           </tbody>
         </table>
       </div>
