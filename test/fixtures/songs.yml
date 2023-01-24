@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  artist: MyString
+  chartmetric_id: MyString
+  pinned: false
+
+two:
+  name: MyString
+  artist: MyString
+  chartmetric_id: MyString
+  pinned: false

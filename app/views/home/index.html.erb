@@ -1,10 +1,18 @@
-<div>
-	<% if user_signed_in? %> 
-	 <div> Welcome <%= current_user.email %> </div> 
-	  <%= button_to "Sign out", destroy_user_session_path, method: :delete %> 
-	<% else %>
-	  <%= link_to "Sign in", new_user_session_path %> 
-	<% end %>
-  <h1 class="font-bold text-4xl">Home</h1>
-  <p>Find me in app/views/home/index.html.erb</p>
+<div class="mt-16">
+	<%= render "home/shared/nav" %>
+	<div>
+  <div class="sm:flex sm:items-baseline sm:flex-row sm:justify-between sm:items-center">
+    <div class="">
+      <h2 class="text-lg font-semibold text-black">Song Leaderboard</h2>
+    </div>
+		<div class="flex flex-row items-center relative px-4 py-2 rounded bg-gray-100 w-80 ">
+    	  <!-- Heroicon name: mini/envelope -->
+			<input placeholder="Find a song" class="w-full bg-transparent focus:ring-0 focus:ring-offset-0 focus:outline-none focus:border-0"/>
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+				<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+			</svg>
+    </div>
+  </div>
+  <%= render "home/shared/leaderboard" %>
+</div>
 </div>
