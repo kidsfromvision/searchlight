@@ -1,24 +1,15 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Searchlight
 
-Things you may want to cover:
+### Introduction
 
-* Ruby version
+Searchlight is a web app to help indie music labels keep track of the songs that they're following. It shows them data that may be relevant to a label when deciding whether a song is interesting or not. 
 
-* System dependencies
+Searchlight is a layer on top of the Chartmetric API and Spotify API. The only data we store about songs is song namess, artists, and Spotify ID. 
 
-* Configuration
+### We use...
 
-* Database creation
+* Ruby version: 3.2.0
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* Database: Postgres

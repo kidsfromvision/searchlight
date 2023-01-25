@@ -6,7 +6,7 @@ class HomeController < ApplicationController
       @songs = @label.user.includes(:song).map(&:song).flatten.uniq
     else
       @label = nil
-      @songs = user.song
+      @songs = current_user.song
     end
   end
 end

@@ -4,7 +4,7 @@
         <table class="min-w-full divide-y divide-gray-300">
           <thead>
             <tr>
-              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">Name</th>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">Song</th>
               <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Artist</th>
               <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Status</th>
             </tr>
@@ -12,9 +12,14 @@
           <tbody class="divide-y divide-gray-200">
 						<% @songs.each do |song| %>
 							<tr>
-            	  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0"><%= song.name%></td>
-            	  <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%=song.artist%></td>
-            	  <td class="whitespace-nowrap py-4 px-3 text-sm text-gray-500"><%=get_readable_status(song.status)%></td>
+            	  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
+									<div class="flex flex-row gap-4 items-center">
+										<%= image_tag song.art_url, :class => "h-12 w-12" %>
+										<%= song.name %>
+									</div>
+								</td>
+            	  <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=song.artist%></td>
+            	  <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=get_readable_status(song.status)%></td>
             	</tr>
 						<%end%>
           </tbody>
