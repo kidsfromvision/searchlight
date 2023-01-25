@@ -8,6 +8,8 @@ Searchlight is a web app to help indie music labels keep track of the songs that
 
 Searchlight is a layer on top of the Chartmetric API and Spotify API. The only data we store about songs is song namess, artists, and Spotify ID. 
 
+It is a full stack Ruby on Rails application.
+
 ### We use...
 
 * Ruby version: 3.2.0
