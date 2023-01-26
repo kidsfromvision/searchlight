@@ -6,16 +6,15 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
-
   <body>
     <main class="container mx-auto px-5">
 			<p class="my-2 text-center text-green-700 h-8"><%= notice %></p> 
 			<div class="mt-8">
 				<%= render "shared/nav" %>
+				<%= render "shared/page_head" %>
       	<%= yield %>
 			</div>
 			<p class="my-2 text-center text-red-700 font-medium"><%= alert %></p>

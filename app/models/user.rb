@@ -10,8 +10,4 @@ class User < ApplicationRecord
 
   has_and_belongs_to_many :song
   belongs_to :label, optional: true
-
-  def self.label_name(user_id)
-    joins(:label).select("labels.name").find(user_id).name
-  end
 end

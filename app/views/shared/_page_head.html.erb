@@ -1,21 +1,19 @@
 <div class="sm:flex sm:items-baseline sm:flex-row sm:justify-between">
   <h1 class="text-2xl">
 		<% if current_user.label_id %>
-			<%= User.label_name(current_user.id) %>
+			<%= current_user.label.name %>
 		<% else %>
 			Searchlight
 		<%end%>
 	</h1>
-	<div class=" ">
-		<%= form_with url: "/search", method: :get do |form| %>
-			<div class="flex flex-row items-center relative rounded bg-gray-100 w-80 px-4 py-2">
- 				<%= form.text_field :query, :class => "rounded pl-0 pr-2 py-0 border-0 ring-0 w-full outline-none bg-gray-100 focus:ring-0 focus:ring-offset-0 focus:outline-none focus:border-0" %>
- 				<%= button_tag type: "submit", value: "search" do %>
-    			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-						<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
-					</svg>
-  			<% end %>
-			</div>
-		<% end %>
-  </div>
+	<%= form_with url: "/search", data: { turbo_frame: "body", turbo_action: "advance" }, method: :get do |form| %>
+		<div class="flex flex-row items-center relative rounded bg-gray-100 w-80 px-4 py-2">
+ 			<%= form.text_field :query, :class => "rounded pl-0 pr-2 py-0 border-0 ring-0 w-full outline-none bg-gray-100 focus:ring-0 focus:ring-offset-0 focus:outline-none focus:border-0", :required => true %>
+ 			<%= button_tag type: "submit", value: "search" do %>
+  			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+					<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+				</svg>
+  		<% end %>
+		</div>
+	<% end %>
 </div>

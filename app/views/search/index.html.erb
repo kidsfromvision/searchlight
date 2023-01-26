@@ -1,2 +1,29 @@
-<%= render "shared/page_head"%>
-<%=@results%>
+<%= turbo_frame_tag "body" do %>
+	<div class="mt-8 flex flex-col">
+    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+      <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+        <table class="min-w-full divide-y divide-gray-300">
+          <thead>
+            <tr>
+              <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">Song</th>
+              <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Artist</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-200">
+						<% @results.each do |result| %>
+							<tr>
+            	  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
+									<div class="flex flex-row gap-4 items-center">
+ 										<%= image_tag result["album"]["images"][2]["url"], :class => "h-12 w-12" %>  
+										<%= result["name"] %>
+									</div>
+								</td>
+            	  <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=result["artists"][0]["name"]%></td>
+            	</tr>
+						<%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<%end%>
