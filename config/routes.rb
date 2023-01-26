@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
   get "/search", to: "search#index"
+  post "/songs", to: "songs#create"
+
   devise_for :users
   devise_scope :user do
     # Redirests signing out users back to sign-in

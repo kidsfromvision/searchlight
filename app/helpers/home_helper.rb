@@ -1,7 +1,7 @@
 module HomeHelper
   def get_readable_status(status)
     readable_statuses = {
-      "not_contacted" => "Not contacted",
+      "potential" => "Watching",
       "contacted" => "Contacted",
       "replied" => "Replied",
       "offered" => "Offered",
