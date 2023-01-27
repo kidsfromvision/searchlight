@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   get "/search", to: "search#index"
-  get "/song/:id", to: "song#index"
+
   post "/song", to: "song#create"
+  get "/song/:id", to: "song#index"
+  delete "/song/:id", to: "song#remove"
 
   devise_for :users
   devise_scope :user do
