@@ -1,4 +1,4 @@
 <div class="flex flex-row w-full justify-end py-3 gap-x-4 items-center">
-	<%= link_to "Home", "/", class: "text-black font-bold" %> 
+	<%= button_to "Home", root_path, class: "text-black font-bold", data: { turbo_frame: "body", turbo_action: "advance" }, method: :get%>
 	<%= button_to "Sign out", destroy_user_session_path, class: "text-black font-bold", method: :delete %> 
 </div>

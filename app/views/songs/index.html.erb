@@ -1,7 +1,7 @@
+<%= render "shared/page_head" %>
 <%= turbo_stream_from "leaderboard" %>
 <%= turbo_frame_tag "body" do %>
 	<h1 class="text-2xl"> Leaderboard </h1>
-	<%= button_to "Update table", "/songs/update", class: "px-4 py-2 bg-red-800 text-white rounded" %>
 	<div class="mt-8 flex flex-col">
     <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
   		<div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
@@ -13,7 +13,7 @@
   		        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Status</th>
   		      </tr>
   		    </thead>
-  		    <tbody class="divide-y divide-gray-200">
+  		    <tbody id="table" class="divide-y divide-gray-200">
 						<%= render @songs %>
   		    </tbody>
   		  </table>
