@@ -6,6 +6,9 @@
 		</div>
 	</td>
   <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=song.artist%></td>
+  <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=song.stream%></td>
+
+  
   <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=get_readable_status(song.status)%></td>
 	<td class="whitespace-nowrap py-4 px-3 text-sm text-black">
 		<%= link_to "/song/#{song.id}" do %>
