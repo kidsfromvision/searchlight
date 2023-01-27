@@ -2,3 +2,4 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 import "debounce";
+import "@hotwired/turbo-rails"

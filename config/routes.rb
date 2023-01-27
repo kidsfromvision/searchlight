@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   get "/search", to: "search#index"
   post "/songs", to: "songs#create"
+  post "/songs/update", to: "songs#update"
 
   devise_for :users
   devise_scope :user do
@@ -10,5 +11,5 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  root "home#index"
+  root "songs#index"
 end

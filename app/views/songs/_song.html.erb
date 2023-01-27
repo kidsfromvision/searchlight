@@ -1,5 +1,4 @@
-<%= turbo_stream_from song %>
-<%= content_tag :tr, id: dom_id(song) do %>
+<tr id="<%= dom_id(song) %>">
   <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
 		<div class="flex flex-row gap-4 items-center">
 			<%= image_tag song.art_url, :class => "h-12 w-12" %>
@@ -8,4 +7,4 @@
 	</td>
   <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=song.artist%></td>
   <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=get_readable_status(song.status)%></td>
-<%end%>
+</tr>
