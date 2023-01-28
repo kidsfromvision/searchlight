@@ -15,17 +15,26 @@ class SongController < ApplicationController
 
     if song.save
       user_song = UserSong.new(user_id: current_user.id, song_id: song.id)
-      user_song.save
-      Turbo::StreamsChannel.broadcast_append_to(
-        "leaderboard",
-        target: "table",
-        partial: "songs/song",
-        locals: {
-          song: song,
-          user: current_user,
-        },
-      )
-      redirect_to root_path
+      if user_song.save
+        broadcast_receiver =
+          (
+            if current_user.label_id
+              "label_leaderboard_#{current_user.label_id}"
+            else
+              "user_leaderboard_#{current_user.id}"
+            end
+          )
+        Turbo::StreamsChannel.broadcast_append_to(
+          broadcast_receiver,
+          target: "table",
+          partial: "songs/song",
+          locals: {
+            song: song,
+            user: current_user,
+          },
+        )
+        redirect_to root_path
+      end
     end
   end
 
@@ -35,8 +44,16 @@ class SongController < ApplicationController
   def remove
     @song = Song.find(params[:id])
     if current_user.song.delete(@song)
+      broadcast_receiver =
+        (
+          if current_user.label_id
+            "label_leaderboard_#{current_user.label_id}"
+          else
+            "user_leaderboard_#{current_user.id}"
+          end
+        )
       Turbo::StreamsChannel.broadcast_remove_to(
-        "leaderboard",
+        broadcast_receiver,
         target: "song_#{@song.id}",
       )
     end
