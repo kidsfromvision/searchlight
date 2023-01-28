@@ -9,20 +9,26 @@ class SongsController < ApplicationController
       @label = nil
       @songs = current_user.song
     end
-    @songs.each { |song|song.stream = 0}
 
-
-    chartmetric_api_token = ChartmetricApiToken.first
-    chartmetric_api_token.refresh if chartmetric_api_token.expired?
+    # @songs.each { |song|song.stream = 0}
+    # chartmetric_api_token = ChartmetricApiToken.first
+    # chartmetric_api_token.refresh if chartmetric_api_token.expired?
     
-    @token = ChartmetricApiToken.first.token
-    headers = { "Authorization" => "Bearer #{@token}" }
-    @songs.each do |song|
-      response = HTTParty.get("https://api.chartmetric.com/api/track/#{song.spotify_id}/spotify/stats/most-history?isDomainId=true&type=streams&since=2023-01-10", headers: headers)
-      data = response["obj"].first["data"]
-      if data.length >= 2
-        song.stream = data[-1]["value"] - data[-2]["value"]
-      end
-    end
+    # @token = ChartmetricApiToken.first.token
+    # headers = { "Authorization" => "Bearer #{@token}" }
+    # @songs.each do |song|
+    #   begin
+    #     @response = HTTParty.get("https://api.chartmetric.com/api/track/#{song.spotify_id}/spotify/stats/most-history?isDomainId=true&type=streams&since=2023-01-10", headers: headers)
+    #     data = response["obj"].first["data"]
+    #     if data.length >= 2
+    #       song.stream = data[-1]["value"] - data[-2]["value"]
+    #     else
+    #       song.stream = 0
+    #     end
+    #   rescue
+    #     song.stream = 0
+    #   end
+    # end
+    
   end
 end

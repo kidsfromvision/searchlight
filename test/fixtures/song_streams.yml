@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  streams: 1
+  date: 2023-01-28 18:18:29
+
+two:
+  streams: 1
+  date: 2023-01-28 18:18:29
