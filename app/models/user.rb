@@ -9,7 +9,7 @@ class User < ApplicationRecord
          :confirmable
 
   has_many :user_songs, dependent: :destroy
-  has_many :song, through: :user_songs
+  has_many :songs, through: :user_songs
 
   belongs_to :label, optional: true
 end

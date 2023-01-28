@@ -63,7 +63,7 @@ class SongController < ApplicationController
 
   def remove
     @song = Song.find(params[:id])
-    if current_user.song.delete(@song)
+    if current_user.songs.delete(@song)
       broadcast_receiver =
         (
           if current_user.label_id
