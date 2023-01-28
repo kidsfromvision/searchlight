@@ -14,7 +14,7 @@
   		      </tr>
   		    </thead>
   		    <tbody id="table" class="divide-y divide-gray-200">
-						<%= render @songs %>
+						<%= render @songs, user: current_user %>
   		    </tbody>
   		  </table>
   		</div>

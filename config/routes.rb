@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   get "/song/:id", to: "song#index"
   delete "/song/:id", to: "song#remove"
 
+  patch "/songs/:song_id/user_songs/:id",
+        to: "user_songs#update",
+        as: "update_user_song"
+
   devise_for :users
   devise_scope :user do
     # Redirests signing out users back to sign-in

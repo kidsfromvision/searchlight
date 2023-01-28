@@ -1,3 +1,4 @@
+<% options=[["Watching", "watching"], ["Contacted", "contacted"], ["Replied", "replied"], ["Offered", "offered"], ["Accepted", "accepted"]]%>
 <tr id="<%= dom_id(song) %>">
   <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
 		<div class="flex flex-row gap-4 items-center">
@@ -6,7 +7,17 @@
 		</div>
 	</td>
   <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=song.artist%></td>
-  <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=get_readable_status(song.status)%></td>
+  <td class="whitespace-nowrap py-4 px-3 text-sm text-black">
+		<% user_song = song.user_songs.find_by(user_id: user.id) %>
+ 		<%= form_for user_song, url: update_user_song_path(user_song.song_id, user_song), method: :patch do |f| %>
+ 			<%= f.select :status, options_for_select(options, user_song.status), {}, { id: "status_select_#{song.id}", class: "border-0 bg-gray-200 rounded px-4 py-2 focus:ring-0 focus:outline-none focus:border-0 w-36" }%>  
+ 			<script>
+  			document.getElementById("status_select_<%= song.id %>").addEventListener("change", function() {
+  			  this.form.submit();
+  			});
+  		</script> 
+		<% end %> 
+	</td>
 	<td class="whitespace-nowrap py-4 px-3 text-sm text-black">
 		<%= link_to "/song/#{song.id}" do %>
   		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">

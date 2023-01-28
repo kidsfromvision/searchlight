@@ -1,7 +1,7 @@
 module SongsHelper
   def get_readable_status(status)
     readable_statuses = {
-      "potential" => "Watching",
+      "watching" => "Watching",
       "contacted" => "Contacted",
       "replied" => "Replied",
       "offered" => "Offered",

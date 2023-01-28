@@ -8,6 +8,8 @@ class User < ApplicationRecord
          :validatable,
          :confirmable
 
-  has_and_belongs_to_many :song
+  has_many :user_songs, dependent: :destroy
+  has_many :song, through: :user_songs
+
   belongs_to :label, optional: true
 end
