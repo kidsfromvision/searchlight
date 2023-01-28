@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_28_154900) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_28_182617) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -44,9 +44,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_28_154900) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "status", default: 0
-    t.bigint "label_id"
-    t.index ["label_id", "song_id"], name: "index_user_songs_on_label_id_and_song_id", unique: true
-    t.index ["label_id"], name: "index_user_songs_on_label_id"
     t.index ["user_id", "song_id"], name: "index_user_songs_on_user_id_and_song_id", unique: true
   end
 
@@ -68,6 +65,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_28_154900) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  add_foreign_key "user_songs", "labels"
   add_foreign_key "users", "labels"
 end

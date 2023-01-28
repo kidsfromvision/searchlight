@@ -15,17 +15,13 @@ class SongController < ApplicationController
 
     if song.save
       if current_user.label_id
-        user_song =
-          UserSong.find_or_create_by(
-            song_id: song.id,
-            label_id: current_user.label_id,
-          ) do |user_song|
-            user_song.attributes = {
-              song_id: song.id,
-              label_id: current_user.label_id,
-              user_id: current_user.id,
-            }
-          end
+        label = Label.find(current_user.label_id)
+        if !label.song_ids.include?(song.id)
+          user_song =
+            UserSong.create(user_id: current_user.id, song_id: song.id)
+        else
+          user_song = UserSong.find_by(song_id: song.id)
+        end
       else
         user_song =
           UserSong.find_or_create_by(
