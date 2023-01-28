@@ -3,4 +3,5 @@ class UserSong < ApplicationRecord
 
   belongs_to :user
   belongs_to :song
+  belongs_to :label, optional: true
 end

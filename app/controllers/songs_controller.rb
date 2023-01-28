@@ -4,10 +4,10 @@ class SongsController < ApplicationController
   def index
     if current_user.label_id
       @label = current_user.label
-      @songs = @label.user.includes(:song).map(&:song).flatten.uniq
+      @songs = @label.user_song.map(&:song)
     else
       @label = nil
-      @songs = current_user.song
+      @songs = current_user.user_songs.map(&:song)
     end
   end
 end

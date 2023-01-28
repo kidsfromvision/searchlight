@@ -14,7 +14,31 @@ class SongController < ApplicationController
       end
 
     if song.save
-      user_song = UserSong.new(user_id: current_user.id, song_id: song.id)
+      if current_user.label_id
+        user_song =
+          UserSong.find_or_create_by(
+            song_id: song.id,
+            label_id: current_user.label_id,
+          ) do |user_song|
+            user_song.attributes = {
+              song_id: song.id,
+              label_id: current_user.label_id,
+              user_id: current_user.id,
+            }
+          end
+      else
+        user_song =
+          UserSong.find_or_create_by(
+            song_id: song.id,
+            user_id: current_user.id,
+          ) do |user_song|
+            user_song.attributes = {
+              song_id: song.id,
+              user_id: current_user.id,
+            }
+          end
+      end
+
       if user_song.save
         broadcast_receiver =
           (
