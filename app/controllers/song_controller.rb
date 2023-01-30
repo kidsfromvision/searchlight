@@ -66,8 +66,8 @@ class SongController < ApplicationController
   end
 
   def remove
-    @song = Song.find(params[:id])
-    if current_user.songs.delete(@song)
+    tracked_song = TrackedSong.find_by(song_id: params[:id])
+    if TrackedSong.delete(tracked_song)
       broadcast_receiver =
         (
           if current_user.label_id
@@ -78,7 +78,7 @@ class SongController < ApplicationController
         )
       Turbo::StreamsChannel.broadcast_remove_to(
         broadcast_receiver,
-        target: "song_#{@song.id}",
+        target: "song_#{params[:id]}",
       )
     end
     redirect_to root_path, notice: "Song removed from your collection"
