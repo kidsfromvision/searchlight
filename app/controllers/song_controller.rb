@@ -24,7 +24,7 @@ class SongController < ApplicationController
               song_id: song.id,
             )
         else
-          tracked_song = UserSong.find_by(song_id: song.id)
+          tracked_song = TrackedSong.find_by(song_id: song.id)
         end
       else
         tracked_song =
