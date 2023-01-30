@@ -8,9 +8,9 @@
 	</td>
   <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=song.artist%></td>
   <td class="whitespace-nowrap py-4 px-3 text-sm text-black">
-		<% user_song = song.user_songs.find_by(user_id: user.id) %>
- 		<%= form_for user_song, url: update_user_song_path(user_song.song_id, user_song), method: :patch do |f| %>
- 			<%= f.select :status, options_for_select(options, user_song.status), {}, { id: "status_select_#{song.id}", class: "border-0 bg-gray-200 rounded px-4 py-2 focus:ring-0 focus:outline-none focus:border-0 w-36" }%>  
+		<% tracked_song = song.tracked_songs.find_by(user_id: user.id) %>
+ 		<%= form_for tracked_song, url: update_tracked_song_path(tracked_song.song_id, tracked_song), method: :patch do |f| %>
+ 			<%= f.select :status, options_for_select(options, tracked_song.status), {}, { id: "status_select_#{song.id}", class: "border-0 bg-gray-200 rounded px-4 py-2 focus:ring-0 focus:outline-none focus:border-0 w-36" }%>  
  			<script>
   			document.getElementById("status_select_<%= song.id %>").addEventListener("change", function() {
   			  this.form.submit();

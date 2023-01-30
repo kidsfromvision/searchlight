@@ -5,9 +5,9 @@ Rails.application.routes.draw do
   get "/song/:id", to: "song#index"
   delete "/song/:id", to: "song#remove"
 
-  patch "/songs/:song_id/user_songs/:id",
-        to: "user_songs#update",
-        as: "update_user_song"
+  patch "/songs/:song_id/tracked_song/:id",
+        to: "tracked_song#update",
+        as: "update_tracked_song"
 
   devise_for :users
   devise_scope :user do

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class UserSongsControllerTest < ActionDispatch::IntegrationTest
+class TrackedSongControllerTest < ActionDispatch::IntegrationTest
   # test "the truth" do
   #   assert true
   # end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_28_182617) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_30_144848) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,14 +37,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_28_182617) do
     t.datetime "expiry", precision: nil
   end
 
-  create_table "user_songs", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "song_id"
-    t.boolean "is_pinned", default: false
+  create_table "tracked_songs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "label_id"
+    t.bigint "song_id"
+    t.bigint "user_id"
     t.integer "status", default: 0
-    t.index ["user_id", "song_id"], name: "index_user_songs_on_user_id_and_song_id", unique: true
+    t.boolean "is_pinned", default: false
+    t.index ["label_id"], name: "index_tracked_songs_on_label_id"
+    t.index ["song_id"], name: "index_tracked_songs_on_song_id"
+    t.index ["user_id"], name: "index_tracked_songs_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -65,5 +68,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_28_182617) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "tracked_songs", "labels"
+  add_foreign_key "tracked_songs", "songs"
+  add_foreign_key "tracked_songs", "users"
   add_foreign_key "users", "labels"
 end

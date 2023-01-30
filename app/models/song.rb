@@ -1,4 +1,4 @@
 class Song < ApplicationRecord
-  has_many :user_songs, dependent: :destroy
-  has_many :user, through: :user_songs
+  has_many :tracked_songs, dependent: :destroy
+  has_many :user, through: :tracked_songs
 end
