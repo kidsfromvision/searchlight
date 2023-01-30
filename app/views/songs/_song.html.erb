@@ -1,24 +1,27 @@
-<% options=[["Watching", "watching"], ["Contacted", "contacted"], ["Replied", "replied"], ["Offered", "offered"], ["Accepted", "accepted"]]%>
 <tr id="<%= dom_id(song) %>">
-  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
-		<div class="flex flex-row gap-4 items-center">
-			<%= image_tag song.art_url, :class => "h-12 w-12" %>
-			<%= song.name %>
-		</div>
+  <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
+		<%= link_to "/song/#{song.id}" do %>
+			<div class="flex flex-row gap-4 items-center">
+				<%= image_tag song.art_url, :class => "h-12 w-12 shadow-lg" %>
+				<%= song.name %>
+			</div>
+		<% end %>
 	</td>
-  <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=song.artist%></td>
-  <td class="whitespace-nowrap py-4 px-3 text-sm text-black">
+  <td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=song.artist%></td>
+  <td class="whitespace-wrap py-4 px-3 text-sm text-black">
+		<% options=TrackedSong.statuses.keys.map { |status| [get_readable_status(status), status] }%> 
 		<% tracked_song = user.label_id ? song.tracked_songs.find_by(label_id: user.label_id) : song.tracked_songs.find_by(user_id: user.id) %>
- 		<%= form_for tracked_song, url: update_tracked_song_path(tracked_song.song_id, tracked_song), method: :patch do |f| %>
- 			<%= f.select :status, options_for_select(options, tracked_song.status), {}, { id: "status_select_#{song.id}", class: "border-0 bg-gray-200 rounded px-4 py-2 focus:ring-0 focus:outline-none focus:border-0 w-36" }%>  
+		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), local: true, method: :patch) do |f| %>
+			<%= f.select :status, options_for_select(options, tracked_song.status), {}, { id: "status_select_#{song.id}", class: "border-0 bg-gray-100 rounded px-4 py-2 focus:ring-0 focus:outline-none focus:border-0 w-40 text-sm" }%> 
  			<script>
   			document.getElementById("status_select_<%= song.id %>").addEventListener("change", function() {
-  			  this.form.submit();
+					this.form.submit();
   			});
   		</script> 
 		<% end %> 
 	</td>
-	<td class="whitespace-nowrap py-4 px-3 text-sm text-black">
+  <td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).email%></td>
+	<td class="whitespace-wrap py-4 px-3 text-sm text-black">
 		<%= link_to "/song/#{song.id}" do %>
   		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   			<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
