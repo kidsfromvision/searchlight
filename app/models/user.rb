@@ -12,4 +12,6 @@ class User < ApplicationRecord
   has_many :songs, through: :tracked_songs
 
   belongs_to :label, optional: true
+
+  enum :role, %i[independent_user, label_employee, label_admin]
 end

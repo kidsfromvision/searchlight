@@ -1,4 +1,6 @@
 class TrackedSongController < ApplicationController
+  before_action :authenticate_user!
+
   def update
     tracked_song = TrackedSong.find(params[:id])
     tracked_song.update(tracked_song_params)
