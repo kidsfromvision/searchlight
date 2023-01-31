@@ -14,8 +14,8 @@
 			<p class="text-center text-green-700 h-8"><%= notice %></p> 
 			<% if current_user %>
 				<%= render "layouts/nav" %>
-			<%end%>
-      	<%= yield %>
+			<% end %>
+      <%= yield %>
 			<p class="my-2 text-center text-amber-700 font-medium"><%= alert %></p>
     </main>
   </body>

@@ -2,4 +2,6 @@
 import "@hotwired/turbo-rails";
 import "controllers";
 import "debounce";
-import "@hotwired/turbo-rails"
+
+import mrujs from "mrujs";
+mrujs.start();

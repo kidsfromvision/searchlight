@@ -8,6 +8,11 @@ class User < ApplicationRecord
          :validatable,
          :confirmable
 
-  has_and_belongs_to_many :song
+  has_many :tracked_songs, dependent: :destroy
+  has_many :songs, through: :tracked_songs
+  has_many :invitations
+
   belongs_to :label, optional: true
+
+  enum :role, %i[independent_user, label_employee, label_admin]
 end

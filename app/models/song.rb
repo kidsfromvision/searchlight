@@ -1,5 +1,4 @@
 class Song < ApplicationRecord
-  enum :status, %i[potential contacted replied offered accepted]
-
-  has_and_belongs_to_many :user
+  has_many :tracked_songs, dependent: :destroy
+  has_many :user, through: :tracked_songs
 end

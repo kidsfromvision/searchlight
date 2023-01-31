@@ -1,28 +1,33 @@
-<%= render "shared/page_head" %>
-<%= turbo_stream_from "leaderboard" %>
-<%= turbo_stream_from "chartmetric_streams" %>
-
-<%= turbo_frame_tag "body" do %>
-	<h1 class="text-2xl"> Leaderboard </h1>
-	<div class="mt-8 flex flex-col">
-    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-  		<div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-  		  <table class="min-w-full divide-y divide-gray-300">
-  		    <thead>
-  		      <tr>
-  		        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">Song</th>
-  		        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Artist</th>
-				  <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Streams (24hrs)</th>
-
-  		        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Status</th>
-  		      </tr>
-  		    </thead>
-  		    <tbody id="table" class="divide-y divide-gray-200">
-						<%= render @songs%>
-  		    </tbody>
-  		  </table>
-  		</div>
-		</div>
-  </div>
-  <%= @response %>
+<%= render layout: "layouts/page" do %>
+	<%= render "shared/page_head" %>
+	<%= turbo_stream_from "chartmetric_streams" %>
+	<% if @label then %>
+		<%= turbo_stream_from "label_leaderboard_#{@label.id}" %>
+	<% else %>
+		<%= turbo_stream_from "user_leaderboard_#{current_user.id}" %>
+	<% end %>
+	<%= turbo_frame_tag "body" do %>
+		<h1 class="text-2xl"> Leaderboard </h1>
+		<div class="mt-8 flex flex-col">
+	    <div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
+	  		<div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
+	  		  <table class="min-w-full divide-y divide-gray-300">
+	  		    <thead>
+	  		      <tr>
+	  		        <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">Song</th>
+	  		        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Artist</th>
+					<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Streams (24hrs)</th>
+	  		        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Status</th>
+	  		        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Added by</th>
+	  		      </tr>
+	  		    </thead>
+	  		    <tbody id="table" class="divide-y divide-gray-200">
+							<%= render @songs, user: current_user %>
+	  		    </tbody>
+	  		  </table>
+	  		</div>
+			</div>
+	  </div>
+	<% end %>
 <% end %>
+
