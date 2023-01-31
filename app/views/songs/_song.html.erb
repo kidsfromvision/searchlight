@@ -11,7 +11,7 @@
   <td class="whitespace-wrap py-4 px-3 text-sm text-black">
 		<% options=TrackedSong.statuses.keys.map { |status| [get_readable_status(status), status] }%> 
 		<% tracked_song = user.label_id ? song.tracked_songs.find_by(label_id: user.label_id) : song.tracked_songs.find_by(user_id: user.id) %>
-		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), local: true, method: :patch) do |f| %>
+		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), method: :patch, data: { controller: "authenticity", action: "click->toggle#hide" }) do |f| %>
 			<%= f.select :status, options_for_select(options, tracked_song.status), {}, { id: "status_select_#{song.id}", class: "border-0 bg-gray-100 rounded px-4 py-2 focus:ring-0 focus:outline-none focus:border-0 w-40 text-sm" }%> 
  			<script>
   			document.getElementById("status_select_<%= song.id %>").addEventListener("change", function() {
