@@ -24,7 +24,7 @@
 		<td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>
 	<% end %>
 	<td class="whitespace-wrap py-4 px-3 text-sm text-black">
-		<%= button_to "song/#{song.id}", data: { turbo_frame: "page", turbo_action: "advance" }, method: :get do %>
+		<%= button_to single_song_path(song.id), data: { turbo_frame: "page", turbo_action: "advance" }, method: :get do %>
   		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
   			<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
 			</svg>
