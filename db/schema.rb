@@ -10,9 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_01_31_165441) do
+ActiveRecord::Schema[7.0].define(version: 2023_01_31_180345) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "invitations", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "label_id"
+    t.bigint "user_id"
+    t.integer "status", default: 0
+    t.index ["label_id"], name: "index_invitations_on_label_id"
+    t.index ["user_id"], name: "index_invitations_on_user_id"
+  end
 
   create_table "labels", force: :cascade do |t|
     t.string "name"
@@ -69,6 +79,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_165441) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "invitations", "labels"
+  add_foreign_key "invitations", "users"
   add_foreign_key "tracked_songs", "labels"
   add_foreign_key "tracked_songs", "songs"
   add_foreign_key "tracked_songs", "users"

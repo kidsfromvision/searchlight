@@ -1,4 +1,7 @@
 <div class="flex flex-row w-full justify-end py-3 gap-x-4 items-center">
-	<%= button_to "Home", root_path, class: "text-black font-bold", data: { turbo_frame: "body", turbo_action: "advance" }, method: :get%>
+	<%= button_to "Home", root_path, class: "text-black font-bold", data: { turbo_frame: "page", turbo_action: "advance" }, method: :get%>
+	<% if current_user.role == "label_admin" then %>
+			<%= button_to "Admin", admin_root_path, class: "text-black font-bold", data: { turbo_frame: "page", turbo_action: "advance" }, method: :get%>
+	<% end %>
 	<%= button_to "Sign out", destroy_user_session_path, class: "text-black font-bold", method: :delete %> 
 </div>
