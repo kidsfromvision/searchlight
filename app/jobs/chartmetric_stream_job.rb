@@ -4,7 +4,7 @@ class ChartmetricStreamJob < ActiveJob::Base
   def perform(song)
     chartmetric_api_token = ChartmetricApiToken.first
     chartmetric_api_token.refresh if chartmetric_api_token.expired?
-    song.stream = 'nuttin'
+    song.stream = 0
     song.save
     token = ChartmetricApiToken.first.token
     headers = { "Authorization" => "Bearer #{token}" }
