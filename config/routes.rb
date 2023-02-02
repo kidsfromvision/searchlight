@@ -6,9 +6,9 @@ Rails.application.routes.draw do
   post "/invitation", to: "invitation#create", as: "create_invitation"
 
   post "/song", to: "song#create"
-  get "/song/:id", to: "song#index", as: "single_song"
   delete "/song/:id", to: "song#remove"
 
+  get "/tracked_song/:id", to: "tracked_song#index", as: "tracked_song"
   patch "/tracked_song/:id",
         to: "tracked_song#update",
         as: "update_tracked_song"
