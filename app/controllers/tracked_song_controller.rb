@@ -15,27 +15,7 @@ class TrackedSongController < ApplicationController
     if tracked_song && user_has_permissions(tracked_song)
       tracked_song.update(tracked_song_params)
       song = Song.find_by(id: tracked_song.song_id)
-      success = tracked_song.save if song
-      if success
-        broadcast_receiver =
-          (
-            if current_user.label_id
-              "label_leaderboard_#{current_user.label_id}"
-            else
-              "user_leaderboard_#{current_user.id}"
-            end
-          )
-
-        Turbo::StreamsChannel.broadcast_replace_to(
-          broadcast_receiver,
-          target: "song_#{song.id}",
-          partial: "songs/song",
-          locals: {
-            song: song,
-            user: current_user,
-          },
-        )
-      end
+      tracked_song.broadcast_replace(current_user) if tracked_song.save if song
     end
   end
 

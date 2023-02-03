@@ -28,14 +28,6 @@ class ChartmetricStreamJob < ActiveJob::Base
       end
     end
 
-    Turbo::StreamsChannel.broadcast_replace_to(
-      "chartmetric_streams",
-      target: "song_#{song.id}",
-      partial: "songs/song",
-      locals: {
-        song: song,
-        user: user,
-      },
-    )
+    song.broadcast_streams
   end
 end

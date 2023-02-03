@@ -47,25 +47,7 @@ class SongController < ApplicationController
       end
 
       if tracked_song.save
-        broadcast_receiver =
-          (
-            if current_user.label_id
-              "label_leaderboard_#{current_user.label_id}"
-            else
-              "user_leaderboard_#{current_user.id}"
-            end
-          )
-
-        Turbo::StreamsChannel.broadcast_append_to(
-          broadcast_receiver,
-          target: "table",
-          partial: "songs/song",
-          locals: {
-            song: song,
-            user: current_user,
-          },
-        )
-
+        tracked_song.broadcast_add(current_user)
         ChartmetricStreamJob.perform_later(song, current_user)
         redirect_to root_path
       end
@@ -78,19 +60,9 @@ class SongController < ApplicationController
   def remove
     tracked_song = TrackedSong.find_by(song_id: params[:id])
     if TrackedSong.delete(tracked_song)
-      broadcast_receiver =
-        (
-          if current_user.label_id
-            "label_leaderboard_#{current_user.label_id}"
-          else
-            "user_leaderboard_#{current_user.id}"
-          end
-        )
-      Turbo::StreamsChannel.broadcast_remove_to(
-        broadcast_receiver,
-        target: "song_#{params[:id]}",
-      )
+      tracked_song.broadcast_remove(current_user)
     end
+
     redirect_to root_path, notice: "Song removed from your collection"
   end
 end
