@@ -2,18 +2,15 @@ class ChartmetricStreamJob < ActiveJob::Base
   queue_as :default
 
   def perform(song, user)
-    chartmetric_api_token = ChartmetricApiToken.first
-    chartmetric_api_token.refresh if chartmetric_api_token.expired?
-    token = ChartmetricApiToken.first.token
-
-    song_streams = song.song_streams.order("date DESC")
+    song_streams =
+      song.song_streams.where(provider: "chartmetric").order("date DESC")
     if song_streams.length > 0
       since_query =
         "&since=#{(song_streams[0].date + 1.days).strftime("%Y-%m-%d")}"
     else
       since_query = ""
     end
-    headers = { "Authorization" => "Bearer #{token}" }
+    headers = { "Authorization" => "Bearer #{ChartmetricAuthManager.token}" }
     response =
       HTTParty.get(
         "https://api.chartmetric.com/api/track/#{song.spotify_id}/spotify/stats/most-history?isDomainId=true&type=streams#{since_query}",

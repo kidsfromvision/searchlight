@@ -25,6 +25,7 @@ class TrackedSongController < ApplicationController
               "user_leaderboard_#{current_user.id}"
             end
           )
+
         Turbo::StreamsChannel.broadcast_replace_to(
           broadcast_receiver,
           target: "song_#{song.id}",

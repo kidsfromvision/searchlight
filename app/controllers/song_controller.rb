@@ -7,7 +7,14 @@ class SongController < ApplicationController
 
   def create
     song_params =
-      params.permit(:name, :artist, :art_url, :icon_url, :spotify_id)
+      params.permit(
+        :name,
+        :artist,
+        :artist_id,
+        :art_url,
+        :icon_url,
+        :spotify_id,
+      )
     song =
       Song.find_or_create_by(spotify_id: song_params[:spotify_id]) do |song|
         song.attributes = song_params

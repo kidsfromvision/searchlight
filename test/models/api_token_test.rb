@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ChartmetricApiTokenTest < ActiveSupport::TestCase
+class ApiTokenTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end
