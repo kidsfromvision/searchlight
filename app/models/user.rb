@@ -14,5 +14,5 @@ class User < ApplicationRecord
 
   belongs_to :label, optional: true
 
-  enum :role, %i[independent_user, label_employee, label_admin]
+  enum :role, %i[independent_user label_employee label_admin]
 end

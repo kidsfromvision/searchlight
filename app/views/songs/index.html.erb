@@ -18,7 +18,9 @@
 	  		        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Artist</th>
 					<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Streams (24hrs)</th>
 	  		        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Status</th>
-	  		        <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Added by</th>
+								<% if current_user.label_id then %>
+	  		        	<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Added by</th>
+								<% end %>
 	  		      </tr>
 	  		    </thead>
 	  		    <tbody id="table" class="divide-y divide-gray-200">
