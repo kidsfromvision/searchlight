@@ -5,7 +5,7 @@ class TrackedSong < ApplicationRecord
   belongs_to :song
   belongs_to :label, optional: true
 
-  def broadcast_add(song, user)
+  def broadcast_add(user)
     song = Song.find_by(id: self.song_id)
     Turbo::StreamsChannel.broadcast_append_to(
       broadcast_receiver(user),
