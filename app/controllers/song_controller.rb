@@ -12,7 +12,7 @@ class SongController < ApplicationController
       Song.find_or_create_by(spotify_id: song_params[:spotify_id]) do |song|
         song.attributes = song_params
       end
-      
+
     if song.save
       if current_user.label_id
         label = Label.find(current_user.label_id)
@@ -48,7 +48,7 @@ class SongController < ApplicationController
               "user_leaderboard_#{current_user.id}"
             end
           )
-        ChartmetricStreamJob.perform_later(@song)
+
         Turbo::StreamsChannel.broadcast_append_to(
           broadcast_receiver,
           target: "table",
@@ -58,6 +58,8 @@ class SongController < ApplicationController
             user: current_user,
           },
         )
+
+        ChartmetricStreamJob.perform_later(song, current_user)
         redirect_to root_path
       end
     end

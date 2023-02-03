@@ -1,19 +1,42 @@
+<% tracked_song = user.label_id ? song.tracked_songs.find_by(label_id: user.label_id) : song.tracked_songs.find_by(user_id: user.id) %>
 <tr id="<%= dom_id(song) %>">
-  <td class="whitespace-wrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
-		<%= link_to "/song/#{song.id}" do %>
+  <td class="whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
+		<%= link_to "/tracked_song/#{tracked_song.id}" do %>
 			<div class="flex flex-row gap-4 items-center">
 				<%= image_tag song.art_url, :class => "h-12 w-12 shadow-lg" %>
 				<%= song.name %>
 			</div>
 		<% end %>
 	</td>
-  <td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=song.artist%></td>
-  <td class="whitespace-nowrap py-4 px-3 text-sm text-black">
-  <%= number_with_delimiter(song.stream) %>
-</td>
+  <td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black"><%=song.artist%></td>
+  <td class="gap-1 whitespace-nowrap py-4 px-3 text-sm text-black justify-center">
+		<% if song.song_streams.length > 1 %>
+			<% song_streams = song.song_streams.order("date DESC").limit(2) %>
+			<% stream_difference = song_streams.first.streams - song_streams.last.streams %>
+			<% day_difference = ((song_streams.first.date - song_streams.last.date) / 60 / 60 / 24).to_i %>
+			<% present_difference = ((Time.now - song_streams.first.date) / 60 / 60 / 24).to_i %>
+
+			<div class="text-black font-bold text-md">
+  			<%= number_with_delimiter((stream_difference / day_difference).to_i) %>
+			</div>
+			<% if day_difference != 1 || present_difference != 0 %>
+				<div class="flex flex-col text-xs font-gray-500 pt-1">
+					<% if day_difference != 0 %>
+						<div>
+							<%= "#{present_difference.to_i}D ago" %>
+						</div>
+					<% end %>
+					<% if day_difference != 1 %>
+						<div>
+							<%= "#{day_difference.to_i}D average" %>
+						</div>
+					<% end %>
+				</div>
+			<% end %>
+		<% end %>
+	</td>
   <td class="whitespace-wrap py-4 px-3 text-sm text-black">
 		<% options=TrackedSong.statuses.keys.map { |status| [get_readable_status(status), status] }%> 
-		<% tracked_song = user.label_id ? song.tracked_songs.find_by(label_id: user.label_id) : song.tracked_songs.find_by(user_id: user.id) %>
 		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), method: :patch, data: { controller: "authenticity", action: "click->toggle#hide" }) do |f| %>
 			<%= f.select :status, options_for_select(options, tracked_song.status), {}, { id: "status_select_#{song.id}", class: "border-0 bg-gray-100 rounded px-4 py-2 focus:ring-0 focus:outline-none focus:border-0 w-40 text-sm" }%> 
  			<script>

@@ -1,32 +1,44 @@
 class ChartmetricStreamJob < ActiveJob::Base
   queue_as :default
 
-  def perform(song)
+  def perform(song, user)
     chartmetric_api_token = ChartmetricApiToken.first
     chartmetric_api_token.refresh if chartmetric_api_token.expired?
-    song.stream = 0
-    song.save
     token = ChartmetricApiToken.first.token
+
+    song_streams = song.song_streams.order("date DESC")
+    if song_streams.length > 0
+      since_query =
+        "&since=#{(song_streams[0].date + 1.days).strftime("%Y-%m-%d")}"
+    else
+      since_query = ""
+    end
     headers = { "Authorization" => "Bearer #{token}" }
-    response = HTTParty.get("https://api.chartmetric.com/api/track/#{song.spotify_id}/spotify/stats/most-history?isDomainId=true&type=streams&since=2023-01-10", headers: headers)
+    response =
+      HTTParty.get(
+        "https://api.chartmetric.com/api/track/#{song.spotify_id}/spotify/stats/most-history?isDomainId=true&type=streams#{since_query}",
+        headers: headers,
+      )
+
     if response && response["obj"]
       data = response["obj"].first["data"]
-      if data.length >= 2
-        song.stream = data[-1]["value"] - data[-2]["value"]
-        song.save
-        # @song_stream = SongStream.find_or_create_by(:id)
+      if data
+        song.song_streams.create(
+          data.map do |stream|
+            { streams: stream["value"], date: stream["timestp"] }
+          end,
+        )
       end
-    else
     end
-    if song.save
+
     Turbo::StreamsChannel.broadcast_replace_to(
-        "chartmetric_streams",
-        target: "song_#{song.id}",
-        partial: "songs/song",
-        locals: {
-          song: song,
-        },
-      )
-    end
+      "chartmetric_streams",
+      target: "song_#{song.id}",
+      partial: "songs/song",
+      locals: {
+        song: song,
+        user: user,
+      },
+    )
   end
 end
