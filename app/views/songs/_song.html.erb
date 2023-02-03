@@ -8,6 +8,9 @@
 		<% end %>
 	</td>
   <td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=song.artist%></td>
+  <td class="whitespace-nowrap py-4 px-3 text-sm text-black">
+  <%= number_with_delimiter(song.stream) %>
+</td>
   <td class="whitespace-wrap py-4 px-3 text-sm text-black">
 		<% options=TrackedSong.statuses.keys.map { |status| [get_readable_status(status), status] }%> 
 		<% tracked_song = user.label_id ? song.tracked_songs.find_by(label_id: user.label_id) : song.tracked_songs.find_by(user_id: user.id) %>
@@ -20,7 +23,7 @@
   		</script> 
 		<% end %> 
 	</td>
-  <% if user.label_id %>
+  <% if user.label_id then %>
 		<td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>
 	<% end %>
 	<td class="whitespace-wrap py-4 px-3 text-sm text-black">

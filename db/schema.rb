@@ -14,6 +14,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_195602) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "chartmetric_api_tokens", force: :cascade do |t|
+    t.string "token"
+    t.datetime "expiry", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "invitations", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -30,6 +37,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_195602) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "song_streams", force: :cascade do |t|
+    t.integer "streams"
+    t.datetime "date", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "song_id"
+    t.index ["song_id"], name: "index_song_streams_on_song_id"
+  end
+
   create_table "songs", force: :cascade do |t|
     t.string "name"
     t.string "artist"
@@ -38,6 +54,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_195602) do
     t.datetime "updated_at", null: false
     t.string "art_url"
     t.string "icon_url"
+    t.integer "stream"
   end
 
   create_table "spotify_api_tokens", force: :cascade do |t|
@@ -82,6 +99,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_01_31_195602) do
 
   add_foreign_key "invitations", "labels"
   add_foreign_key "invitations", "users"
+  add_foreign_key "song_streams", "songs"
   add_foreign_key "tracked_songs", "labels"
   add_foreign_key "tracked_songs", "songs"
   add_foreign_key "tracked_songs", "users"
