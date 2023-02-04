@@ -1,4 +1,5 @@
 <% tracked_song = user.label_id ? song.tracked_songs.find_by(label_id: user.label_id) : song.tracked_songs.find_by(user_id: user.id) %>
+<% latest_stream_event = song.stream_events.last %>
 <tr id="<%= dom_id(song) %>">
   <td class="whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
 		<%= link_to "/tracked_song/#{tracked_song.id}" do %>
@@ -9,7 +10,13 @@
 		<% end %>
 	</td>
   <td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black"><%=song.artist%></td>
-	<%= render "songs/streams_col", song: song %>
+	<% if !latest_stream_event %>
+		<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="streams_song_<%=song.id%>">No data</td>
+	<% elsif latest_stream_event.status == "unresolved" %>
+		<%= render "songs/streams_loading", song: song %>
+	<% else %>
+		<%= render "songs/streams_col", song: song %>
+	<% end %>
   <td class="whitespace-wrap py-4 px-3 text-sm text-black">
 		<% options=TrackedSong.statuses.keys.map { |status| [get_readable_status(status), status] }%> 
 		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), method: :patch, data: { controller: "authenticity", action: "click->toggle#hide" }) do |f| %>

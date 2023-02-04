@@ -14,8 +14,7 @@ class TrackedSongController < ApplicationController
     tracked_song = TrackedSong.find_by(id: params[:id])
     if tracked_song && user_has_permissions(tracked_song)
       tracked_song.update(tracked_song_params)
-      song = Song.find_by(id: tracked_song.song_id)
-      tracked_song.broadcast_replace(current_user) if tracked_song.save if song
+      tracked_song.broadcast_replace(current_user) if tracked_song.save
     end
   end
 

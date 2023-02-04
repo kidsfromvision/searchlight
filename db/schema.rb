@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_03_220040) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_04_190454) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -66,6 +66,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_220040) do
     t.datetime "expiry", precision: nil
   end
 
+  create_table "stream_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "song_id"
+    t.integer "provider", default: 0
+    t.integer "status", default: 0
+    t.index ["song_id"], name: "index_stream_events_on_song_id"
+  end
+
   create_table "tracked_songs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -102,6 +111,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_220040) do
   add_foreign_key "invitations", "labels"
   add_foreign_key "invitations", "users"
   add_foreign_key "song_streams", "songs"
+  add_foreign_key "stream_events", "songs"
   add_foreign_key "tracked_songs", "labels"
   add_foreign_key "tracked_songs", "songs"
   add_foreign_key "tracked_songs", "users"
