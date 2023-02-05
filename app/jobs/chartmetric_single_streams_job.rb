@@ -1,4 +1,4 @@
-class ChartmetricStreamJob < ActiveJob::Base
+class ChartmetricSingleStreamsJob < ActiveJob::Base
   queue_as :default
 
   def perform(song)

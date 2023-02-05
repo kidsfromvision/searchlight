@@ -48,7 +48,7 @@ class SongController < ApplicationController
 
       if tracked_song.save
         tracked_song.broadcast_add(current_user)
-        ChartmetricStreamJob.perform_later(song)
+        ChartmetricSingleStreamsJob.perform_later(song)
         redirect_to root_path
       end
     end

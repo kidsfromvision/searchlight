@@ -1,6 +1,6 @@
 require "test_helper"
 
-class ChartmetricStreamJobTest < ActiveJob::TestCase
+class ChartmetricSingleStreamsJobTest < ActiveJob::TestCase
   # test "the truth" do
   #   assert true
   # end
