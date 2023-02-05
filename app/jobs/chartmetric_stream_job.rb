@@ -1,33 +1,16 @@
 class ChartmetricStreamJob < ActiveJob::Base
   queue_as :default
 
-  def perform(song, user)
-    song_streams =
-      song.song_streams.where(provider: "chartmetric").order("date DESC")
-    if song_streams.length > 0
-      since_query =
-        "&since=#{(song_streams[0].date + 1.days).strftime("%Y-%m-%d")}"
-    else
-      since_query = ""
-    end
-    headers = { "Authorization" => "Bearer #{ChartmetricAuthManager.token}" }
-    response =
-      HTTParty.get(
-        "https://api.chartmetric.com/api/track/#{song.spotify_id}/spotify/stats/most-history?isDomainId=true&type=streams#{since_query}",
-        headers: headers,
+  def perform(song)
+    song.broadcast_streams_loading
+    streams = ChartmetricRequestManager.get_streams(song)
+    if streams.length > 0
+      song.song_streams.create(
+        streams.map do |stream|
+          { streams: stream["value"], date: stream["timestp"] }
+        end,
       )
-
-    if response && response["obj"]
-      data = response["obj"].first["data"]
-      if data
-        song.song_streams.create(
-          data.map do |stream|
-            { streams: stream["value"], date: stream["timestp"] }
-          end,
-        )
-      end
     end
-
     song.broadcast_streams
   end
 end

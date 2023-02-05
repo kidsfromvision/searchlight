@@ -5,7 +5,7 @@
 	<% else %>
 		<%= turbo_stream_from "user_leaderboard_#{current_user.id}" %>
 	<% end %>
-	<%= turbo_stream_from "chartmetric_streams" %>
+	<%= turbo_stream_from "streams" %>
 	<%= turbo_frame_tag "body" do %>
 		<h1 class="text-2xl"> Leaderboard </h1>
 		<div class="mt-8 flex flex-col">
