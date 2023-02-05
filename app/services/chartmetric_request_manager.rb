@@ -2,7 +2,6 @@ class ChartmetricRequestManager
   class << self
     def get_streams(song)
       last_updated = last_update_date(song)
-      puts "LAST UPDATED", last_updated
       if last_updated.nil? || Time.now > last_updated + 1.days
         stream_event = song.stream_events.create(provider: "chartmetric")
         since_query =
