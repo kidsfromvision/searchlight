@@ -14,7 +14,9 @@ class SongController < ApplicationController
         :art_url,
         :icon_url,
         :spotify_id,
+        :released,
       )
+    puts "RELEASED: ", params[:released]
     song =
       Song.find_or_create_by(spotify_id: song_params[:spotify_id]) do |song|
         song.attributes = song_params
