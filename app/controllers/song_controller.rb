@@ -63,6 +63,6 @@ class SongController < ApplicationController
       tracked_song.broadcast_remove(current_user)
     end
 
-    redirect_to root_path, notice: "Song removed from your collection"
+    redirect_to root_path
   end
 end
