@@ -1,0 +1,31 @@
+
+		<%= turbo_frame_tag "songs" do %>
+			<table class="min-w-full divide-y divide-gray-300">
+				<thead>
+					<tr>
+						<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">
+							<%= sort_link(column: "name", label: "Song") %>
+						</th>
+						<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
+							<%= sort_link(column: "artist", label: "Artist") %>
+						</th>
+						<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
+							<%= sort_link(column: "streams", label: "Daily Streams") %>
+						</th>
+						<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
+							<%= sort_link(column: "status", label: "Status") %>
+						</th>
+						<% if current_user.label_id then %>
+							<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
+								<%= sort_link(column: "added_by", label: "Added by") %>
+							</th>
+						<% end %>
+					</tr>
+				</thead>
+				<tbody id="table" class="divide-y divide-gray-200">
+					<% songs.each do |song| %>
+						<%= render "songs/song", user: current_user, song: song %>
+					<% end %>
+				</tbody>
+			</table>
+		<% end %>
