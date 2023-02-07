@@ -25,4 +25,11 @@ class Song < ApplicationRecord
       },
     )
   end
+
+  def recent_streams
+    song_streams
+      .order(date: :desc)
+      .each_cons(2)
+      .detect { |a, b| (a.streams - b.streams).nonzero? }
+  end
 end
