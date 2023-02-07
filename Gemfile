@@ -77,4 +77,3 @@ end
 
 gem "tailwindcss-rails", "~> 2.0"
 gem "httparty"
-gem "whenever", require: false
