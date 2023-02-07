@@ -22,16 +22,20 @@ class SongsController < ApplicationController
     if params[:column] == "streams"
       songs =
         songs.sort_by do |song|
-          song.recent_streams.last.streams - song.recent_streams.first.streams
+          if params[:direction] == "asc"
+            song.recent_streams.last.streams - song.recent_streams.first.streams
+          else
+            song.recent_streams.first.streams - song.recent_streams.last.streams
+          end
         end
     elsif params[:column] == "added_by" # only happens if the user is part of a label
       songs =
         songs
           .joins(tracked_songs: :user)
           .where(tracked_songs: { label_id: label.id })
-          .order("users.name asc")
+          .order("users.name #{params[:direction]}")
     else
-      songs = songs.order("#{params[:column]} asc")
+      songs = songs.order("#{params[:column]} #{params[:direction]}")
     end
 
     render(partial: "songs/songs", locals: { songs: songs })
