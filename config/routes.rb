@@ -6,12 +6,12 @@ Rails.application.routes.draw do
   post "/invitation", to: "invitation#create", as: "create_invitation"
 
   post "/song", to: "song#create"
-  delete "/song/:id", to: "song#remove"
 
   get "/tracked_song/:id", to: "tracked_song#index", as: "tracked_song"
   patch "/tracked_song/:id",
         to: "tracked_song#update",
         as: "update_tracked_song"
+  delete "/tracked_song/:id", to: "tracked_song#remove"
 
   devise_for :users
   devise_scope :user do

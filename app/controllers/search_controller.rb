@@ -3,7 +3,7 @@ class SearchController < ApplicationController
 
   def index
     query = params[:query]
-    if query == "" || query.nil?
+    if query.blank?
       @results = []
     else
       headers = { "Authorization" => "Bearer #{SpotifyAuthManager.token}" }
