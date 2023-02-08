@@ -81,6 +81,7 @@ test:
 #
 production:
   <<: *default
+  url: <%= ENV["SEARCHLIGHT_DATABASE_URL"] %>
   database: searchlight_production
   username: searchlight
   password: <%= ENV["SEARCHLIGHT_DATABASE_PASSWORD"] %>
