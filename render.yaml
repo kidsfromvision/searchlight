@@ -15,6 +15,10 @@ services:
         fromDatabase:
           name: postgres
           property: connectionString
+      - key: REDIS_URL
+        fromDatabase:
+          name: redis
+          property: connectionString
   - type: redis
     name: redis
     ipAllowList: []
