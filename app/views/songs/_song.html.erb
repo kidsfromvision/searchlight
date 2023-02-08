@@ -26,7 +26,7 @@
 	<% end %>
   <td class="whitespace-wrap py-4 px-3 text-sm text-black">
 		<% options=TrackedSong.statuses.keys.map { |status| [get_readable_status(status), status] }%> 
-		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), method: :patch, data: { controller: "authenticity auto-submit-form", action: "click->toggle#hide" }) do |f| %>
+		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), remote: :true, method: :patch, data: { controller: "authenticity auto-submit-form", action: "click->toggle#hide" }) do |f| %>
 			<%= f.select :status, options_for_select(options, tracked_song.status), {}, { 
 				id: "status_select_#{song.id}", 
 				class: "border-0 bg-gray-100 rounded px-4 py-2 focus:ring-0 focus:outline-none focus:border-0 w-40 text-sm",

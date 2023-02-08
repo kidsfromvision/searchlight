@@ -1,18 +1,13 @@
 <td class="gap-1 whitespace-nowrap py-4 px-3 text-sm text-black justify-center", id="streams_song_<%=song.id%>">
 	<% if song.song_streams.length > 1 %>
-		<% recent_streams = song.recent_streams %>
-		<% stream_difference = recent_streams.first.streams - recent_streams.last.streams %>
-		<% day_difference = ((recent_streams.first.date - recent_streams.last.date) / 60 / 60 / 24).to_i %>
-		<% present_difference = ((Time.now - recent_streams.first.date) / 60 / 60 / 24).to_i %>
-		<% up_to_date = day_difference == 1 && present_difference == 0 %>
-		<% streams = number_with_delimiter((stream_difference / day_difference).to_i) %>
-		<% if !up_to_date %>
+		<% streams = number_with_delimiter((song.recent_daily_streams / song.stream_gap_days).to_i) %>
+		<% if !song.up_to_date %>
 			<div class="text-black font-semibold text-md">
 				<%= streams %>
 			</div>
 			<div class="flex flex-col text-xs font-gray-500 pt-1">
-				<%= content_tag :div, present_difference != 0 ? "#{present_difference.to_i}D ago" : nil %>
-				<%= content_tag :div, day_difference != 1 ? "#{day_difference.to_i}D average" : nil %>
+				<%= content_tag :div, song.present_gap_days != 0 ? "#{song.present_gap_days.to_i}D ago" : nil %>
+				<%= content_tag :div, song.stream_gap_days != 1 ? "#{song.stream_gap_days.to_i}D average" : nil %>
 			</div>
 		<% else %>
 			<div class="text-black font-semibold text-md flex flex-row justify-between items-center pr-2">
