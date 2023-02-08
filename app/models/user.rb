@@ -5,8 +5,7 @@ class User < ApplicationRecord
          :registerable,
          :recoverable,
          :rememberable,
-         :validatable,
-         :confirmable
+         :validatable
 
   has_many :tracked_songs, dependent: :destroy
   has_many :songs, through: :tracked_songs
