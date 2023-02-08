@@ -35,4 +35,3 @@
 
 # Ignore env variables
 .env
-render.yaml
