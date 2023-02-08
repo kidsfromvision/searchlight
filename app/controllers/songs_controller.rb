@@ -2,38 +2,22 @@ class SongsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    if current_user.label_id
-      @label = current_user.label
-      @songs = @label.songs
-    else
-      @label = nil
-      @songs = current_user.songs
-    end
+    @label = current_user.label
+    @songs = @label.nil? ? current_user.songs : @label.songs
   end
 
   def list
-    if current_user.label_id
-      label = current_user.label
-      songs = label.songs
-    else
-      label = nil
-      songs = current_user.songs
-    end
+    label = current_user.label
+    songs = label.nil? ? current_user.songs : label.songs
+
     if params[:column] == "streams"
-      songs =
-        songs.sort_by do |song|
-          if params[:direction] == "asc"
-            song.recent_streams.last.streams - song.recent_streams.first.streams
-          else
-            song.recent_streams.first.streams - song.recent_streams.last.streams
-          end
-        end
+      songs = songs.sort_by { |song| song.recent_daily_streams }
+      songs = songs.reverse if params[:direction] == "asc"
     elsif params[:column] == "added_by" # only happens if the user is part of a label
       songs =
-        songs
-          .joins(tracked_songs: :user)
-          .where(tracked_songs: { label_id: label.id })
-          .order("users.name #{params[:direction]}")
+        songs.includes(tracked_songs: :user).order(
+          "users.name #{params[:direction]}",
+        )
     else
       songs = songs.order("#{params[:column]} #{params[:direction]}")
     end

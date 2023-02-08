@@ -26,10 +26,29 @@ class Song < ApplicationRecord
     )
   end
 
+  def recent_daily_streams
+    recent_streams.first.streams - recent_streams.last.streams
+  end
+
+  def present_gap_days
+    ((Time.now - recent_streams.first.date) / 60 / 60 / 24).to_i
+  end
+
+  def stream_gap_days
+    ((recent_streams.first.date - recent_streams.last.date) / 60 / 60 / 24).to_i
+  end
+
+  def up_to_date
+    stream_gap_days == 1 && present_gap_days == 0
+  end
+
+  private
+
   def recent_streams
-    song_streams
-      .order(date: :desc)
-      .each_cons(2)
-      .detect { |a, b| (a.streams - b.streams).nonzero? }
+    @recent_streams ||=
+      song_streams
+        .order(date: :desc)
+        .each_cons(2)
+        .detect { |a, b| (a.streams - b.streams).nonzero? }
   end
 end

@@ -31,9 +31,9 @@ class SongController < ApplicationController
 
   def tracked_song_search_params(song_id)
     if current_user.label_id
-      { label_id: current_user.label_id, song_id: song.id }
+      { label_id: current_user.label_id, song_id: song_id }
     else
-      { song_id: song.id, user_id: current_user.id }
+      { song_id: song_id, user_id: current_user.id }
     end
   end
 
@@ -41,11 +41,11 @@ class SongController < ApplicationController
     if current_user.label_id
       {
         label_id: current_user.label_id,
-        song_id: song.id,
+        song_id: song_id,
         user_id: current_user.id,
       }
     else
-      { song_id: song.id, user_id: current_user.id }
+      { song_id: song_id, user_id: current_user.id }
     end
   end
 
