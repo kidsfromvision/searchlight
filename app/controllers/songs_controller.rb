@@ -40,4 +40,10 @@ class SongsController < ApplicationController
 
     render(partial: "songs/songs", locals: { songs: songs })
   end
+
+  private
+
+  def filter_params
+    params.permit(:name, :column, :direction)
+  end
 end
