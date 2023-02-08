@@ -1,5 +1,6 @@
 databases:
   - name: postgres
+    region: frankfurt
     ipAllowList: []
 
 services:
@@ -8,6 +9,7 @@ services:
     env: ruby
     buildCommand: "./bin/render-build.sh"
     startCommand: bundle exec rails s
+    region: frankfurt
     envVars:
       - key: RAILS_MASTER_KEY
         sync: false
@@ -25,3 +27,4 @@ services:
     ipAllowList: []
     plan: free
     maxmemoryPolicy: noeviction
+    region: frankfurt
