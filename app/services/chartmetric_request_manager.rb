@@ -5,7 +5,13 @@ class ChartmetricRequestManager
       if last_updated.nil? || Time.now > last_updated + 1.days
         stream_event = song.stream_events.create(provider: "chartmetric")
         since_query =
-          last_updated.nil? ? "" : "&since=#{last_updated.strftime("%Y-%m-%d")}"
+          (
+            if last_updated.nil?
+              ""
+            else
+              "&since=#{(last_updated + 1.days).strftime("%Y-%m-%d")}"
+            end
+          )
         headers = {
           "Authorization" => "Bearer #{ChartmetricAuthManager.token}",
         }

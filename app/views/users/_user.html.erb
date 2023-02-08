@@ -1,3 +1,4 @@
 <tr id="<%= dom_id(user) %>">
   <td class="whitespace-wrap py-4 text-sm text-black"><%=user.email%></td>
+	<td class="whitespace-wrap py-4 text-sm text-black"><%=get_readable_role(user.role)%></td>
 </tr>

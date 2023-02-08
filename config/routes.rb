@@ -18,7 +18,8 @@ Rails.application.routes.draw do
     # Redirests signing out users back to sign-in
     get "users", to: "devise/sessions#new"
   end
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+
+  get "list", to: "songs#list", as: "list_songs"
 
   # Defines the root path route ("/")
   root "songs#index"

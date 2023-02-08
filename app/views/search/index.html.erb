@@ -24,19 +24,20 @@
 										</td>
 	    	        	  <td class="whitespace-nowrap py-4 px-3 text-sm text-black"><%=result["artists"][0]["name"]%></td>
 										<td class="whitespace-nowrap py-4 px-3 text-sm text-black">
-										<%= form_with model: @song, url: '/song', method: :post do |form| %>
-	  									<%= form.hidden_field :name, value: result["name"] %>
-	  									<%= form.hidden_field :artist, value: result["artists"][0]["name"] %>
-	  									<%= form.hidden_field :artist_id, value: result["artists"][0]["id"] %>
-											<%= form.hidden_field :art_url, value: result["album"]["images"][0]["url"] %>
-	  									<%= form.hidden_field :icon_url, value: result["album"]["images"][2]["url"] %>
-	  									<%= form.hidden_field :spotify_id, value: result["id"] %>
-											<%= button_tag type: "submit", value: "home" do %>
-												<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-	  											<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-												</svg>
-											<%end%>
-										<% end %>
+											<%= form_with model: @song, url: '/song', method: :post do |form| %>
+	  										<%= form.hidden_field :name, value: result["name"] %>
+	  										<%= form.hidden_field :artist, value: result["artists"][0]["name"] %>
+	  										<%= form.hidden_field :artist_id, value: result["artists"][0]["id"] %>
+												<%= form.hidden_field :art_url, value: result["album"]["images"][0]["url"] %>
+	  										<%= form.hidden_field :icon_url, value: result["album"]["images"][2]["url"] %>
+	  										<%= form.hidden_field :spotify_id, value: result["id"] %>
+	  										<%= form.hidden_field :released, value: result["album"]["release_date"] %>
+												<%= button_tag type: "submit", value: "home" do %>
+													<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+	  												<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+													</svg>
+												<%end%>
+											<% end %>
 										</td>
 	    	        	</tr>
 								<%end%>

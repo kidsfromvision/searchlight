@@ -14,7 +14,9 @@ class SongController < ApplicationController
         :art_url,
         :icon_url,
         :spotify_id,
+        :released,
       )
+    puts "RELEASED: ", params[:released]
     song =
       Song.find_or_create_by(spotify_id: song_params[:spotify_id]) do |song|
         song.attributes = song_params
@@ -48,7 +50,7 @@ class SongController < ApplicationController
 
       if tracked_song.save
         tracked_song.broadcast_add(current_user)
-        ChartmetricStreamJob.perform_later(song)
+        ChartmetricSingleStreamsJob.perform_later(song)
         redirect_to root_path
       end
     end
