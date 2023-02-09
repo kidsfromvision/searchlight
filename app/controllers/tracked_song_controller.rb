@@ -33,9 +33,13 @@ class TrackedSongController < ApplicationController
   def user_has_permissions(tracked_song)
     return false unless tracked_song
 
-    is_correct_label =
-      current_user.label_id && current_user.label_id == tracked_song.label_id
     is_correct_user = current_user.id == tracked_song.user_id
-    is_correct_label || is_correct_user
+    is_correct_label(tracked_song) || is_correct_user
+  end
+
+  def is_correct_label(tracked_song)
+    return false unless tracked_song&.label_id
+
+    current_user&.label_id == tracked_song.label_id
   end
 end
