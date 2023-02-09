@@ -4,20 +4,12 @@ class ChartmetricRequestManager
       last_updated = last_update_date(song)
       if last_updated.nil? || Time.now > last_updated + 1.days
         stream_event = song.stream_events.create(provider: "chartmetric")
-        since_query =
-          (
-            if last_updated.nil?
-              ""
-            else
-              "&since=#{(last_updated + 1.days).strftime("%Y-%m-%d")}"
-            end
-          )
         headers = {
           "Authorization" => "Bearer #{ChartmetricAuthManager.token}",
         }
         response =
           HTTParty.get(
-            "https://api.chartmetric.com/api/track/#{song.spotify_id}/spotify/stats/most-history?isDomainId=true&type=streams#{since_query}",
+            "https://api.chartmetric.com/api/track/#{song.spotify_id}/spotify/stats/most-history?isDomainId=true&type=streams#{since_query(last_updated)}",
             headers: headers,
           )
         stream_event.status = "success"
@@ -35,6 +27,12 @@ class ChartmetricRequestManager
     def last_update_date(song)
       streams = song.song_streams
       streams.last.nil? ? nil : streams.last.date
+    end
+
+    def since_query(last_updated)
+      return "" unless last_updated
+
+      "&since=#{(last_updated + 1.days).strftime("%Y-%m-%d")}"
     end
   end
 end
