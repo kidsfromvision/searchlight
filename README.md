@@ -34,3 +34,4 @@ There's no sign up form (intended as a B2B product), so you'll have to create yo
 * Stimulus for auto-submit on forms (search bar and status changing)
 * Turbo streams for synced loading state and updates across users belonging to the same label. 
 
+Enjoy! 
