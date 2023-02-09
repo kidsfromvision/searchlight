@@ -3,6 +3,5 @@ if %w[development test].include? ENV["RAILS_ENV"]
     "SPOTIFY_CLIENT_ID",
     "SPOTIFY_CLIENT_SECRET",
     "CHARTMETRIC_REFRESH_TOKEN",
-    "BROWSE_API_KEY",
   )
 end
