@@ -28,6 +28,8 @@ services:
       - SPOTIFY_CLIENT_ID=${SPOTIFY_CLIENT_ID}
       - SPOTIFY_CLIENT_SECRET=${SPOTIFY_CLIENT_SECRET}
       - CHARTMETRIC_REFRESH_TOKEN=${CHARTMETRIC_REFRESH_TOKEN}
+      - GMAIL_EMAIL=${GMAIL_EMAIL}
+      - GMAIL_PASSWORD=${GMAIL_PASSWORD}
     volumes:
       - app_storage:/rails/storage
     depends_on:
