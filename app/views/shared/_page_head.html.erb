@@ -1,11 +1,13 @@
 <div class="py-4 w-full flex flex-row justify-between items-baseline">
-	<% if current_user.label_id %>
-		<%= current_user.label.name %>
-	<% else %>
-		<h2>Searchlight</h2>
-	<%end%>
+	<div class="hidden sm:inline-block">
+		<% if current_user.label_id %>
+			<%= current_user.label.name %>
+		<% else %>
+			<h2>Searchlight</h2>
+		<%end%>
+	</div>
 	<%= form_with url: "/search", data: { turbo_frame: "body", turbo_action: "advance", controller: "search", action: "input->search#submit" }, method: :get do |form| %>
-		<div class="flex flex-row items-center relative rounded bg-gray-100 w-80 px-4 py-2">
+		<div class="flex flex-row items-center relative rounded bg-gray-100 sm:w-80 px-4 py-2 w-full">
  			<%= form.text_field :query, :class => "rounded pl-0 pr-2 py-0 border-0 ring-0 w-full outline-none bg-gray-100 focus:ring-0 focus:ring-offset-0 focus:outline-none focus:border-0", :placeholder => "Add a song" %>
  			<%= button_tag type: "submit", value: "search" do %>
   			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
