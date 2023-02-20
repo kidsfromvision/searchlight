@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_19_132936) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_20_231614) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +38,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_19_132936) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "song_request_events", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "song_id"
+    t.integer "provider", default: 0
+    t.integer "status", default: 0
+    t.integer "data_requested", default: 0
+    t.index ["song_id"], name: "index_song_request_events_on_song_id"
+  end
+
   create_table "song_streams", force: :cascade do |t|
     t.integer "streams"
     t.datetime "date", precision: nil
@@ -58,6 +68,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_19_132936) do
     t.string "icon_url"
     t.string "artist_id"
     t.date "released"
+    t.string "genres"
   end
 
   create_table "spotify_api_tokens", force: :cascade do |t|
@@ -65,15 +76,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_19_132936) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.datetime "expiry", precision: nil
-  end
-
-  create_table "stream_events", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "song_id"
-    t.integer "provider", default: 0
-    t.integer "status", default: 0
-    t.index ["song_id"], name: "index_stream_events_on_song_id"
   end
 
   create_table "tracked_songs", force: :cascade do |t|
@@ -112,8 +114,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_19_132936) do
 
   add_foreign_key "invitations", "labels"
   add_foreign_key "invitations", "users"
+  add_foreign_key "song_request_events", "songs"
   add_foreign_key "song_streams", "songs"
-  add_foreign_key "stream_events", "songs"
   add_foreign_key "tracked_songs", "labels"
   add_foreign_key "tracked_songs", "songs"
   add_foreign_key "tracked_songs", "users"

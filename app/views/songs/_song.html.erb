@@ -1,5 +1,6 @@
 <% tracked_song = user.label_id ? song.tracked_songs.find_by(label_id: user.label_id) : song.tracked_songs.find_by(user_id: user.id) %>
-<% latest_stream_event = song.stream_events.last %>
+<% latest_stream_event = song.song_request_events.where(data_requested: "streams").last %>
+<% latest_genre_event = song.song_request_events.where(data_requested: "genres").last %>
 <tr id="<%= dom_id(song) %>">
   <td class="whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
 		<%= link_to "/tracked_song/#{tracked_song.id}" do %>
@@ -16,6 +17,7 @@
 			</div>
 		<% end %>
 	</td>
+
 	<% if !latest_stream_event %>
 		<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="streams_song_<%=song.id%>">No data</td>
 	<% elsif latest_stream_event.status == "unresolved" %>
@@ -23,6 +25,15 @@
 	<% else %>
 		<%= render "songs/streams_col", song: song %>
 	<% end %>
+
+	<% if !latest_genre_event %>
+		<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="genres_song_<%=song.id%>">No data</td>
+	<% elsif latest_genre_event.status == "unresolved" %>
+		<%= render "songs/genres_loading", song: song %>
+	<% else %>
+		<%= render "songs/genres_col", song: song %>
+	<% end %>
+
   <td class="whitespace-wrap py-4 px-3 text-sm text-black">
 		<% options = get_status_options %> 
 		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), remote: :true, method: :patch, data: { controller: "authenticity auto-submit-form", action: "click->toggle#hide" }) do |f| %>

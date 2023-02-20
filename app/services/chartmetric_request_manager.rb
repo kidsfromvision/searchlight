@@ -2,9 +2,12 @@ class ChartmetricRequestManager
   class << self
     def get_streams(song)
       last_updated = last_update_date(song)
-      puts "LAST UPDATED:", last_updated
       if last_updated.nil? || Time.now > last_updated + 1.days
-        stream_event = song.stream_events.create(provider: "chartmetric")
+        stream_event =
+          song.song_request_events.create(
+            provider: "chartmetric",
+            data_requested: "streams",
+          )
         headers = {
           "Authorization" => "Bearer #{ChartmetricAuthManager.token}",
         }
@@ -23,6 +26,28 @@ class ChartmetricRequestManager
       []
     end
 
+    def get_genres(song)
+      headers = { "Authorization" => "Bearer #{ChartmetricAuthManager.token}" }
+      chartmetric_id = get_chartmetric_id(song.spotify_id, headers)
+      genres_event =
+        song.song_request_events.create(
+          provider: "chartmetric",
+          data_requested: "genres",
+        )
+      response =
+        HTTParty.get(
+          "https://api.chartmetric.com/api/track/#{chartmetric_id}",
+          headers: headers,
+        )
+
+      genres_event.status = "success"
+      genres_event.save
+      return response["obj"]["tags"] unless response["obj"].nil?
+
+      genres_event.status = "failed"
+      genres_event.save
+    end
+
     private
 
     def last_update_date(song)
@@ -34,6 +59,15 @@ class ChartmetricRequestManager
       return "" unless last_updated
 
       "&since=#{(last_updated + 1.days).strftime("%Y-%m-%d")}"
+    end
+
+    def get_chartmetric_id(spotify_id, headers)
+      response =
+        HTTParty.get(
+          "https://api.chartmetric.com/api/track/spotify/#{spotify_id}/get-ids",
+          headers: headers,
+        )
+      response["obj"][0]["chartmetric_ids"][0] unless response["obj"].empty?
     end
   end
 end

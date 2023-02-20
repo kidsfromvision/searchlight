@@ -1,6 +1,6 @@
 require "test_helper"
 
-class StreamEventTest < ActiveSupport::TestCase
+class SongRequestEventTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

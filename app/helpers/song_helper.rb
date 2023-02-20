@@ -8,6 +8,6 @@ module SongHelper
         million: "M",
         billion: "B",
       },
-    )
+    ).gsub(" ", "") + " all time"
   end
 end
