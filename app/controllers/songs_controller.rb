@@ -12,23 +12,21 @@ class SongsController < ApplicationController
   end
 
   def list
-    songs = current_songs
-
     if params[:column] == "streams"
-      songs = songs.sort_by { |song| song.recent_daily_streams }
-      songs = songs.reverse if params[:direction] == "asc"
+      songs = current_songs.sort_by { |song| song.recent_daily_streams }
+      songs = current_songs.reverse if params[:direction] == "asc"
     elsif params[:column] == "added_by" # only happens if the user is part of a label
       songs =
-        songs.includes(tracked_songs: :user).order(
+        current_songs.includes(tracked_songs: :user).order(
           "users.name #{params[:direction]}",
         )
     elsif params[:column] == "status"
-      song =
-        songs.includes(tracked_songs).order(
+      songs =
+        current_songs.includes(:tracked_songs).order(
           "tracked_songs.status #{params[:direction]}",
         )
     else
-      songs = songs.order("#{params[:column]} #{params[:direction]}")
+      songs = current_songs.order("#{params[:column]} #{params[:direction]}")
     end
 
     render(partial: "songs/songs", locals: { songs: songs })
@@ -47,16 +45,16 @@ class SongsController < ApplicationController
   def current_songs
     @current_songs ||=
       (
-        if @label.nil?
+        if user_label.nil?
           current_user
             .songs
             .joins(:tracked_songs)
-            .where.not(tracked_songs: { archived: true })
+            .where(tracked_songs: { archived: false, user_id: current_user.id })
         else
-          @label
+          user_label
             .songs
             .joins(:tracked_songs)
-            .where.not(tracked_songs: { archived: true })
+            .where(tracked_songs: { archived: false, label_id: user_label.id })
         end
       )
   end
@@ -64,16 +62,16 @@ class SongsController < ApplicationController
   def archived_songs
     @archived_songs ||=
       (
-        if @label.nil?
+        if user_label.nil?
           current_user
             .songs
             .joins(:tracked_songs)
-            .where(tracked_songs: { archived: true })
+            .where(tracked_songs: { archived: true, user_id: current_user.id })
         else
-          @label
+          user_label
             .songs
             .joins(:tracked_songs)
-            .where(tracked_songs: { archived: true })
+            .where(tracked_songs: { archived: true, label_id: user_label.id })
         end
       )
   end
