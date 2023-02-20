@@ -49,15 +49,21 @@ class SongsController < ApplicationController
     @current_songs ||=
       (
         if user_label.nil?
-          current_user
-            .songs
-            .joins(:tracked_songs)
-            .where(tracked_songs: { archived: false })
+          current_user.songs.where(
+            id:
+              TrackedSong.select(:song_id).where(
+                user_id: user_id,
+                archived: false,
+              ),
+          )
         else
-          user_label
-            .songs
-            .joins(:tracked_songs)
-            .where(tracked_songs: { archived: false })
+          user_label.songs.where(
+            id:
+              TrackedSong.select(:song_id).where(
+                label_id: user_label.id,
+                archived: false,
+              ),
+          )
         end
       )
   end
@@ -66,15 +72,21 @@ class SongsController < ApplicationController
     @archived_songs ||=
       (
         if user_label.nil?
-          current_user
-            .songs
-            .joins(:tracked_songs)
-            .where(tracked_songs: { archived: true })
+          current_user.songs.where(
+            id:
+              TrackedSong.select(:song_id).where(
+                user_id: user_id,
+                archived: true,
+              ),
+          )
         else
-          user_label
-            .songs
-            .joins(:tracked_songs)
-            .where(tracked_songs: { archived: true })
+          user_label.songs.where(
+            id:
+              TrackedSong.select(:song_id).where(
+                label_id: user_label.id,
+                archived: true,
+              ),
+          )
         end
       )
   end
