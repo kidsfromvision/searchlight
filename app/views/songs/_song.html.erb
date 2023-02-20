@@ -10,26 +10,28 @@
 						<%= song.name %>					
 					</p>
 					<p class="text-xs font-gray-500 font-light">
-						Added <%= tracked_song.created_at.to_date %>
+						<%= song.artist %>
 					</p>
 				</div>
 			</div>
 		<% end %>
 	</td>
-  <td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black"><%=song.artist%></td>
 	<% if !latest_stream_event %>
-		<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="streams_song_<%=song.id%>">No data</td>
+		<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="total_streams_song_<%=song.id%>">No data</td>
+		<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="daily_streams_song_<%=song.id%>">No data</td>
 	<% elsif latest_stream_event.status == "unresolved" %>
-		<%= render "songs/streams_loading", song: song %>
+		<%= render "songs/total_streams_loading", song: song %>
+		<%= render "songs/daily_streams_loading", song: song %>
 	<% else %>
-		<%= render "songs/streams_col", song: song %>
+		<%= render "songs/total_streams_col", song: song %>
+		<%= render "songs/daily_streams_col", song: song %>
 	<% end %>
   <td class="whitespace-wrap py-4 px-3 text-sm text-black">
-		<% options = get_status_options%> 
+		<% options = get_status_options %> 
 		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), remote: :true, method: :patch, data: { controller: "authenticity auto-submit-form", action: "click->toggle#hide" }) do |f| %>
 			<%= f.select :status, options_for_select(options, tracked_song.status), {}, { 
 				id: "status_select_#{song.id}", 
-				class: "border-0 bg-gray-100 rounded px-4 py-2 focus:ring-0 focus:outline-none focus:border-0 w-40 text-sm",
+				class: "border-0 bg-slate-100 rounded-full px-3 py-1 focus:ring-0 focus:outline-none focus:border-0 w-36 text-sm",
 				data: { "auto-submit-form-target": "statusSelect" }
 			}%> 
 		<% end %> 

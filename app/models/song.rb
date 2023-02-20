@@ -7,8 +7,17 @@ class Song < ApplicationRecord
   def broadcast_streams
     Turbo::StreamsChannel.broadcast_replace_to(
       "streams",
-      target: "streams_song_#{self.id}",
-      partial: "songs/streams_col",
+      target: "daily_streams_song_#{self.id}",
+      partial: "songs/daily_streams_col",
+      locals: {
+        song: self,
+      },
+    )
+
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "streams",
+      target: "total_streams_song_#{self.id}",
+      partial: "songs/total_streams_col",
       locals: {
         song: self,
       },
@@ -18,8 +27,17 @@ class Song < ApplicationRecord
   def broadcast_streams_loading
     Turbo::StreamsChannel.broadcast_replace_to(
       "streams",
-      target: "streams_song_#{self.id}",
-      partial: "songs/streams_loading",
+      target: "daily_streams_song_#{self.id}",
+      partial: "songs/daily_streams_loading",
+      locals: {
+        song: self,
+      },
+    )
+
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "streams",
+      target: "total_streams_song_#{self.id}",
+      partial: "songs/total_streams_loading",
       locals: {
         song: self,
       },
@@ -28,6 +46,10 @@ class Song < ApplicationRecord
 
   def recent_daily_streams
     recent_streams.first.streams - recent_streams.last.streams
+  end
+
+  def recent_total_streams
+    recent_streams.first.streams
   end
 
   def present_gap_days

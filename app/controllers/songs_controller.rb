@@ -12,11 +12,14 @@ class SongsController < ApplicationController
   end
 
   def list
-    if params[:column] == "streams"
+    if params[:column] == "daily_streams"
       songs =
         current_songs.sort_by do |song|
           (song.recent_daily_streams / song.stream_gap_days).to_i
         end
+      songs = songs.reverse if params[:direction] == "asc"
+    elsif params[:column] == "total_streams"
+      songs = current_songs.sort_by { |song| song.recent_total_streams }
       songs = songs.reverse if params[:direction] == "asc"
     elsif params[:column] == "added_by" # only happens if the user is part of a label
       songs =
