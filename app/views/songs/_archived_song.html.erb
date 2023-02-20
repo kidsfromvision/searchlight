@@ -20,7 +20,7 @@
 		<td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>
 	<% end %>
 	<td class="whitespace-wrap py-4 px-3 text-sm text-black">
-		<%= button_to unarchive_tracked_song_path(tracked_song), method: :patch, params: { tracked_song: { archived: false } }, class: "font-medium" do %>
+		<%= button_to unarchive_tracked_song_path(tracked_song), method: :patch, params: { tracked_song: { archived: false } }, class: "text-black font-medium" do %>
   		Unarchive
   	<% end %>
 	</td>

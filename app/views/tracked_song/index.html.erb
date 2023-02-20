@@ -11,7 +11,7 @@
 				</div>
 			</div>
 			<%= button_to "Remove from leaderboard", update_tracked_song_path(@tracked_song), class: "text-red-700 font-bold", method: :delete %>
-			<%= button_to "Archive song", archive_tracked_song_path(@tracked_song), class: "text-gray-600 font-medium", method: :patch, params: { tracked_song: { archived: true } } %>
+			<%= button_to "Archive song", archive_tracked_song_path(@tracked_song), class: "text-black font-medium", method: :patch, params: { tracked_song: { archived: true } } %>
 		</div>
 	<% else %>
 		<div>No song found.</div>

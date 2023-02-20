@@ -1,7 +1,11 @@
-<div class="py-4 w-full flex flex-row justify-between items-baseline">
+<div class="py-4 w-full flex flex-row justify-between items-center">
 	<div class="hidden sm:inline-block">
 		<% if current_user.label_id %>
-			<%= current_user.label.name %>
+			<% if asset_exists?(current_user.label.name + '.png') %>
+				<%= image_tag current_user.label.name + '.png', class: "w-24"%>
+			<% else %>
+				<%= current_user.label.name %>
+			<% end %>
 		<% else %>
 			<h2>Searchlight</h2>
 		<%end%>

@@ -7,17 +7,8 @@ class Song < ApplicationRecord
   def broadcast_streams
     Turbo::StreamsChannel.broadcast_replace_to(
       "streams",
-      target: "daily_streams_song_#{self.id}",
-      partial: "songs/daily_streams_col",
-      locals: {
-        song: self,
-      },
-    )
-
-    Turbo::StreamsChannel.broadcast_replace_to(
-      "streams",
-      target: "total_streams_song_#{self.id}",
-      partial: "songs/total_streams_col",
+      target: "streams_song_#{self.id}",
+      partial: "songs/streams_col",
       locals: {
         song: self,
       },
@@ -27,17 +18,8 @@ class Song < ApplicationRecord
   def broadcast_streams_loading
     Turbo::StreamsChannel.broadcast_replace_to(
       "streams",
-      target: "daily_streams_song_#{self.id}",
-      partial: "songs/daily_streams_loading",
-      locals: {
-        song: self,
-      },
-    )
-
-    Turbo::StreamsChannel.broadcast_replace_to(
-      "streams",
-      target: "total_streams_song_#{self.id}",
-      partial: "songs/total_streams_loading",
+      target: "streams_song_#{self.id}",
+      partial: "songs/streams_loading",
       locals: {
         song: self,
       },
