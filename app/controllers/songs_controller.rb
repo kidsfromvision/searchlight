@@ -13,8 +13,11 @@ class SongsController < ApplicationController
 
   def list
     if params[:column] == "streams"
-      songs = current_songs.sort_by { |song| song.recent_daily_streams }
-      songs = current_songs.reverse if params[:direction] == "asc"
+      songs =
+        current_songs.sort_by do |song|
+          (song.recent_daily_streams / song.stream_gap_days).to_i
+        end
+      songs = songs.reverse if params[:direction] == "asc"
     elsif params[:column] == "added_by" # only happens if the user is part of a label
       songs =
         current_songs.includes(tracked_songs: :user).order(
@@ -49,12 +52,12 @@ class SongsController < ApplicationController
           current_user
             .songs
             .joins(:tracked_songs)
-            .where(tracked_songs: { archived: false, user_id: current_user.id })
+            .where(tracked_songs: { archived: false })
         else
           user_label
             .songs
             .joins(:tracked_songs)
-            .where(tracked_songs: { archived: false, label_id: user_label.id })
+            .where(tracked_songs: { archived: false })
         end
       )
   end
@@ -66,12 +69,12 @@ class SongsController < ApplicationController
           current_user
             .songs
             .joins(:tracked_songs)
-            .where(tracked_songs: { archived: true, user_id: current_user.id })
+            .where(tracked_songs: { archived: true })
         else
           user_label
             .songs
             .joins(:tracked_songs)
-            .where(tracked_songs: { archived: true, label_id: user_label.id })
+            .where(tracked_songs: { archived: true })
         end
       )
   end
