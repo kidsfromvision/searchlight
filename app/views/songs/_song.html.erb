@@ -25,7 +25,7 @@
 		<%= render "songs/streams_col", song: song %>
 	<% end %>
   <td class="whitespace-wrap py-4 px-3 text-sm text-black">
-		<% options=TrackedSong.statuses.keys.map { |status| [get_readable_status(status), status] }%> 
+		<% options = get_status_options%> 
 		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), remote: :true, method: :patch, data: { controller: "authenticity auto-submit-form", action: "click->toggle#hide" }) do |f| %>
 			<%= f.select :status, options_for_select(options, tracked_song.status), {}, { 
 				id: "status_select_#{song.id}", 

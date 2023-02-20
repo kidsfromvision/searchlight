@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_07_131425) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_19_132936) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -84,6 +84,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_07_131425) do
     t.bigint "user_id"
     t.integer "status", default: 0
     t.boolean "is_pinned", default: false
+    t.boolean "archived", default: false
     t.index ["label_id"], name: "index_tracked_songs_on_label_id"
     t.index ["song_id"], name: "index_tracked_songs_on_song_id"
     t.index ["user_id"], name: "index_tracked_songs_on_user_id"

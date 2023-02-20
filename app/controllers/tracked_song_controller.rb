@@ -1,5 +1,6 @@
 class TrackedSongController < ApplicationController
   before_action :authenticate_user!
+  include ActionView::Helpers::UrlHelper
 
   def index
     tracked_song = TrackedSong.find_by(id: params[:id])
@@ -12,6 +13,24 @@ class TrackedSongController < ApplicationController
     if tracked_song && user_has_permissions(tracked_song)
       tracked_song.update(tracked_song_params)
       tracked_song.broadcast_replace(current_user) if tracked_song.save
+    end
+  end
+
+  def archive
+    tracked_song = TrackedSong.find_by(id: params[:id])
+    tracked_song.archived = true
+    if tracked_song.save
+      tracked_song.broadcast_remove(current_user)
+      redirect_to root_path
+    end
+  end
+
+  def unarchive
+    tracked_song = TrackedSong.find_by(id: params[:id])
+    tracked_song.archived = false
+    if tracked_song.save
+      tracked_song.broadcast_add(current_user)
+      redirect_to root_path
     end
   end
 

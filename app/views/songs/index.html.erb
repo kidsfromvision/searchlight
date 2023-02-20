@@ -7,7 +7,10 @@
 	<% end %>
 	<%= turbo_stream_from "streams" %>
 	<%= turbo_frame_tag "body" do %>
-		<h1 class="text-2xl"> Leaderboard </h1>
+		<div class="flex flex-row justify-between items-baseline">
+			<h1 class="text-2xl"> Leaderboard </h1>
+			<%= button_to "Archives", archives_path, class: "text-black font-medium", data: { turbo_frame: "page", turbo_action: "advance" }, method: :get %>
+		</div>
 		<div class="mt-8 flex flex-col">
 			<div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
 				<div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
