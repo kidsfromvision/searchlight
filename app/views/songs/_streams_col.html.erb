@@ -6,7 +6,7 @@
 			<div class="flex flex-row justify-between text-md items-center pr-2">
 				<div class="flex flex-col gap-1">
 					<%= content_tag :div, daily_streams, class: "font-semibold" %>
-					<%= content_tag :div, (total_streams), class: "text-gray-600" %>
+					<%= content_tag :div, (total_streams), class: "text-gray-600 text-xs" %>
 				</div>
 				<div class="flex flex-col text-xs font-gray-500 pt-1 text-right">
 					<%= content_tag :div, song.present_gap_days != 0 ? "#{song.present_gap_days.to_i}D ago" : nil %>
