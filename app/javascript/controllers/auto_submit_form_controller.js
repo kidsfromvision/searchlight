@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import Rails from "@rails/ujs";
 
 export default class extends Controller {
   static targets = ["statusSelect"];
@@ -8,6 +9,10 @@ export default class extends Controller {
   }
 
   submitForm() {
-    this.element.submit();
+    Rails.ajax({
+      type: "patch",
+      url: this.element.action,
+      data: new FormData(this.element),
+    });
   }
 }

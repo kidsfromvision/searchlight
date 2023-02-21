@@ -24,6 +24,7 @@ class SongController < ApplicationController
 
     tracked_song.broadcast_add(current_user)
     ChartmetricSingleStreamsJob.perform_later(song)
+    ChartmetricGenresJob.perform_later(song)
     redirect_to root_path
   end
 

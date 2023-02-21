@@ -11,6 +11,12 @@ Rails.application.routes.draw do
   patch "/tracked_song/:id",
         to: "tracked_song#update",
         as: "update_tracked_song"
+  patch "/tracked_song/:id/archive",
+        to: "tracked_song#archive",
+        as: "archive_tracked_song"
+  patch "/tracked_song/:id/unarchive",
+        to: "tracked_song#unarchive",
+        as: "unarchive_tracked_song"
   delete "/tracked_song/:id", to: "tracked_song#remove"
 
   devise_for :users
@@ -20,6 +26,8 @@ Rails.application.routes.draw do
   end
 
   get "list", to: "songs#list", as: "list_songs"
+
+  get "archives", to: "songs#archives", as: "archives"
 
   # Defines the root path route ("/")
   root "songs#index"

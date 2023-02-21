@@ -1,0 +1,28 @@
+<%= turbo_frame_tag "archived_songs" do %>
+	<table class="min-w-full divide-y divide-gray-300">
+		<thead>
+			<tr>
+				<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">
+					Song
+				</th>
+				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
+					Artist
+				</th>
+				<% if current_user.label_id then %>
+					<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
+						Added by
+					</th>
+				<% end %>
+			</tr>
+		</thead>
+		<tbody id="table" class="divide-y divide-gray-200">
+			<% if songs.empty? then %>
+				<tr><td><div class="mt-4">No archives</div></td></tr>
+			<% else %>
+				<% songs.each do |song| %>
+					<%= render "songs/archived_song", user: current_user, song: song %>
+				<% end %>
+			<% end %> 
+		</tbody>
+	</table>
+<% end %>

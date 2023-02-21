@@ -6,10 +6,10 @@
 					<%= render "songs/table_header", name: "name", label: "Song" %>
 				</th>
 				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "artist", label: "Artist" %>
+					<%= render "songs/table_header", name: "daily_streams", label: "Daily Streams" %>
 				</th>
 				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "streams", label: "Daily Streams" %>
+					<%= render "songs/table_header", name: "genres", label: "Genre" %>
 				</th>
 				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
 					<%= render "songs/table_header", name: "status", label: "Status" %>
@@ -22,8 +22,12 @@
 			</tr>
 		</thead>
 		<tbody id="table" class="divide-y divide-gray-200">
-			<% songs.each do |song| %>
-				<%= render "songs/song", user: current_user, song: song %>
+			<% if songs.empty? then %>
+				<tr><td><div class="mt-4">No songs added</div></td></tr>
+			<% else %>
+				<% songs.each do |song| %>
+					<%= render "songs/song", user: current_user, song: song %>
+				<% end %>
 			<% end %>
 		</tbody>
 	</table>
