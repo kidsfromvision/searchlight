@@ -3,14 +3,16 @@
 	<div class="mt-8 flex flex-col">
 		<h2 class="text-xl">Welcome to Searchlight<%= current_user.name.nil? ? "" : ", " + current_user.name.split(' ')[0] %></h2>
 		<div class="flex flex-col gap-4 mt-8">
-			<div class="flex flex-col gap-1">
-				<p class="text-sm font-semibold">Name</p>
-				<%= content_tag :p, current_user.name%>
-			</div>
-			<div class="flex flex-col gap-1">
-				<p class="text-sm font-semibold">Email</p>
-				<%= content_tag :p, current_user.email%>
-			</div>
+			<% if current_user.name && current_user.email %>
+				<div class="flex flex-col gap-1">
+					<p class="text-sm font-semibold">Name</p>
+					<%= content_tag :p, current_user.name%>
+				</div>
+				<div class="flex flex-col gap-1">
+					<p class="text-sm font-semibold">Email</p>
+					<%= content_tag :p, current_user.email%>
+				</div>
+			<% end %>
 			<% if current_user.label_id %>
 				<div class="flex flex-col gap-1">
 					<p class="text-sm font-semibold">Label</p>
