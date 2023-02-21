@@ -29,6 +29,10 @@ Rails.application.routes.draw do
 
   get "archives", to: "songs#archives", as: "archives"
 
+  get "account", to: "account#index", as: "account"
+  post "account/reset_password",
+       to: "account#reset_password",
+       as: "reset_password"
   # Defines the root path route ("/")
   root "songs#index"
 end
