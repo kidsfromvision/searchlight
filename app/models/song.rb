@@ -49,19 +49,27 @@ class Song < ApplicationRecord
   end
 
   def recent_daily_streams
-    recent_streams.first.streams - recent_streams.last.streams
+    unless recent_streams.nil?
+      recent_streams.first.streams - recent_streams.last.streams
+    end
   end
 
   def recent_total_streams
-    recent_streams.first.streams
+    recent_streams.first.streams unless recent_streams.nil?
   end
 
   def present_gap_days
-    ((Time.now - recent_streams.first.date) / 60 / 60 / 24).to_i
+    unless recent_streams.nil?
+      ((Time.now - recent_streams.first.date) / 60 / 60 / 24).to_i
+    end
   end
 
   def stream_gap_days
-    ((recent_streams.first.date - recent_streams.last.date) / 60 / 60 / 24).to_i
+    unless recent_streams.nil?
+      (
+        (recent_streams.first.date - recent_streams.last.date) / 60 / 60 / 24
+      ).to_i
+    end
   end
 
   def up_to_date
