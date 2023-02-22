@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         as: "unarchive_tracked_song"
   delete "/tracked_song/:id", to: "tracked_song#remove"
 
-  devise_for :users
+  devise_for :users, controllers: { passwords: "users/passwords" }
   devise_scope :user do
     # Redirests signing out users back to sign-in
     get "users", to: "devise/sessions#new"

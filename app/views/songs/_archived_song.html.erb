@@ -3,7 +3,7 @@
   <td class="whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
 		<%= link_to "/tracked_song/#{tracked_song.id}" do %>
 			<div class="flex flex-row gap-4 items-center">
-				<%= image_tag song.art_url, :class => "h-12 w-12 shadow-lg" %>
+				<%= image_tag song.art_url, :class => "h-12 w-12 shadow-lg", alt: "#{song.name} album art" %>
 				<div class="flex flex-col gap-1">
 					<p>
 						<%= song.name %>					
@@ -20,7 +20,7 @@
 		<td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>
 	<% end %>
 	<td class="whitespace-wrap py-4 px-3 text-sm text-black">
-		<%= button_to unarchive_tracked_song_path(tracked_song), method: :patch, params: { tracked_song: { archived: false } }, class: "text-black font-medium" do %>
+		<%= button_to unarchive_tracked_song_path(tracked_song), method: :patch, params: { tracked_song: { archived: false } }, class: "text-black font-medium", aria: { label: "unarchive" }, do %>
   		Unarchive
   	<% end %>
 	</td>

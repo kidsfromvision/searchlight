@@ -23,7 +23,7 @@
 				<p>If any of this information doesn't seem right, <%= link_to "get in touch.", "mailto:sam@kidsfromvision.com", class: "font-medium underline"%></p>
 			</div>
 			<%= turbo_frame_tag "reset_password_button" do %>
-				<%= button_to "Reset your password here.", reset_password_path, class: "font-medium underline", method: :post, data: { turbo_frame: "reset_password_button", turbo_action: "advance" } %>
+				<%= button_to "Reset your password here.", reset_password_path, class: "font-medium underline", method: :post, data: { turbo_frame: "reset_password_button", turbo_action: "advance" }, aria: { label: "reset password"} %>
 			<%end %>
 		</div>
 	</div> 
