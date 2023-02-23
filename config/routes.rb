@@ -19,7 +19,7 @@ Rails.application.routes.draw do
         as: "unarchive_tracked_song"
   delete "/tracked_song/:id", to: "tracked_song#remove"
 
-  devise_for :users
+  devise_for :users, controllers: { passwords: "users/passwords" }
   devise_scope :user do
     # Redirests signing out users back to sign-in
     get "users", to: "devise/sessions#new"
@@ -29,6 +29,10 @@ Rails.application.routes.draw do
 
   get "archives", to: "songs#archives", as: "archives"
 
+  get "account", to: "account#index", as: "account"
+  post "account/reset_password",
+       to: "account#reset_password",
+       as: "reset_password"
   # Defines the root path route ("/")
   root "songs#index"
 end

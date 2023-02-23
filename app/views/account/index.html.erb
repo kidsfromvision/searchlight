@@ -1,0 +1,30 @@
+<%= render layout: "layouts/page" do %>
+	<h1 class="text-2xl">Account</h1>
+	<div class="mt-8 flex flex-col">
+		<h2 class="text-xl">Welcome to Searchlight<%= current_user.name.nil? ? "" : ", " + current_user.name.split(' ')[0] %></h2>
+		<div class="flex flex-col gap-4 mt-8">
+			<% if current_user.name && current_user.email %>
+				<div class="flex flex-col gap-1">
+					<p class="text-sm font-semibold">Name</p>
+					<%= content_tag :p, current_user.name%>
+				</div>
+				<div class="flex flex-col gap-1">
+					<p class="text-sm font-semibold">Email</p>
+					<%= content_tag :p, current_user.email%>
+				</div>
+			<% end %>
+			<% if current_user.label_id %>
+				<div class="flex flex-col gap-1">
+					<p class="text-sm font-semibold">Label</p>
+					<%= content_tag :p, current_user.label.name%>
+				</div>
+			<% end %>
+			<div class="flex flex-row">
+				<p>If any of this information doesn't seem right, <%= link_to "get in touch.", "mailto:sam@kidsfromvision.com", class: "font-medium underline"%></p>
+			</div>
+			<%= turbo_frame_tag "reset_password_button" do %>
+				<%= button_to "Reset your password here.", reset_password_path, class: "font-medium underline", method: :post, data: { turbo_frame: "reset_password_button", turbo_action: "advance" }, aria: { label: "reset password"} %>
+			<%end %>
+		</div>
+	</div> 
+<% end %>
