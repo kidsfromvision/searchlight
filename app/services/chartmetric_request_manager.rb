@@ -18,7 +18,7 @@ class ChartmetricRequestManager
           )
         stream_event.status = "success"
         stream_event.save
-        return response["obj"].first["data"] if response["obj"].length > 0
+        return response["obj"].first["data"] if !response["obj"].empty?
 
         stream_event.status = "failed"
         stream_event.save
@@ -42,7 +42,7 @@ class ChartmetricRequestManager
 
       genres_event.status = "success"
       genres_event.save
-      return response["obj"]["tags"] unless response["obj"].nil?
+      return response["obj"]["tags"] unless response["obj"].empty?
 
       genres_event.status = "failed"
       genres_event.save

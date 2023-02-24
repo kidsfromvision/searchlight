@@ -26,13 +26,16 @@ Rails.application.routes.draw do
   end
 
   get "list", to: "songs#list", as: "list_songs"
+  get "label/list", to: "songs#label_list", as: "label_list_songs"
 
-  get "archives", to: "songs#archives", as: "archives"
+  get "label", to: "songs#label", as: "label_leaderboard"
+  get "label_archives", to: "songs#label_archives", as: "label_archives"
 
   get "account", to: "account#index", as: "account"
   post "account/reset_password",
        to: "account#reset_password",
        as: "reset_password"
+
   # Defines the root path route ("/")
   root "songs#index"
 end

@@ -1,42 +1,40 @@
 class SongsController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_label, only: %i[label label_archives]
 
   def index
     @label = user_label
-    @songs = current_songs
+    @songs = current_user.songs
   end
 
-  def archives
+  def label
+    @label = user_label
+    @songs = @label.songs
+  end
+
+  def label_archives
     @label = user_label
     @songs = archived_songs
   end
 
   def list
-    if params[:column] == "daily_streams"
-      songs =
-        current_songs.sort_by do |song|
-          if song.recent_daily_streams.nil? || song.stream_gap_days.nil?
-            0
-          else
-            (song.recent_daily_streams / song.stream_gap_days).to_i
-          end
-        end
-      songs = songs.reverse if params[:direction] == "asc"
-    elsif params[:column] == "added_by" # only happens if the user is part of a label
-      songs =
-        current_songs.includes(tracked_songs: :user).order(
-          "users.name #{params[:direction]}",
-        )
-    elsif params[:column] == "status"
-      songs =
-        current_songs.includes(:tracked_songs).order(
-          "tracked_songs.status #{params[:direction]}",
-        )
-    else
-      songs = current_songs.order("#{params[:column]} #{params[:direction]}")
-    end
+    render(
+      partial: "songs/songs",
+      locals: {
+        songs: sort_songs(current_songs, params),
+        is_label: false,
+      },
+    )
+  end
 
-    render(partial: "songs/songs", locals: { songs: songs })
+  def label_list
+    render(
+      partial: "songs/songs",
+      locals: {
+        songs: sort_songs(current_songs, params),
+        is_label: true,
+      },
+    )
   end
 
   private
@@ -93,5 +91,36 @@ class SongsController < ApplicationController
           )
         end
       )
+  end
+
+  def require_label
+    redirect_to root_path unless current_user.label_id.present?
+  end
+
+  def sort_songs(current_songs, params)
+    if params[:column] == "daily_streams"
+      songs =
+        current_songs.sort_by do |song|
+          if song.recent_daily_streams.nil? || song.stream_gap_days.nil?
+            0
+          else
+            (song.recent_daily_streams / song.stream_gap_days).to_i
+          end
+        end
+      songs = songs.reverse if params[:direction] == "asc"
+    elsif params[:column] == "added_by" # only happens if the user is part of a label
+      songs =
+        current_songs.includes(tracked_songs: :user).order(
+          "users.name #{params[:direction]}",
+        )
+    elsif params[:column] == "status"
+      songs =
+        current_songs.includes(:tracked_songs).order(
+          "tracked_songs.status #{params[:direction]}",
+        )
+    else
+      songs = current_songs.order("#{params[:column]} #{params[:direction]}")
+    end
+    songs
   end
 end

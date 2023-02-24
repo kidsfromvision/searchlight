@@ -25,6 +25,6 @@ set :environment, ENV["RAILS_ENV"]
 
 set :output, "log/cron_log.log"
 
-every 1.day at: ["8:00 am", "8:00 pm"] do
+every 1.day at: "9:00 am" do
   runner "ChartmetricAllStreamsJob.perform_now"
 end

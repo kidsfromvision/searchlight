@@ -36,15 +36,15 @@
 
   <td class="whitespace-wrap py-4 px-3 text-sm text-black">
 		<% options = get_status_options %> 
-		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), remote: :true, method: :patch, data: { controller: "authenticity auto-submit-form", action: "click->toggle#hide" }) do |f| %>
+		<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), remote: :true, method: :patch, data: { controller: "authenticity auto-submit-status", action: "click->toggle#hide" }) do |f| %>
 			<%= f.select :status, options_for_select(options, tracked_song.status), {}, { 
 				id: "status_select_#{song.id}", 
 				class: "border-0 bg-slate-100 rounded-full px-3 py-1 focus:ring-0 focus:outline-none focus:border-0 w-36 text-sm",
-				data: { "auto-submit-form-target": "statusSelect" }
+				data: { "auto-submit-status-target": "statusSelect" }
 			}%> 
 		<% end %> 
 	</td>
-  <% if user.label_id then %>
+  <% if is_label then %>
 		<td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>
 	<% end %>
 	<td class="whitespace-wrap py-4 px-3 text-sm text-black">
