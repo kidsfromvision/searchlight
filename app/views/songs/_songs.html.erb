@@ -21,7 +21,7 @@
 				<% end %>
 			</tr>
 		</thead>
-		<tbody id="<%= is_label ? "" : "user_table" %>" class="divide-y divide-gray-200">
+		<tbody id="<%= is_label ? "label_table" : "user_table" %>" class="divide-y divide-gray-200">
 			<% if songs.empty? then %>
 				<tr><td><div class="mt-4">No songs added</div></td></tr>
 			<% else %>

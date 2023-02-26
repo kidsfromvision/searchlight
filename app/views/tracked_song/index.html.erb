@@ -10,7 +10,7 @@
 					<%= @tracked_song.song.artist %>
 				</div>
 			</div>
-			<%= button_to "Remove from leaderboard", update_tracked_song_path(@tracked_song), class: "text-red-700 font-bold", aria: { label: "remove from leaderboard"}, method: :delete %>
+			<%= button_to "Untrack this song", update_tracked_song_path(@tracked_song), class: "text-red-700 font-bold", aria: { label: "remove from leaderboard"}, method: :delete %>
 			<%= button_to "Archive song", archive_tracked_song_path(@tracked_song), class: "text-black font-medium", method: :patch, params: { tracked_song: { archived: true } }, aria: { label: "archive"} %>
 		</div>
 	<% else %>

@@ -1,5 +1,6 @@
 class SongController < ApplicationController
   before_action :authenticate_user!
+  before_action :require_label, only: %i[add_tracked_song_to_label]
 
   def index
     @song = Song.find(params[:id])
@@ -15,40 +16,20 @@ class SongController < ApplicationController
 
     tracked_song =
       TrackedSong.find_or_create_by(
-        tracked_song_search_params(song.id),
+        { song_id: song.id, user_id: current_user.id },
       ) do |tracked_song|
-        tracked_song.attributes = tracked_song_create_params(song.id)
+        tracked_song.attributes = { song_id: song.id, user_id: current_user.id }
       end
 
     raise "Tracked song failed to save" unless tracked_song.save
 
-    tracked_song.broadcast_add(current_user)
+    tracked_song.broadcast_add_to_user(current_user)
     ChartmetricSingleStreamsJob.perform_later(song)
     ChartmetricGenresJob.perform_later(song)
     redirect_to root_path
   end
 
   private
-
-  def tracked_song_search_params(song_id)
-    if current_user.label_id
-      { label_id: current_user.label_id, song_id: song_id }
-    else
-      { song_id: song_id, user_id: current_user.id }
-    end
-  end
-
-  def tracked_song_create_params(song_id)
-    if current_user.label_id
-      {
-        label_id: current_user.label_id,
-        song_id: song_id,
-        user_id: current_user.id,
-      }
-    else
-      { song_id: song_id, user_id: current_user.id }
-    end
-  end
 
   def song_params
     @song_params ||=
@@ -61,5 +42,9 @@ class SongController < ApplicationController
         :spotify_id,
         :released,
       )
+  end
+
+  def require_label
+    redirect_to root_path unless current_user.label_id.present?
   end
 end

@@ -4,17 +4,20 @@ class SongsController < ApplicationController
 
   def index
     @label = user_label
-    @songs = current_user.songs
+    @songs = user_songs
   end
 
   def label
     @label = user_label
-    @songs = @label.songs
+    @songs = label_songs
   end
 
   def label_archives
-    @label = user_label
-    @songs = archived_songs
+    @songs = label_archived_songs
+  end
+
+  def user_archives
+    @songs = user_archived_songs
   end
 
   def list
@@ -47,6 +50,28 @@ class SongsController < ApplicationController
     current_user.label
   end
 
+  def user_songs
+    @user_songs ||=
+      current_user.songs.where(
+        id:
+          TrackedSong.select(:song_id).where(
+            user_id: current_user.id,
+            archived: false,
+          ),
+      )
+  end
+
+  def label_songs
+    @label_songs ||=
+      user_label.songs.where(
+        id:
+          TrackedSong.select(:song_id).where(
+            label_id: user_label.id,
+            archived: false,
+          ),
+      )
+  end
+
   def current_songs
     @current_songs ||=
       (
@@ -70,26 +95,25 @@ class SongsController < ApplicationController
       )
   end
 
-  def archived_songs
-    @archived_songs ||=
-      (
-        if user_label.nil?
-          current_user.songs.where(
-            id:
-              TrackedSong.select(:song_id).where(
-                user_id: user_id,
-                archived: true,
-              ),
-          )
-        else
-          user_label.songs.where(
-            id:
-              TrackedSong.select(:song_id).where(
-                label_id: user_label.id,
-                archived: true,
-              ),
-          )
-        end
+  def label_archived_songs
+    @label_archived_songs ||=
+      user_label.songs.where(
+        id:
+          TrackedSong.select(:song_id).where(
+            label_id: user_label.id,
+            archived: true,
+          ),
+      )
+  end
+
+  def user_archived_songs
+    @user_archived_songs ||=
+      current_user.songs.where(
+        id:
+          TrackedSong.select(:song_id).where(
+            user_id: current_user.id,
+            archived: true,
+          ),
       )
   end
 

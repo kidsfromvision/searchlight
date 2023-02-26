@@ -7,7 +7,7 @@
 			<h1 class="text-2xl"> Leaderboard </h1>
 			<%= render "songs/leaderboard_selector", is_label: true %>
 			<div class="flex flex-row justify-between items-center gap-1">
-				<%= button_to "Label archives", label_archives_path, class: "text-black font-medium", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "archives"}, method: :get %>
+				<%= button_to "Archives", label_archives_path, class: "text-black font-medium", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "archives"}, method: :get %>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
   				<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
 				</svg>
