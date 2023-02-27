@@ -24,7 +24,7 @@ class SongsController < ApplicationController
     render(
       partial: "songs/songs",
       locals: {
-        songs: sort_songs(current_songs, params),
+        songs: sort_songs(user_songs, params),
         is_label: false,
       },
     )
@@ -34,7 +34,7 @@ class SongsController < ApplicationController
     render(
       partial: "songs/songs",
       locals: {
-        songs: sort_songs(current_songs, params),
+        songs: sort_songs(label_songs, params),
         is_label: true,
       },
     )
