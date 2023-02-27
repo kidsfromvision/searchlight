@@ -2,7 +2,7 @@
 	<div class="hidden sm:inline-block">
 		<% if current_user.label_id %>
 			<% if asset_exists?(current_user.label.name + '.png') %>
-				<%= image_tag current_user.label.name + '.png', class: "w-32", alt: "#{current_user.label.name} logo" %>
+				<%= image_tag current_user.label.name + '.png', class: "h-16", alt: "#{current_user.label.name} logo" %>
 			<% else %>
 				<%= current_user.label.name %>
 			<% end %>
