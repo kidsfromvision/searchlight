@@ -16,7 +16,7 @@
 		<svg width="1" height="64" viewBox="0 0 1 64" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect width="1" height="64" rx="0.5" fill="black"/>
 		</svg>
-		<h1 class="text-2xl font-light"><%= is_archives ? "Archives" : "Leaderboard" %></h1>
+		<h1 class="text-xl font-light"><%= is_archives ? "Archives" : "Leaderboard" %></h1>
 	</div>
 	<% unless is_archives %>
 		<%= form_with url: "/search", data: { turbo_frame: "body", turbo_action: "advance", controller: "search", action: "input->search#submit" }, class: "flex flex-row items-center relative", method: :get do |form| %>
