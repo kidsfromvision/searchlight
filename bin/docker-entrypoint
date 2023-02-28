@@ -4,6 +4,8 @@
 if [ "${*}" == "./bin/rails server" ]; then
   ./bin/rails db:create
   ./bin/rails db:prepare
+	crontab -l | { cat; echo ""; } | crontab -
+	cron && bundle exec whenever --update-crontab
 fi
 
 exec "${@}"

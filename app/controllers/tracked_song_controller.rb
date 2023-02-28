@@ -18,29 +18,43 @@ class TrackedSongController < ApplicationController
 
   def archive
     tracked_song = TrackedSong.find_by(id: params[:id])
-    tracked_song.archived = true
-    if tracked_song.save
-      tracked_song.broadcast_remove(current_user)
+    if tracked_song && user_has_permissions(tracked_song)
+      tracked_song.archived = true
+      tracked_song.broadcast_remove(current_user) if tracked_song.save
       redirect_to root_path
     end
   end
 
   def unarchive
     tracked_song = TrackedSong.find_by(id: params[:id])
-    tracked_song.archived = false
-    if tracked_song.save
-      tracked_song.broadcast_add(current_user)
+    if tracked_song && user_has_permissions(tracked_song)
+      tracked_song.archived = false
+      raise "Failed to unarchive song" unless tracked_song.save
+      tracked_song.broadcast_add_to_user(current_user)
+      tracked_song.broadcast_add_to_label(current_user)
       redirect_to root_path
     end
   end
 
   def remove
     tracked_song = TrackedSong.find_by(id: params[:id])
-    if TrackedSong.delete(tracked_song)
+    if tracked_song && user_has_permissions(tracked_song)
+      raise "Failed to remove song" unless TrackedSong.delete(tracked_song)
       tracked_song.broadcast_remove(current_user)
     end
 
     redirect_to root_path
+  end
+
+  def add_tracked_song_to_label
+    tracked_song = TrackedSong.find_by(id: params[:id])
+    if tracked_song && user_has_permissions(tracked_song)
+      tracked_song.label_id = current_user.label_id
+      raise "Failed to move tracked song to label" unless tracked_song.save
+    end
+
+    tracked_song.broadcast_add_to_label(current_user)
+    redirect_to label_leaderboard_path
   end
 
   private

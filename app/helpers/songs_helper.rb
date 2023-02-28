@@ -1,16 +1,31 @@
 module SongsHelper
-  def sort_link(column:, label:)
+  def sort_link(column:, label:, is_label:)
     if column == params[:column]
       if next_direction.nil?
-        link_to(label, root_path)
+        link_to(label, is_label ? label_leaderboard_path : root_path)
       else
         link_to(
           label,
-          list_songs_path(column: column, direction: next_direction),
+          (
+            if is_label
+              label_list_songs_path(column: column, direction: next_direction)
+            else
+              list_songs_path(column: column, direction: next_direction)
+            end
+          ),
         )
       end
     else
-      link_to(label, list_songs_path(column: column, direction: "asc"))
+      link_to(
+        label,
+        (
+          if is_label
+            label_list_songs_path(column: column, direction: "asc")
+          else
+            list_songs_path(column: column, direction: "asc")
+          end
+        ),
+      )
     end
   end
 

@@ -1,4 +1,4 @@
-<% tracked_song = user.label_id ? song.tracked_songs.find_by(label_id: user.label_id) : song.tracked_songs.find_by(user_id: user.id) %>
+<% tracked_song = is_label ? song.tracked_songs.find_by(label_id: user.label_id) : song.tracked_songs.find_by(user_id: user.id) %>
 <tr id="archived_<%= dom_id(song) %>">
   <td class="whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
 		<%= link_to "/tracked_song/#{tracked_song.id}" do %>
@@ -16,11 +16,11 @@
 		<% end %>
 	</td>
   <td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black"><%=song.artist%></td>
-  <% if user.label_id then %>
+  <% if is_label then %>
 		<td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>
 	<% end %>
 	<td class="whitespace-wrap py-4 px-3 text-sm text-black">
-		<%= button_to unarchive_tracked_song_path(tracked_song), method: :patch, params: { tracked_song: { archived: false } }, class: "text-black font-medium", aria: { label: "unarchive" } do %>
+		<%= button_to unarchive_tracked_song_path(tracked_song), method: :patch, params: { tracked_song: { archived: false } }, data: { turbo_frame: "page", turbo_action: "advance "}, class: "text-black font-medium", aria: { label: "unarchive" } do %>
   		Unarchive
   	<% end %>
 	</td>
