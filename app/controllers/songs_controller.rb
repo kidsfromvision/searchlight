@@ -12,12 +12,12 @@ class SongsController < ApplicationController
     @songs = label_songs
   end
 
-  def label_archives
-    @songs = label_archived_songs
+  def archives
+    @songs = user_archived_songs
   end
 
-  def user_archives
-    @songs = user_archived_songs
+  def label_archives
+    @songs = label_archived_songs
   end
 
   def list
