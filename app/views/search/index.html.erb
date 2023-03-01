@@ -1,5 +1,5 @@
 <%= render layout: "layouts/page" do %>
-	<%= render "shared/page_head" %>
+	<%= render "shared/page_head", is_label: false, is_archives: false %>
 	<%= turbo_frame_tag "body" do %>
 	  <h1 class="text-2xl"> Search Results </h1>
 		<div class="mt-8 flex flex-col">
