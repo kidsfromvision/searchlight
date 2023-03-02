@@ -5,6 +5,11 @@ class AdminToolsController < ApplicationController
   def index
   end
 
+  def update_songs
+    ChartmetricAllStreamsJob.perform_now
+    render(partial: "admin_tools/update_songs_button")
+  end
+
   private
 
   def require_admin

@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   get "/admin", to: "admin#index", as: "admin_root"
 
   get "/admin_tools", to: "admin_tools#index", as: "admin_tools"
+  post "/admin_tools/update_songs",
+       to: "admin_tools#update_songs",
+       as: "update_songs"
 
   post "/invitation", to: "invitation#create", as: "create_invitation"
 

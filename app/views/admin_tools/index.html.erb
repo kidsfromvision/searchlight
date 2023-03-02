@@ -1,4 +1,11 @@
 <%= render layout: "layouts/page" do %>
 	<%= render "shared/page_head", is_label: false, is_archives: false, hide_search: true, title: "Admin tools", hide_selector: true %>
-	<div>Here are your admintools: </div>
+		<div class="mt-8 flex flex-col">
+				<%= turbo_frame_tag "update_songs_button" do %>
+					<%= button_to "UPDATE ALL SONGS", update_songs_path, disabled: current_user.id != 1, class: current_user.id != 1 ? "font-medium text-black" : "font-medium text-slate-600", method: :post, data: { turbo_frame: "update_songs_button" }, aria: { label: "update all songs" } %>
+				<%end %>
+				<% if current_user.id == 2 %>
+					<p class="w-80">This button is programmatically disabled so that specifically YOU cannot click it. Please let me know if you think this is a mistake.</p>
+				<% end %>
+		</div> 
 <% end %>
