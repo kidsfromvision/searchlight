@@ -1,6 +1,0 @@
-<%= turbo_frame_tag "leaderboard_selector" do %>
-	<div class="flex flex-row gap-4 justify-center">
-		<%= button_to "You", root_path, class: "font-medium transition hover:text-black #{is_label ? "text-slate-400" : "text-black"}", aria: { label: "your leaderboard"}, data: { turbo_frame: "body", turbo_action: "advance" }, method: :get %> 
-		<%= button_to "Label", label_leaderboard_path, class: "text-black font-medium transition hover:text-black  #{is_label ? "text-black" : "text-slate-400"}", aria: { label: "label leaderboard"}, data: { turbo_frame: "body", turbo_action: "advance" }, method: :get %> 
-	</div>
-<% end %>

@@ -3,6 +3,11 @@ Rails.application.routes.draw do
 
   get "/admin", to: "admin#index", as: "admin_root"
 
+  get "/admin_tools", to: "admin_tools#index", as: "admin_tools"
+  post "/admin_tools/update_songs",
+       to: "admin_tools#update_songs",
+       as: "update_songs"
+
   post "/invitation", to: "invitation#create", as: "create_invitation"
 
   post "/song", to: "song#create"
@@ -32,13 +37,13 @@ Rails.application.routes.draw do
   get "label/list", to: "songs#label_list", as: "label_list_songs"
 
   get "label", to: "songs#label", as: "label_leaderboard"
-  get "label_archives", to: "songs#label_archives", as: "label_archives"
+  get "label/archives", to: "songs#label_archives", as: "label_archives"
+  get "archives", to: "songs#archives", as: "archives"
 
   get "account", to: "account#index", as: "account"
   post "account/reset_password",
        to: "account#reset_password",
        as: "reset_password"
 
-  get "user_archives", to: "songs#user_archives", as: "user_archives"
   root "songs#index"
 end

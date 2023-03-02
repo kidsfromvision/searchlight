@@ -1,18 +1,8 @@
 <%= render layout: "layouts/page" do %>
-	<%= render "shared/page_head" %>
+	<%= render "shared/page_head", is_label: false, is_archives: false, hide_search: false, title: "Leaderboard", hide_selector: false %>
 	<%= turbo_stream_from "user_leaderboard_#{current_user.id}" %>
 	<%= turbo_stream_from "streams" %>
 	<%= turbo_frame_tag "body" do %>
-		<div class="flex flex-row justify-between items-baseline">
-			<h1 class="text-2xl">Leaderboard</h1>
-			<%= render "songs/leaderboard_selector", is_label: false %>
-			<div class="flex flex-row justify-between items-center gap-1">
-				<%= button_to "Archives", user_archives_path, class: "text-black font-medium", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "archives"}, method: :get %>
-				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-  				<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-				</svg>
-			</div>
-		</div>
 		<div class="mt-8 flex flex-col">
 			<div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
 				<div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
