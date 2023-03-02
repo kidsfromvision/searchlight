@@ -1,5 +1,5 @@
-<nav class="flex flex-row w-full justify-between py-3 items-center">
-	<div class="flex flex-row gap-x-8 items-center">
+<nav class="flex flex-col sm:flex-row w-full justify-between py-3 gap-y-4 items-center">
+	<div class="flex flex-row gap-x-4 sm:gap-x-8 items-center">
 		<%= button_to "Leaderboard", root_path, class: "text-black font-semibold", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "leaderboard"}, method: :get%>
 		<% if current_user.role == "label_admin" then %>
 				<%= button_to "Admin", admin_root_path, class: "text-black font-semibold", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "admin"}, method: :get%>
