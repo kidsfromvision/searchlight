@@ -68,12 +68,13 @@ Rails.application.configure do
   config.action_mailer.default_url_options = { host: "kidsfromvision.com" }
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address: "smtp.gmail.com",
+    address: "smtp.sendgrid.net",
     port: 587,
-    user_name: ENV["GMAIL_EMAIL"],
-    password: ENV["GMAIL_PASSWORD"],
-    authentication: "plain",
+    user_name: "apikey",
+    domain: "kidsfromvision.com",
+    password: ENV["SENDGRID_API_KEY"],
     enable_starttls_auto: true,
+    authentication: "plain",
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
