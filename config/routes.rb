@@ -3,6 +3,8 @@ Rails.application.routes.draw do
 
   get "/admin", to: "admin#index", as: "admin_root"
 
+  get "/admin_tools", to: "admin_tools#index", as: "admin_tools"
+
   post "/invitation", to: "invitation#create", as: "create_invitation"
 
   post "/song", to: "song#create"
