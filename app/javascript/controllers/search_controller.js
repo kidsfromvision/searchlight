@@ -1,7 +1,6 @@
 import { Controller } from "@hotwired/stimulus";
 import debounce from "debounce";
 
-// Connects to data-controller="search"
 export default class extends Controller {
   initialize() {
     this.submit = debounce(this.submit.bind(this), 300);
@@ -10,4 +9,11 @@ export default class extends Controller {
   submit() {
     this.element.requestSubmit();
   }
+
+  close(e) {
+    e.preventDefault();
+    this.element.parentElement.removeAttribute("src")
+    this.element.remove()
+  }
+
 }
