@@ -79,3 +79,7 @@
         /* target background color */
     }
 }
+
+.hover\:text-white:hover {
+    color: white !important;
+}

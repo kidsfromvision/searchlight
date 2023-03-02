@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get "/search", to: "search#index"
+  get "/search_popover", to: "search#search_popover", as: "search_popover"
 
   get "/admin", to: "admin#index", as: "admin_root"
 
