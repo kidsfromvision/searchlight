@@ -45,7 +45,6 @@ Rails.application.configure do
     address: "smtp.sendgrid.net",
     port: 587,
     user_name: "apikey",
-    domain: "search.kidsfromvision.com",
     password: ENV["SENDGRID_API_KEY"],
     enable_starttls_auto: true,
     authentication: "plain",
