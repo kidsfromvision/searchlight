@@ -1,11 +1,14 @@
-.animate-element-in {
-    animation: fade-in 0.4s ease-out,
-        slide-in 0.4s ease-out;
+.animate-row-in {
+    animation: fade-in 0.25s ease-out, slide-in 0.25s ease-out;
 }
 
-.animate-element-out {
-    animation: fade-out 0.2s ease-out,
-        slide-out 0.5s ease-out;
+.animate-row-out {
+    animation: fade-out 0.25s ease-out,
+        slide-out 0.25s ease-out;
+}
+
+.animate-background {
+    animation: bg-color-in 0.25s ease-out;
 }
 
 @keyframes fade-in {
@@ -30,7 +33,7 @@
 
 @keyframes slide-in {
     from {
-        transform: translateX(-4rem);
+        transform: translateX(8rem);
     }
 
     to {
@@ -45,26 +48,6 @@
 
     to {
         transform: translateX(8rem);
-    }
-}
-
-@keyframes slide-down {
-    from {
-        transform: translateY(-1rem);
-    }
-
-    to {
-        transform: translateY(0);
-    }
-}
-
-@keyframes slide-up {
-    from {
-        max-height: 3rem;
-    }
-
-    to {
-        max-height: 0;
     }
 }
 
