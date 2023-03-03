@@ -16,9 +16,8 @@ export default class extends Controller {
   }
 
   close() {
-    const popover = document.getElementById("search_popover");
-    popover.innerHTML = "";
-    popover.removeAttribute("src");
-    popover.removeAttribute("complete");
+    this.targets.element.innerHTML = "";
+    this.targets.element.removeAttribute("src");
+    this.targets.element.removeAttribute("complete");
   }
 }
