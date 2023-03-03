@@ -10,10 +10,10 @@
 						<%= image_tag song.art_url, :class => "h-12 w-12 shadow-lg", alt: "#{song.name} album art" %>
 						<div class="flex flex-col gap-1">
 							<p>
-								<%= song.name %>					
+								<%= song.name.truncate(35) %>					
 							</p>
 							<p class="text-xs font-gray-500 font-light">
-								<%= song.artist %>
+								<%= song.artist.truncate(40) %>
 							</p>
 						</div>
 					</div>
