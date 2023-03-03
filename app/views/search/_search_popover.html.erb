@@ -21,9 +21,9 @@
 	    	          <th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">Artist</th>
 	    	        </tr> %>
 	    	      </thead>
-	    	      <tbody class="divide-y divide-gray-200">
+	    	      <tbody>
 								<% @results.each_with_index do |result, index| %>
-  <tr <%= if @previously_added_songs.where(spotify_id: result["id"]).exists? then "class='bg-gray-100'" end %> >
+  <tr class="search-result search-result-<%= index %> <% if @previously_added_songs.where(spotify_id: result["id"]).exists? %>bg-gray-100 opacity-50<% end %>">
 
     <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0 w-80">
       <div class="flex flex-row gap-4 items-center">

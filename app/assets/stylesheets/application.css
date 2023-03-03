@@ -29,7 +29,7 @@
 
 .search-result {
     /* initial position of the row */
-    transform: translateZ(-5) translateY(-50px);
+    transform: translateY(-50px);
     opacity: 0;
     animation-name: search-result-anim;
     animation-duration: 0.5s;
@@ -66,12 +66,15 @@
 @keyframes search-result-anim {
     0% {
         opacity: 0;
-        transform: translateY(-50px);
+        transform: translateY(-30px) scale(1.02);
+        box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
     }
 
     100% {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+
     }
 }
 
