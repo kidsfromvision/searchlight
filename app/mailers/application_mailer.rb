@@ -1,4 +1,4 @@
 class ApplicationMailer < ActionMailer::Base
-  default from: "confirm@kidsfromvision.com"
+  default from: "searchlight@kidsfromvision.com"
   layout "mailer"
 end
