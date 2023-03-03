@@ -10,6 +10,8 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
 		<%= favicon_link_tag asset_path('favicon.png') %>
+    <script src="/javascript/controllers/search_controller.js"></script>
+
   </head>
   <body>
     <main class="mx-auto px-8">
@@ -20,5 +22,23 @@
       <%= yield %>
 			<p class="my-2 text-center text-amber-700 font-medium"><%= alert %></p>
     </main>
+    <script>
+  document.addEventListener("click", function(event) {
+  var searchPopover = document.querySelector("turbo-frame#search_popover");
+  var clickedElement = event.target;
+  var isInsideSearchPopover = searchPopover.contains(clickedElement);
+
+  if (!isInsideSearchPopover) {
+    var closeButton = searchPopover.querySelector("[data-action='click->search#close']");
+    if (closeButton) {
+      closeButton.click();
+    }
+  }
+});
+
+
+
+</script>
+
   </body>
 </html>

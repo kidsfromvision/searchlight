@@ -1,7 +1,7 @@
 <%# search popover modal with turbo frame %>
 <%= turbo_frame_tag "search_popover" do %>
-<div data-controller="search" data-search-target="popover" data-target="searchController" >
-		    <div class="rounded-lg shadow-2xl absolute top-20 right-36 w-80 h-auto bg-white border-[1px] border-gray-100 px-4 pt-4 pb-4">
+<div class='animate-popover-in' data-controller="search" data-search-target="popover" data-target="searchController" >
+		    <div class=" rounded-lg shadow-2xl absolute top-20 right-36 w-80 h-auto bg-white border-[1px] border-gray-100 px-4 pt-8 pb-4">
             <%# link to close %>
             <div class="absolute top-0 right-0">
                 <a href="#" data-action="click->search#close">
@@ -23,46 +23,47 @@
 	    	      </thead>
 	    	      <tbody class="divide-y divide-gray-200">
 								<% @results.each_with_index do |result, index| %>
-                        <tr>
+  <tr <%= if @previously_added_songs.where(spotify_id: result["id"]).exists? then "class='bg-gray-100'" end %> >
 
-	    	        	  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0 w-80">
-											<div class="flex flex-row gap-4 items-center">
-	 											<%= image_tag result["album"]["images"][2]["url"], :class => "h-12 w-12", alt: "#{result["name"]} album art" %>  
-                                                <div class="flex flex-col">
-                                                    <div class="text-sm font-medium text-black w-32"><%= result["name"].truncate(25) %></div>
-                                                    <div class="text-sm text-gray-400"><%= result["artists"][0]["name"].truncate(25)%></div>
-											</div>
-						    </td>      
-                            <%# absolute positioned at the end of the row %>
-										<td class="whitespace-nowrap py-4 px-3 text-sm text-black ">
-											<%= form_with model: @song, url: '/song', method: :post do |form| %>
-	  										<%= form.hidden_field :name, value: result["name"] %>
-	  										<%= form.hidden_field :artist, value: result["artists"][0]["name"] %>
-	  										<%= form.hidden_field :artist_id, value: result["artists"][0]["id"] %>
-												<%= form.hidden_field :art_url, value: result["album"]["images"][0]["url"] %>
-	  										<%= form.hidden_field :icon_url, value: result["album"]["images"][2]["url"] %>
-	  										<%= form.hidden_field :spotify_id, value: result["id"] %>
-	  										<%= form.hidden_field :released, value: result["album"]["release_date"] %>
-												<% if @previously_added_songs.where(spotify_id: result["id"]).exists? %>
-													<p>Already added</p>
-												<% else %>
-                                                <%# hover over turns svg white and shows black circle %>
-                                                <div class="hover:bg-black hover:bg-opacity-10 transition duration-100 p-2 h-6 w-6 rounded-full flex items-center justify-center">
-													<%= button_tag type: "submit", aria: { label: "add song" }, data: { turbo_frame: "page", turbo_action: "advance" }, value: "home" do %>
-														<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-	  													<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-														</svg>
-													<%end%>
-                                                </div>
-												<% end %>	
-											<% end %>
-										</td>
-	    	        	</tr>
-								<%end%>
+    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0 w-80">
+      <div class="flex flex-row gap-4 items-center">
+        <%= image_tag result["album"]["images"][2]["url"], :class => "h-12 w-12", alt: "#{result["name"]} album art" %>  
+        <div class="flex flex-col">
+          <div class="text-sm font-medium text-black w-32"><%= result["name"].truncate(25) %></div>
+          <div class="text-sm text-gray-400"><%= result["artists"][0]["name"].truncate(25)%></div>
+        </div>
+      </div>
+    </td>      
+    <td class="whitespace-nowrap py-4 px-3 text-sm text-black ">
+      <%= form_with model: @song, url: '/song', method: :post do |form| %>
+        <%= form.hidden_field :name, value: result["name"] %>
+        <%= form.hidden_field :artist, value: result["artists"][0]["name"] %>
+        <%= form.hidden_field :artist_id, value: result["artists"][0]["id"] %>
+        <%= form.hidden_field :art_url, value: result["album"]["images"][0]["url"] %>
+        <%= form.hidden_field :icon_url, value: result["album"]["images"][2]["url"] %>
+        <%= form.hidden_field :spotify_id, value: result["id"] %>
+        <%= form.hidden_field :released, value: result["album"]["release_date"] %>
+        <% if @previously_added_songs.where(spotify_id: result["id"]).exists? %>
+          <p class="text-sm text-gray-400">Added</p>
+        <% else %>
+          <%# hover over turns svg white and shows black circle %>
+          <div class="hover:bg-black hover:bg-opacity-10 transition duration-100 p-2 h-6 w-6 rounded-full flex items-center justify-center">
+            <%= button_tag type: "submit", aria: { label: "add song" }, data: { turbo_frame: "page", turbo_action: "advance" }, value: "home" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+              </svg>
+            <% end %>
+          </div>
+        <% end %>  
+      <% end %>
+    </td>
+  </tr>
+<% end %>
+
 	    	      </tbody>
 	    	    </table>
                 <%# view all results button %>
-                <div class="flex justify-center">
+                <div class="flex justify-center pt-4">
                     <%= link_to "View all results", search_path(query: @query), class: "text-sm text-gray-400 hover:text-gray-500" %>
 
                 </div>

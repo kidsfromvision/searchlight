@@ -8,6 +8,75 @@
         slide-out 0.5s ease-out;
 }
 
+.animate-popover-out {
+    animation: popover-out 0.3s ease-in-out;
+}
+
+@keyframes popover-out {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-50%);
+    }
+}
+
+
+
+
+.search-result {
+    /* initial position of the row */
+    transform: translateZ(-5) translateY(-50px);
+    opacity: 0;
+    animation-name: search-result-anim;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
+}
+
+.search-result.search-result-0 {
+    animation-delay: 0.04s;
+}
+
+.search-result.search-result-1 {
+    animation-delay: 0.08s;
+}
+
+.search-result.search-result-2 {
+    animation-delay: 0.12s;
+}
+
+.search-result.search-result-3 {
+    animation-delay: 0.16s;
+}
+
+.search-result.search-result-4 {
+    animation-delay: 0.20s;
+}
+
+.search-result.search-result-5 {
+    animation-delay: 0.24s;
+}
+
+
+/* and so on, for as many search results as you have */
+@keyframes search-result-anim {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add more nth-child selectors and delay values as needed for more items */
+
 @keyframes fade-in {
     from {
         opacity: 0;
@@ -50,11 +119,11 @@
 
 @keyframes slide-down {
     from {
-        transform: translateY(-1rem);
+        max-height: 0;
     }
 
     to {
-        transform: translateY(0);
+        max-height: 3rem;
     }
 }
 
@@ -79,6 +148,7 @@
         /* target background color */
     }
 }
+
 
 .hover\:text-white:hover {
     color: white !important;
