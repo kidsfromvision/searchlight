@@ -1,3 +1,4 @@
+<%= turbo_stream_from "user_#{current_user.id}" %>
 <nav class="flex flex-col sm:flex-row w-full justify-between py-3 gap-y-4 items-center">
 	<div class="flex flex-row gap-x-4 sm:gap-x-8 items-center">
 		<%= button_to "Leaderboard", root_path, class: "text-black font-semibold", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "leaderboard"}, method: :get%>
@@ -7,8 +8,8 @@
 		<%= button_to "Account", account_path, class: "text-black font-semibold", aria: { label: "account"}, method: :get %> 
 		<%= button_to "Archives", archives_path, class: "text-black font-medium", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "archives"}, method: :get %>
 	</div>
-	<div class="flex flex-row gap-x-4 items-center">
-		<%= form_with url: search_popover_path, data: { turbo_frame: "search_popover", turbo_action: "advance", controller: "search", action: "input->search#submit" },  class: "flex flex-row items-center relative", method: :get do |form| %>
+	<div class="flex flex-row items-center">
+		<%= form_with url: search_popover_path, data: { controller: "search", action: "input->search#submit", turbo_stream: true },  class: "flex flex-row items-center relative", method: :get do |form| %>
 			<%= form.text_field :query, value: "#{params[:query]}", class: "pl-4 pr-8 py-2 rounded-full w-full sm:w-80 border-[1px] border-white bg-slate-100 ring-0 w-full outline-none transition focus:border-black focus:bg-white focus:ring-0 focus:ring-offset-0 focus:outline-none text-sm", placeholder: "Add a song", autocomplete: "off" %>
 			<%= button_tag type: "submit", aria: { label: "search" }, value: "search" do %>
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 absolute right-4 top-0 translate-y-2/3">
@@ -16,9 +17,8 @@
 				</svg>
 			<% end %>
 		<% end %>
-		<%= turbo_frame_tag "search_popover", data: { controller: "modal" } do %>
-		<% end %>
-		<%= button_to destroy_user_session_path, method: :delete, class: "text-black font-semibold flex flex-row gap-x-2 items-center", aria: { label: "sign out" } do %>
+		<div data-controller="modal" id="search_popover" class="hidden"></div>
+		<%= button_to destroy_user_session_path, method: :delete, class: "text-black font-semibold flex flex-row gap-x-2 items-center ml-6", aria: { label: "sign out" } do %>
 			Log out
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
 				<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />

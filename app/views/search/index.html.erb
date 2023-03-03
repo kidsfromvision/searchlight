@@ -32,13 +32,9 @@
 	  										<%= form.hidden_field :spotify_id, value: result["id"] %>
 	  										<%= form.hidden_field :released, value: result["album"]["release_date"] %>
 												<% if @previously_added_songs.where(spotify_id: result["id"]).exists? %>
-													<p>Already added</p>
+													<%= render "search/search_result_icon_loaded", spotify_id: result["id"] %>
 												<% else %>
-													<%= button_tag type: "submit", aria: { label: "add song" }, data: { turbo_frame: "page", turbo_action: "advance" }, value: "home" do %>
-														<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-	  													<path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-														</svg>
-													<%end%>
+													<%= render "search/plus_icon", spotify_id: result["id"] %>
 												<% end %>	
 											<% end %>
 										</td>
