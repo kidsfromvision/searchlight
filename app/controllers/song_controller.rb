@@ -7,6 +7,7 @@ class SongController < ApplicationController
   end
 
   def create
+    broadcast_search_result_icon_loading
     song =
       Song.find_or_create_by(spotify_id: song_params[:spotify_id]) do |song|
         song.attributes = song_params
@@ -22,11 +23,14 @@ class SongController < ApplicationController
       end
 
     raise "Tracked song failed to save" unless tracked_song.save
-
+    
     tracked_song.broadcast_add_to_user(current_user)
+
+    broadcast_search_result_icon_loaded
+
     ChartmetricSingleStreamsJob.perform_later(song)
     ChartmetricGenresJob.perform_later(song)
-    redirect_to root_path
+    
   end
 
   private
@@ -46,5 +50,27 @@ class SongController < ApplicationController
 
   def require_label
     redirect_to root_path unless current_user.label_id.present?
+  end
+
+  def broadcast_search_result_icon_loading
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "user_#{current_user.id}",
+      target: "search_result_icon_#{song_params[:spotify_id]}",
+      partial: "search/search_result_icon_loading",
+      locals: {
+        spotify_id: song_params[:spotify_id],
+      },
+    )
+  end
+
+  def broadcast_search_result_icon_loaded
+    Turbo::StreamsChannel.broadcast_replace_to(
+      "user_#{current_user.id}",
+      target: "search_result_icon_#{song_params[:spotify_id]}",
+      partial: "search/search_result_icon_loaded",
+      locals: {
+        spotify_id: song_params[:spotify_id],
+      },
+    )
   end
 end

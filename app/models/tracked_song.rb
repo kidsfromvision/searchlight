@@ -15,6 +15,7 @@ class TrackedSong < ApplicationRecord
         song: song,
         user: user,
         is_label: false,
+        animate_in: true
       },
     )
   end
@@ -29,6 +30,7 @@ class TrackedSong < ApplicationRecord
         song: song,
         user: user,
         is_label: true,
+        animate_in: true
       },
     )
   end
