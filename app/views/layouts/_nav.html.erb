@@ -16,7 +16,7 @@
 				</svg>
 			<% end %>
 		<% end %>
-		<%= turbo_frame_tag "search_popover" do %>
+		<%= turbo_frame_tag "search_popover", data: { controller: "modal" } do %>
 		<% end %>
 		<%= button_to destroy_user_session_path, method: :delete, class: "text-black font-semibold flex flex-row gap-x-2 items-center", aria: { label: "sign out" } do %>
 			Log out

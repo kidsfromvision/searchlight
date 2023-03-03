@@ -8,13 +8,5 @@ export default class extends Controller {
 
   submit() {
     this.element.requestSubmit();
-    this.element.close();
   }
-
-  close(e) {
-    e.preventDefault();
-    this.element.parentElement.removeAttribute("src")
-    this.element.remove()
-  }
-
 }
