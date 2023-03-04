@@ -2,6 +2,10 @@ body {
   background-color: #fefefe;
 }
 
+.fade-in {
+  animation: fade-in 0.4s ease-out;
+}
+
 .animate-element-in {
   animation: fade-in 0.4s ease-out, slide-in 0.4s ease-out;
 }
@@ -37,34 +41,48 @@ body {
 }
 
 .search-result.search-result-0 {
-  animation-delay: 0.04s;
+  animation-delay: 0.02s;
 }
 
 .search-result.search-result-1 {
-  animation-delay: 0.08s;
+  animation-delay: 0.04s;
 }
 
 .search-result.search-result-2 {
-  animation-delay: 0.12s;
+  animation-delay: 0.06s;
 }
 
 .search-result.search-result-3 {
-  animation-delay: 0.16s;
+  animation-delay: 0.08s;
 }
 
 .search-result.search-result-4 {
-  animation-delay: 0.2s;
+  animation-delay: 0.10s;
 }
 
 .search-result.search-result-5 {
-  animation-delay: 0.24s;
+  animation-delay: 0.12s;
+}
+
+.shimmer {
+  color: grey;
+  display:inline-block;
+  -webkit-mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/300% 100%;
+  background-repeat: no-repeat;
+  animation: shimmer 0.5s infinite;
+  font-size: 50px;
+  max-width:200px;
+}
+
+@keyframes shimmer {
+  100% {-webkit-mask-position:left}
 }
 
 /* and so on, for as many search results as you have */
 @keyframes search-result-anim {
   0% {
     opacity: 0;
-    transform: translateY(-15px) scale(1.01);
+    transform: translateY(-2px) scale(1.01);
   }
 
   100% {

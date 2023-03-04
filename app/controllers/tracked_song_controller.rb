@@ -32,8 +32,8 @@ class TrackedSongController < ApplicationController
       raise "Failed to unarchive song" unless tracked_song.save
 
       # Calling broadcast methods explicitly here because there's no after_archive_commit hook
-      tracked_song.broadcast_add_to_user(current_user)
-      tracked_song.broadcast_add_to_label(current_user) if tracked_song.label_id
+      tracked_song.broadcast_add_to_user
+      tracked_song.broadcast_add_to_label if tracked_song.label_id
     end
 
     if tracked_song.label_id
@@ -59,7 +59,7 @@ class TrackedSongController < ApplicationController
       raise "Failed to move tracked song to label" unless tracked_song.save
     end
 
-    tracked_song.broadcast_add_to_label(current_user)
+    tracked_song.broadcast_add_to_label
     redirect_to label_leaderboard_path
   end
 
