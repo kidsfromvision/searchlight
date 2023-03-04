@@ -5,7 +5,7 @@
 		<% if current_user.role == "label_admin" then %>
 				<%= button_to "Admin", admin_root_path, class: "text-black font-semibold", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "admin"}, method: :get%>
 		<% end %>
-		<%= button_to "Account", account_path, class: "text-black font-semibold", aria: { label: "account"}, method: :get %> 
+		<%= button_to "Account", account_path, class: "text-black font-semibold", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "account"}, method: :get %> 
 		<%= button_to "Archives", archives_path, class: "text-black font-medium", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "archives"}, method: :get %>
 	</div>
 	<div class="flex flex-row items-center">
