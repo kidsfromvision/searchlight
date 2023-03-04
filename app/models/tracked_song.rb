@@ -12,12 +12,12 @@ class TrackedSong < ApplicationRecord
   def broadcast_add_to_user
     song = Song.find_by(id: self.song_id)
     Turbo::StreamsChannel.broadcast_append_later_to(
-      user,
+      self.user,
       target: "user_table",
       partial: "songs/song",
       locals: {
         song: song,
-        user: user,
+        user: self.user,
         is_label: false,
         animate_in: true,
       },
@@ -27,12 +27,12 @@ class TrackedSong < ApplicationRecord
   def broadcast_add_to_label
     song = Song.find_by(id: self.song_id)
     Turbo::StreamsChannel.broadcast_append_later_to(
-      user.label,
+      self.user.label,
       target: "label_table",
       partial: "songs/song",
       locals: {
         song: song,
-        user: user,
+        user: self.user,
         is_label: true,
         animate_in: true,
       },
