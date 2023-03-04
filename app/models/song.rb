@@ -6,7 +6,7 @@ class Song < ApplicationRecord
 
   def broadcast_streams
     Turbo::StreamsChannel.broadcast_replace_to(
-      "streams",
+      :streams,
       target: "streams_song_#{self.id}",
       partial: "songs/streams_col",
       locals: {
@@ -17,7 +17,7 @@ class Song < ApplicationRecord
 
   def broadcast_genres
     Turbo::StreamsChannel.broadcast_replace_to(
-      "streams",
+      :streams,
       target: "genres_song_#{self.id}",
       partial: "songs/genres_col",
       locals: {
@@ -28,7 +28,7 @@ class Song < ApplicationRecord
 
   def broadcast_streams_loading
     Turbo::StreamsChannel.broadcast_replace_to(
-      "streams",
+      :streams,
       target: "streams_song_#{self.id}",
       partial: "songs/streams_loading",
       locals: {
@@ -39,7 +39,7 @@ class Song < ApplicationRecord
 
   def broadcast_genres_loading
     Turbo::StreamsChannel.broadcast_replace_to(
-      "streams",
+      :streams,
       target: "genres_song_#{self.id}",
       partial: "songs/genres_loading",
       locals: {

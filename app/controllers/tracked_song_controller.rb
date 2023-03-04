@@ -12,7 +12,7 @@ class TrackedSongController < ApplicationController
     tracked_song = TrackedSong.find_by(id: params[:id])
     if tracked_song && user_has_permissions(tracked_song)
       tracked_song.update(tracked_song_params)
-      tracked_song.broadcast_replace(current_user) if tracked_song.save
+      tracked_song.save
     end
   end
 
@@ -20,7 +20,7 @@ class TrackedSongController < ApplicationController
     tracked_song = TrackedSong.find_by(id: params[:id])
     if tracked_song && user_has_permissions(tracked_song)
       tracked_song.archived = true
-      tracked_song.broadcast_remove(current_user) if tracked_song.save
+      tracked_song.broadcast_remove if tracked_song.save
       redirect_to root_path
     end
   end
@@ -30,6 +30,8 @@ class TrackedSongController < ApplicationController
     if tracked_song && user_has_permissions(tracked_song)
       tracked_song.archived = false
       raise "Failed to unarchive song" unless tracked_song.save
+
+      # Calling broadcast methods explicitly here because there's no after_archive_commit hook
       tracked_song.broadcast_add_to_user(current_user)
       tracked_song.broadcast_add_to_label(current_user) if tracked_song.label_id
     end
@@ -44,8 +46,7 @@ class TrackedSongController < ApplicationController
   def remove
     tracked_song = TrackedSong.find_by(id: params[:id])
     if tracked_song && user_has_permissions(tracked_song)
-      raise "Failed to remove song" unless TrackedSong.delete(tracked_song)
-      tracked_song.broadcast_remove(current_user)
+      raise "Failed to remove song" unless tracked_song.destroy
     end
 
     redirect_to root_path
