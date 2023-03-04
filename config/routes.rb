@@ -41,6 +41,10 @@ Rails.application.routes.draw do
   get "label/archives", to: "songs#label_archives", as: "label_archives"
   get "archives", to: "songs#archives", as: "archives"
 
+  get "label_leaderboard_stream", to: "songs#label_stream", as: "label_leaderboard_stream"
+  get "stream", to: "songs#index_stream", as: "root_stream"
+
+
   get "account", to: "account#index", as: "account"
   post "account/reset_password",
        to: "account#reset_password",
