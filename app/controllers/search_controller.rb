@@ -6,17 +6,16 @@ class SearchController < ApplicationController
     @results = get_results()
   end
 
-
-  def search_popover 
+  def search_popover
     broadcast_popover_loading
     @previously_added_songs = previously_added_songs
     @results = get_results(5)
     broadcast_popover_loaded(@results, @previously_added_songs)
   end
 
-
   private
-  def get_results(limit=10)
+
+  def get_results(limit = 10)
     query = params[:query]
     if query.blank?
       @results = []
@@ -46,7 +45,7 @@ class SearchController < ApplicationController
 
   def broadcast_popover_loaded(results, previously_added_songs)
     Turbo::StreamsChannel.broadcast_replace_to(
-      "user_#{current_user.id}",
+      current_user,
       target: "search_popover",
       partial: "search/search_popover",
       locals: {
@@ -59,7 +58,7 @@ class SearchController < ApplicationController
 
   def broadcast_popover_loading
     Turbo::StreamsChannel.broadcast_replace_to(
-      "user_#{current_user.id}",
+      current_user,
       target: "search_popover",
       partial: "search/search_popover_loading",
     )

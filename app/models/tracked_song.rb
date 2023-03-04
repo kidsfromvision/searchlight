@@ -5,85 +5,80 @@ class TrackedSong < ApplicationRecord
   belongs_to :song
   belongs_to :label, optional: true
 
-  def broadcast_add_to_user(user)
+  after_create_commit :broadcast_add_to_user
+  after_update_commit :broadcast_replace
+  after_destroy_commit :broadcast_remove
+
+  def broadcast_add_to_user
     song = Song.find_by(id: self.song_id)
-    Turbo::StreamsChannel.broadcast_append_to(
-      user_broadcast_receiver(user),
+    Turbo::StreamsChannel.broadcast_append_later_to(
+      user,
       target: "user_table",
       partial: "songs/song",
       locals: {
         song: song,
         user: user,
         is_label: false,
-        animate_in: true
+        animate_in: true,
       },
     )
   end
 
-  def broadcast_add_to_label(user)
+  def broadcast_add_to_label
     song = Song.find_by(id: self.song_id)
-    Turbo::StreamsChannel.broadcast_append_to(
-      label_broadcast_receiver(user),
+    Turbo::StreamsChannel.broadcast_append_later_to(
+      user.label,
       target: "label_table",
       partial: "songs/song",
       locals: {
         song: song,
         user: user,
         is_label: true,
-        animate_in: true
+        animate_in: true,
       },
     )
   end
 
-  def broadcast_replace(user)
+  def broadcast_replace
     song = Song.find_by(id: self.song_id)
-    puts "broadcasting replace to #{user_broadcast_receiver(user)}"
-    Turbo::StreamsChannel.broadcast_replace_to(
-      user_broadcast_receiver(user),
+    broadcast_replace_later_to(
+      self.user,
       target: "song_#{song.id}",
       partial: "songs/song",
       locals: {
         song: song,
-        user: user,
+        user: self.user,
         is_label: false,
+        animate_in: false,
       },
     )
 
-    unless label_broadcast_receiver(user).nil? or self.label_id.nil?
-      Turbo::StreamsChannel.broadcast_replace_to(
-        label_broadcast_receiver(user),
+    unless self.label_id.nil?
+      broadcast_replace_later_to(
+        self.user.label,
         target: "song_#{song.id}",
         partial: "songs/song",
         locals: {
           song: song,
-          user: user,
+          user: self.user,
           is_label: true,
+          animate_in: false,
         },
       )
     end
   end
 
-  def broadcast_remove(user)
+  def broadcast_remove
     Turbo::StreamsChannel.broadcast_remove_to(
-      user_broadcast_receiver(user),
+      self.user,
       target: "song_#{self.song_id}",
     )
 
-    unless label_broadcast_receiver(user).nil? or self.label_id.nil?
+    unless self.label_id.nil?
       Turbo::StreamsChannel.broadcast_remove_to(
-        label_broadcast_receiver(user),
+        self.user.label,
         target: "song_#{self.song_id}",
       )
     end
-  end
-
-  private
-
-  def label_broadcast_receiver(user)
-    "label_leaderboard_#{user.label_id}" unless user.label_id.nil?
-  end
-
-  def user_broadcast_receiver(user)
-    "user_leaderboard_#{user.id}"
   end
 end
