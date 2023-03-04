@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "songs" do %>
+<div id="leaderboard_table">
 	<table class="min-w-full divide-y divide-gray-300">
 		<thead>
 			<tr>
@@ -26,9 +26,9 @@
 				<tr><td><div class="mt-4">No songs added</div></td></tr>
 			<% else %>
 				<% songs.each do |song| %>
-					<%= render "songs/song", user: current_user, song: song, is_label: is_label, animate_in: false %>
+					<%= render "songs/song", user: user, song: song, is_label: is_label, animate_in: false %>
 				<% end %>
 			<% end %>
 		</tbody>
 	</table>
-<% end %>
+</div>
