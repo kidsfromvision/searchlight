@@ -60,7 +60,6 @@ class TrackedSongController < ApplicationController
     end
 
     tracked_song.broadcast_add_to_label
-    redirect_to label_leaderboard_path
   end
 
   private
