@@ -1,39 +1,23 @@
 module SongsHelper
-  def sort_link(column:, label:, is_label:)
-    if column == params[:column]
-      if next_direction.nil?
-        link_to(label, is_label ? label_leaderboard_path : root_path)
-      else
-        link_to(
-          label,
-          (
-            if is_label
-              label_list_songs_path(column: column, direction: next_direction)
-            else
-              list_songs_path(column: column, direction: next_direction)
-            end
-          ),
-        )
-      end
-    else
-      link_to(
-        label,
-        (
-          if is_label
-            label_list_songs_path(column: column, direction: "asc")
-          else
-            list_songs_path(column: column, direction: "asc")
-          end
-        ),
+  def table_header_classes(name)
+    if name == "name"
+      return(
+        "py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0"
       )
+    elsif name == "genres"
+      return(
+        "py-3.5 px-3 text-left text-sm font-semibold text-black search-result search-result-1"
+      )
+    elsif name == "status"
+      return(
+        "py-3.5 px-3 text-left text-sm font-semibold text-black search-result search-result-2"
+      )
+    elsif name == "added_by"
+      return(
+        "py-3.5 px-3 text-left text-sm font-semibold text-black search-result search-result-3"
+      )
+    else
+      return "py-3.5 px-3 text-left text-sm font-semibold text-black"
     end
-  end
-
-  def next_direction
-    params[:direction] == "asc" ? "desc" : nil
-  end
-
-  def is_sorted_asc
-    params[:direction] == "asc"
   end
 end

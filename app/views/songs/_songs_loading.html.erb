@@ -1,0 +1,44 @@
+<div id="leaderboard_table">
+	<table class="min-w-full divide-y divide-gray-300">
+		<thead>
+			<tr>
+				<%= render "songs/table_header", name: "name", title: "Song"%>
+				<%= render "songs/table_header", name: "daily_streams", title: "Daily Streams"%>
+			</tr>
+		</thead>
+		<tbody id="<%= is_label ? "label_table" : "user_table" %>" class="divide-y divide-gray-200">
+			<% 8.times do %>
+				<tr> 
+					<td class="w-96 whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
+						<div class="flex flex-row gap-4 items-center justify-between group">
+							<div class="flex flex-row gap-4 items-center">
+								<div class="h-12 w-12 bg-gray-300 shimmer"></div>
+									<div class="flex flex-col">
+										<div class="pb-4 text-sm font-medium text-black h-3 w-16 bg-gray-200 shimmer"></div>
+										<div class="mt-2 text-sm h-3 w-32 bg-gray-300 shimmer"></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</td>	
+					<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm font-medium text-black">
+						<div class="h-3 w-16 bg-gray-300 shimmer"></div>
+					</td>
+					<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm font-medium text-black">
+						<div class="h-3 w-12 bg-gray-300 shimmer"></div>
+					</td>
+					<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm font-medium text-black">
+						<div class="h-3 w-16 bg-gray-300 shimmer"></div>
+					</td>
+					<% if is_label then %>
+						<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm font-medium text-black">
+							<div class="h-3 w-20 bg-gray-300 shimmer"></div>
+						</td>
+					<% end %>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>
+
+

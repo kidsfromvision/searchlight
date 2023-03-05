@@ -1,10 +1,10 @@
 <%= render layout: "layouts/page" do %>
-	<%= render "shared/page_head", is_label: false, is_archives: false, hide_search: false, title: "Leaderboard", hide_selector: false %>
+	<%= render "shared/page_head", user: current_user, is_label: false, path: label_leaderboard_stream_path, is_archives: false, hide_search: false, title: "Leaderboard", hide_selector: false %>
 	<%= turbo_frame_tag "body" do %>
 		<div class="mt-8 flex flex-col">
 			<div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
 				<div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-	    		<%= render "songs/songs", songs: @songs, is_label: false %>
+	    		<%= render "songs/songs", songs: @songs, is_label: false, user: current_user %>
 				</div>
 			</div>
 	  </div> 

@@ -1,22 +1,21 @@
-<div class="py-4 w-full flex flex-row justify-between items-center">
+<div id="page_head" class="pt-4 w-full flex flex-row justify-between items-center">
 	<div class="flex flex-row items-center gap-x-5 py-4">
-		<% if current_user.label_id %>
-			<% if asset_exists?(current_user.label.name + '.png') %>
-				<%= image_tag current_user.label.name + '.png', class: "h-4 sm:h-8 lg:h-12", alt: "#{current_user.label.name} logo" %>
+		<% if user.label_id %>
+			<% if asset_exists?(user.label.name + ".png") %>
+				<%= image_tag user.label.name + ".png", class: "h-4 sm:h-8 lg:h-12", alt: "#{user.label.name} logo" %>
 			<% else %>
-				<%= current_user.label.name %>
+				<%= user.label.name %>
 			<% end %>
 		<% else %>
 			<h2>Searchlight</h2>
-		<%end%>
+		<% end %>
 		<svg width="1" height="64" viewBox="0 0 1 64" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect width="1" height="64" rx="0.5" fill="black"/>
 		</svg>
 		<% unless hide_selector %>
-			<%= render "songs/selector", is_label: is_label, is_archives: is_archives %>
-			<svg width="1" height="64" viewBox="0 0 1 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<rect width="1" height="64" rx="0.5" fill="black"/>
-			</svg>
+			<div class="pt-5 text-xl w-16 h-16">
+				<%= render "songs/leaderboard_selector", is_label: is_label, path: path %>
+			</div>
 		<% end %>
 		<h1 class="text-xl font-light"><%= title %></h1>
 	</div>

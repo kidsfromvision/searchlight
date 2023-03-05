@@ -1,4 +1,6 @@
-<div class="flex flex-row gap-2 items-center">
-	<%= sort_link(column: name, label: label, is_label: is_label) %>
-	<%= render "songs/sort_arrow", col_name: name %>
-</div>
+<th scope="col" id="<%= name %>" class="<%= table_header_classes name %>">
+	<div class="flex flex-row gap-x-2 items-center cursor-pointer select-none">
+		<%= title %>
+		<%= render "songs/sort_arrows"%>
+	</div>
+</th>

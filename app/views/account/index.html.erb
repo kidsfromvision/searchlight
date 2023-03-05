@@ -1,5 +1,5 @@
 <%= render layout: "layouts/page" do %>
-	<%= render "shared/page_head", is_label: false, is_archives: false, hide_search: true, title: "Account", hide_selector: true %>
+	<%= render "shared/page_head", is_label: false, is_archives: false, hide_search: true, title: "Account", hide_selector: true, user: current_user %>
 	<div class="mt-8 flex flex-col">
 		<h2 class="text-xl">Welcome to Searchlight<%= current_user.name.nil? ? "" : ", " + current_user.name.split(' ')[0] %></h2>
 		<div class="flex flex-col gap-4 mt-8">

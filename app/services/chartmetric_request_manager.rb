@@ -44,7 +44,7 @@ class ChartmetricRequestManager
 
       genres_event.status = "success"
       genres_event.save
-      return response["obj"]["tags"] unless response["obj"].empty?
+      return response["obj"]["tags"] unless response["obj"]&.empty?
 
       genres_event.status = "failed"
       genres_event.save

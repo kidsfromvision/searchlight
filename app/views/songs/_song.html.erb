@@ -2,14 +2,14 @@
 <% latest_stream_event = song.song_request_events.where(data_requested: "streams").last %>
 <% latest_genre_event = song.song_request_events.where(data_requested: "genres").last %>
 <% unless tracked_song.nil? %>
-<tr id="<%= dom_id(song) %>" class=<%= animate_in ? 'animate-element-in' : nil %>>
-		<td class="whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
+<tr id="<%= dom_id(song) %>" class=<%= animate_in ? 'animate-element-in' : "search-result search-result-0" %>>
+		<td class="w-96 whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
 			<%= link_to "/tracked_song/#{tracked_song.id}" do %>
 				<div class="flex flex-row gap-4 items-center justify-between group">
 					<div class="flex flex-row gap-4 items-center">
 						<%= image_tag song.art_url, :class => "h-12 w-12 shadow-lg", alt: "#{song.name} album art" %>
 						<div class="flex flex-col gap-1">
-							<p>
+							<p id="name_<%=dom_id(song)%>">
 								<%= song.name.truncate(35) %>					
 							</p>
 							<p class="text-xs font-gray-500 font-light">
@@ -25,7 +25,7 @@
 		</td>
 
 		<% if !latest_stream_event %>
-			<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="streams_song_<%=song.id%>">No data</td>
+			<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="streams_<%=dom_id(song)%>">No data</td>
 		<% elsif latest_stream_event.status == "unresolved" %>
 			<%= render "songs/streams_loading", song: song %>
 		<% else %>
@@ -33,7 +33,7 @@
 		<% end %>
 
 		<% if !latest_genre_event %>
-			<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="genres_song_<%=song.id%>">No data</td>
+			<td class="whitespace-nowrap overflow-hidden py-4 px-3 text-sm text-black" id="genres_<%=dom_id(song)%>">No data</td>
 		<% elsif latest_genre_event.status == "unresolved" %>
 			<%= render "songs/genres_loading", song: song %>
 		<% else %>
@@ -42,7 +42,7 @@
 
 		<td class="whitespace-wrap py-4 px-3 text-sm text-black">
 			<% options = get_status_options %> 
-			<%= form_with(model: tracked_song, url: update_tracked_song_path(tracked_song), remote: :true, method: :patch, data: { controller: "authenticity auto-submit-status", action: "click->toggle#hide" }) do |f| %>
+			<%= form_with(id: "status_#{dom_id(song)}", model: tracked_song, url: update_tracked_song_path(tracked_song), remote: :true, method: :patch, data: { controller: "authenticity auto-submit-status", action: "click->toggle#hide" }) do |f| %>
 				<%= f.select :status, options_for_select(options, tracked_song.status), {}, { 
 					id: "status_select_#{song.id}", 
 					class: "border-0 bg-slate-100 rounded-full px-3 py-1 focus:ring-0 focus:outline-none focus:border-0 w-36 text-sm",
@@ -51,7 +51,7 @@
 			<% end %> 
 		</td>
 		<% if is_label then %>
-			<td class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>
+			<td id="added_by_<%= dom_id(song) %>" class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>
 		<% end %>
 		<td class="whitespace-wrap py-4 px-3 text-sm text-black">
 			<% if !is_label %>

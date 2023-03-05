@@ -1,23 +1,13 @@
-<%= turbo_frame_tag "songs" do %>
-	<table class="min-w-full divide-y divide-gray-300">
+<div id="leaderboard_table" data-controller="stream-animation">
+	<table class="min-w-full divide-y divide-gray-300" data-controller="leaderboard">
 		<thead>
 			<tr>
-				<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">
-					<%= render "songs/table_header", name: "name", label: "Song", is_label: is_label %>
-				</th>
-				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "daily_streams", label: "Daily Streams", is_label: is_label %>
-				</th>
-				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "genres", label: "Genre", is_label: is_label %>
-				</th>
-				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "status", label: "Status", is_label: is_label %>
-				</th>
+				<%= render "songs/table_header", title: "Song", name: "name" %>
+				<%= render "songs/table_header", title: "Daily Streams", name: "daily_streams" %>
+				<%= render "songs/table_header", title: "Genres", name: "genres" %>
+				<%= render "songs/table_header", title: "Status", name: "status" %>
 				<% if is_label then %>
-					<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-						<%= render "songs/table_header", name: "added_by", label: "Added by", is_label: is_label %>
-					</th>
+					<%= render "songs/table_header", title: "Added by", name: "added_by" %>
 				<% end %>
 			</tr>
 		</thead>
@@ -26,9 +16,9 @@
 				<tr><td><div class="mt-4">No songs added</div></td></tr>
 			<% else %>
 				<% songs.each do |song| %>
-					<%= render "songs/song", user: current_user, song: song, is_label: is_label, animate_in: false %>
+					<%= render "songs/song", user: user, song: song, is_label: is_label, animate_in: false %>
 				<% end %>
 			<% end %>
 		</tbody>
 	</table>
-<% end %>
+</div>
