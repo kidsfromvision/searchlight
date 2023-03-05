@@ -11,14 +11,16 @@ class ChartmetricRequestManager
         headers = {
           "Authorization" => "Bearer #{ChartmetricAuthManager.token}",
         }
+
         response =
           HTTParty.get(
             "https://api.chartmetric.com/api/track/#{song.spotify_id}/spotify/stats/most-history?isDomainId=true&type=streams#{since_query(last_updated)}",
             headers: headers,
           )
+
         stream_event.status = "success"
         stream_event.save
-        return response["obj"].first["data"] if !response & ["obj"].empty?
+        return response["obj"].first["data"] if !response["obj"]&.empty?
 
         stream_event.status = "failed"
         stream_event.save
