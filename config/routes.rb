@@ -34,18 +34,14 @@ Rails.application.routes.draw do
     get "users", to: "devise/sessions#new"
   end
 
-  get "list", to: "songs#list", as: "list_songs"
-  get "list_streams", to: "songs#list_streams", as: "list_streams"
-  get "label/list", to: "songs#label_list", as: "label_list_songs"
-  get "label/list_streams", to: "songs#label_list_streams", as: "label_list_streams"
-
   get "label", to: "songs#label", as: "label_leaderboard"
   get "label/archives", to: "songs#label_archives", as: "label_archives"
   get "archives", to: "songs#archives", as: "archives"
 
-  get "label_leaderboard_stream", to: "songs#label_stream", as: "label_leaderboard_stream"
+  get "label_leaderboard_stream",
+      to: "songs#label_stream",
+      as: "label_leaderboard_stream"
   get "stream", to: "songs#index_stream", as: "root_stream"
-
 
   get "account", to: "account#index", as: "account"
   post "account/reset_password",

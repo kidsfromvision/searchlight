@@ -30,14 +30,6 @@ class SongsController < ApplicationController
     @songs = label_archived_songs
   end
 
-  def list_streams
-    broadcast_sorted_table(is_label: false)
-  end
-
-  def label_list_streams
-    broadcast_sorted_table(is_label: true)
-  end
-
   def list
     render(
       partial: "songs/songs",
@@ -174,9 +166,9 @@ class SongsController < ApplicationController
       locals: {
         selected_title: "Label",
         path: root_stream_path,
-        is_archives: false, 
-        hide_search: false, 
-        title: "Leaderboard", 
+        is_archives: false,
+        hide_search: false,
+        title: "Leaderboard",
         hide_selector: false,
         user: current_user,
       },
@@ -191,9 +183,9 @@ class SongsController < ApplicationController
       locals: {
         selected_title: "Personal",
         path: label_leaderboard_stream_path,
-        is_archives: false, 
-        hide_search: false, 
-        title: "Leaderboard", 
+        is_archives: false,
+        hide_search: false,
+        title: "Leaderboard",
         hide_selector: false,
         user: current_user,
       },
@@ -206,9 +198,9 @@ class SongsController < ApplicationController
       target: "leaderboard_table",
       partial: "songs/songs",
       locals: {
-        songs: label_songs, 
+        songs: label_songs,
         is_label: true,
-        user: current_user
+        user: current_user,
       },
     )
   end
@@ -221,7 +213,7 @@ class SongsController < ApplicationController
       locals: {
         songs: user_songs,
         is_label: false,
-        user: current_user
+        user: current_user,
       },
     )
   end
@@ -234,9 +226,8 @@ class SongsController < ApplicationController
       locals: {
         songs: sort_songs(is_label ? label_songs : user_songs, params),
         is_label: is_label,
-        user: current_user
+        user: current_user,
       },
     )
   end
-
 end

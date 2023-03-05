@@ -3,20 +3,20 @@
 		<thead>
 			<tr>
 				<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">
-					<%= render "songs/table_header", name: "name", title: "Song", is_label: is_label %>
+					<%= render "songs/table_header", name: "name", title: "Song" %>
 				</th>
 				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "daily_streams", title: "Daily Streams", is_label: is_label %>
+					<%= render "songs/table_header", name: "daily_streams", title: "Daily Streams" %>
 				</th>
 				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "genres", title: "Genre", is_label: is_label %>
+					<%= render "songs/table_header", name: "genres", title: "Genre" %>
 				</th>
 				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "status", title: "Status", is_label: is_label %>
+					<%= render "songs/table_header", name: "status", title: "Status" %>
 				</th>
 				<% if is_label then %>
 					<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-						<%= render "songs/table_header", name: "added_by", title: "Added by", is_label: is_label %>
+						<%= render "songs/table_header", name: "added_by", title: "Added by" %>
 					</th>
 				<% end %>
 			</tr>
