@@ -82,46 +82,40 @@ class SongsController < ApplicationController
 
   def current_songs
     @current_songs ||=
-      (
-        if user_label.nil?
-          current_user.songs.where(
-            id:
-              TrackedSong.select(:song_id).where(
-                user_id: user_id,
-                archived: false,
-              ),
-          )
-        else
-          user_label.songs.where(
-            id:
-              TrackedSong.select(:song_id).where(
-                label_id: user_label.id,
-                archived: false,
-              ),
-          )
-        end
-      )
+      (if user_label.nil?
+        current_user.songs.where(
+          id: TrackedSong.select(:song_id).where(
+            user_id: user_id,
+            archived: false,
+          ),
+        )
+      else
+        user_label.songs.where(
+          id: TrackedSong.select(:song_id).where(
+            label_id: user_label.id,
+            archived: false,
+          ),
+        )
+      end)
   end
 
   def label_archived_songs
     @label_archived_songs ||=
       user_label.songs.where(
-        id:
-          TrackedSong.select(:song_id).where(
-            label_id: user_label.id,
-            archived: true,
-          ),
+        id: TrackedSong.select(:song_id).where(
+          label_id: user_label.id,
+          archived: true,
+        ),
       )
   end
 
   def user_archived_songs
     @user_archived_songs ||=
       current_user.songs.where(
-        id:
-          TrackedSong.select(:song_id).where(
-            user_id: current_user.id,
-            archived: true,
-          ),
+        id: TrackedSong.select(:song_id).where(
+          user_id: current_user.id,
+          archived: true,
+        ),
       )
   end
 
