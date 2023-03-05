@@ -8,8 +8,9 @@ class SongsController < ApplicationController
   end
 
   def index_stream
-    broadcast_personal_selected
+    broadcast_table_loading
     broadcast_personal_table
+    broadcast_personal_selected
   end
 
   def label
@@ -18,8 +19,9 @@ class SongsController < ApplicationController
   end
 
   def label_stream
-    broadcast_label_selected
+    broadcast_table_loading
     broadcast_label_table
+    broadcast_label_selected
   end
 
   def archives
@@ -210,6 +212,18 @@ class SongsController < ApplicationController
         is_label: is_label,
         user: current_user,
       },
+    )
+  end
+
+  def broadcast_table_loading
+    Turbo::StreamsChannel.broadcast_replace_to(
+      current_user,
+      target: "leaderboard_table",
+      partial: "songs/songs_loading",
+      locals: {
+        is_label: !user_label.present?,
+      },
+
     )
   end
 end

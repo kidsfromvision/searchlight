@@ -3,8 +3,6 @@
     line-height: 62px;
 }
 
-
-
 .cube {
     width: 15%;
     text-align: center;
@@ -12,7 +10,7 @@
     height: 50px;
     transition: transform 0.5s;
     transform-style: preserve-3d;
-    padding: 2px;
+    padding: 5px;
 }
 
 .flippety,
