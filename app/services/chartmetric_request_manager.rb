@@ -18,7 +18,7 @@ class ChartmetricRequestManager
           )
         stream_event.status = "success"
         stream_event.save
-        return response["obj"].first["data"] if !response["obj"].empty?
+        return response["obj"].first["data"] if !response&["obj"].empty?
 
         stream_event.status = "failed"
         stream_event.save
