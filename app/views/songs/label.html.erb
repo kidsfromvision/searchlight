@@ -1,5 +1,5 @@
 <%= render layout: "layouts/page" do %>
-	<%= render "shared/page_head", user: current_user, selected_title: 'Label', path: root_stream_path, is_archives: false, hide_search: false, title: "Leaderboard", hide_selector: false %>
+	<%= render "shared/page_head", user: current_user, is_label: true, path: root_stream_path, is_archives: false, hide_search: false, title: "Leaderboard", hide_selector: false %>
 	<%= turbo_stream_from @label %>
 	<%= turbo_frame_tag "body" do %>
 		<div class="mt-8 flex flex-col">
