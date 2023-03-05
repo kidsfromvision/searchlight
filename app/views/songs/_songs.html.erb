@@ -1,23 +1,13 @@
 <div id="leaderboard_table">
-	<table class="min-w-full divide-y divide-gray-300">
+	<table class="min-w-full divide-y divide-gray-300" data-controller="leaderboard">
 		<thead>
 			<tr>
-				<th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0">
-					<%= render "songs/table_header", name: "name", title: "Song" %>
-				</th>
-				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "daily_streams", title: "Daily Streams" %>
-				</th>
-				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "genres", title: "Genre" %>
-				</th>
-				<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-					<%= render "songs/table_header", name: "status", title: "Status" %>
-				</th>
+				<%= render "songs/table_header", title: "Song", name: "name" %>
+				<%= render "songs/table_header", title: "Daily Streams", name: "daily_streams" %>
+				<%= render "songs/table_header", title: "Genres", name: "genres" %>
+				<%= render "songs/table_header", title: "Status", name: "status" %>
 				<% if is_label then %>
-					<th scope="col" class="py-3.5 px-3 text-left text-sm font-semibold text-black">
-						<%= render "songs/table_header", name: "added_by", title: "Added by" %>
-					</th>
+					<%= render "songs/table_header", title: "Added by", name: "added_by" %>
 				<% end %>
 			</tr>
 		</thead>

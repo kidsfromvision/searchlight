@@ -1,3 +1,6 @@
-<div class="flex flex-row gap-2 items-center">
-	<%= title %>
-</div>
+<th scope="col" id="<%= name %>" class="<%= name == "name" ? "py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-black sm:pl-6 md:pl-0" : "py-3.5 px-3 text-left text-sm font-semibold text-black" %>">
+	<div class="flex flex-row gap-x-2 items-center cursor-pointer select-none">
+		<%= title %>
+		<%= render "songs/sort_arrows"%>
+	</div>
+</th>
