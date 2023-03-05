@@ -1,64 +1,35 @@
-.animate-row-in {
-    animation: fade-in 0.25s ease-out, slide-in 0.25s ease-out;
+/* Container box to set the sides relative to */
+.selector {
+    line-height: 62px;
 }
 
-.animate-row-out {
-    animation: fade-out 0.25s ease-out,
-        slide-out 0.25s ease-out;
+
+
+.cube {
+    width: 15%;
+    text-align: center;
+    margin: 0 auto;
+    height: 50px;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+    padding: 2px;
 }
 
-.animate-background {
-    animation: bg-color-in 0.25s ease-out;
+.flippety,
+.flop {
+    r-radius: 5px;
+    height: 50%;
+    width: 100%;
 }
 
-@keyframes fade-in {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
+.flippety {
+    transform: translateZ(25px);
 }
 
-@keyframes fade-out {
-    from {
-        opacity: 1;
-    }
-
-    to {
-        opacity: 0;
-    }
+.flop {
+    transform: rotateX(-90deg) translateZ(-25px);
 }
 
-@keyframes slide-in {
-    from {
-        transform: translateX(8rem);
-    }
-
-    to {
-        transform: translateX(0);
-    }
-}
-
-@keyframes slide-out {
-    from {
-        transform: translateX(0);
-    }
-
-    to {
-        transform: translateX(8rem);
-    }
-}
-
-@keyframes bg-color-in {
-    from {
-        background-color: #ffffff;
-        /* initial background color */
-    }
-
-    to {
-        background-color: #2d2d2d;
-        /* target background color */
-    }
+.cube:hover {
+    transform: rotateX(90deg);
 }

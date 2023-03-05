@@ -1,5 +1,5 @@
 <%= render layout: "layouts/page" do %>
-	<%= render "shared/page_head", user: current_user, selected_title: 'Personal', path: label_leaderboard_stream_path, is_archives: false, hide_search: false, title: "Leaderboard", hide_selector: false %>
+	<%= render "shared/page_head", user: current_user, is_label: false, path: label_leaderboard_stream_path, is_archives: false, hide_search: false, title: "Leaderboard", hide_selector: false %>
 	<%= turbo_frame_tag "body" do %>
 		<div class="mt-8 flex flex-col">
 			<div class="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">

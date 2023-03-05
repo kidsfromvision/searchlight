@@ -1,0 +1,19 @@
+<div  id="leaderboard_selector" class="leaderboard_selector cube hoverable flex flex-col gap-4 items-center align-center" data-controller="selector">
+  <div  data-stream-enter-class="fade-in" data-stream-exit-class="fade-out"  class="hoverable items-center justify-center flex flippety font-medium text-black shadow-2xl">
+    <% if is_label %>
+      Label 
+    <% else %>
+      Personal
+    <% end %>
+  </div>
+  <div class="items-end justify-center flex flop font-medium text-gray-500 shadow-2xl pt-8">
+  <%= button_to path, class: "font-medium h-[55px]", aria: { label: "your leaderboard" }, data: { turbo_stream: true }, method: :get do %>
+    <% if is_label %>
+      <%= "Personal" %>
+    <% else %>
+      <%= "Label" %>
+    <% end %>
+  <% end %>
+</div>
+
+</div>

@@ -1,24 +1,21 @@
 <div id="page_head" class="py-4 w-full flex flex-row justify-between items-center">
 	<div class="flex flex-row items-center gap-x-5 py-4">
 		<% if user.label_id %>
-			<% if asset_exists?(user.label.name + '.png') %>
-				<%= image_tag user.label.name + '.png', class: "h-4 sm:h-8 lg:h-12", alt: "#{user.label.name} logo" %>
+			<% if asset_exists?(user.label.name + ".png") %>
+				<%= image_tag user.label.name + ".png", class: "h-4 sm:h-8 lg:h-12", alt: "#{user.label.name} logo" %>
 			<% else %>
 				<%= user.label.name %>
 			<% end %>
 		<% else %>
 			<h2>Searchlight</h2>
-		<%end%>
+		<% end %>
 		<svg width="1" height="64" viewBox="0 0 1 64" fill="none" xmlns="http://www.w3.org/2000/svg">
 			<rect width="1" height="64" rx="0.5" fill="black"/>
 		</svg>
 		<% unless hide_selector %>
-			<div class="flex flex-col gap-4 items-start">
-				<%= button_to selected_title, path, class: "font-medium transition hover:text-black text-black", aria: { label: "your leaderboard"}, data: {turbo_stream: true}, method: :get %> 
+			<div class="pt-[18px] text-xl w-16 h-16">
+				<%= render "songs/leaderboard_selector", is_label: is_label, path: path %>
 			</div>
-			<svg width="1" height="64" viewBox="0 0 1 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<rect width="1" height="64" rx="0.5" fill="black"/>
-			</svg>
 		<% end %>
 		<h1 class="text-xl font-light"><%= title %></h1>
 	</div>
