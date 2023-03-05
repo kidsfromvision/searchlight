@@ -6,17 +6,28 @@ body {
   animation: fade-in 0.4s ease-out;
 }
 
-.animate-element-in {
-  animation: fade-in 0.4s ease-out, slide-in 0.4s ease-out;
+.fade-out {
+  animation: fade-out 0.4s ease-out;
 }
 
-.animate-element-out {
-  animation: fade-out 0.2s ease-out, slide-out 0.5s ease-out;
-}
 
 .animate-popover-out {
   animation: popover-out 0.3s ease-in-out;
 }
+
+.animate-table-in {
+  animation: fade-in 0.2s ease-out
+}
+
+.animate-table-out {
+  animation: fade-out 0.2s ease-out
+}
+
+.animate-table-down {
+  animation: slide-down 0.1s ease-out;
+}
+
+
 
 @keyframes popover-out {
   0% {
@@ -41,41 +52,24 @@ body {
 }
 
 .search-result.search-result-0 {
-  animation-delay: 0.02s;
+  animation-delay: 0.01s
 }
 
-.search-result.search-result-1 {
-  animation-delay: 0.04s;
-}
-
-.search-result.search-result-2 {
-  animation-delay: 0.06s;
-}
-
-.search-result.search-result-3 {
-  animation-delay: 0.08s;
-}
-
-.search-result.search-result-4 {
-  animation-delay: 0.10s;
-}
-
-.search-result.search-result-5 {
-  animation-delay: 0.12s;
-}
 
 .shimmer {
   color: grey;
-  display:inline-block;
-  -webkit-mask:linear-gradient(-60deg,#000 30%,#0005,#000 70%) right/300% 100%;
+  display: inline-block;
+  -webkit-mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/300% 100%;
   background-repeat: no-repeat;
   animation: shimmer 0.5s infinite;
   font-size: 50px;
-  max-width:200px;
+  max-width: 200px;
 }
 
 @keyframes shimmer {
-  100% {-webkit-mask-position:left}
+  100% {
+    -webkit-mask-position: left
+  }
 }
 
 /* and so on, for as many search results as you have */
@@ -115,7 +109,7 @@ body {
 
 @keyframes slide-in {
   from {
-    transform: translateX(-4rem);
+    transform: translateX(-2rem);
   }
 
   to {
@@ -129,7 +123,7 @@ body {
   }
 
   to {
-    transform: translateX(8rem);
+    transform: translateX(4rem);
   }
 }
 
@@ -164,6 +158,27 @@ body {
     /* target background color */
   }
 }
+
+@keyframes scale-in {
+  from {
+    transform: scale(0.9);
+  }
+
+  to {
+    transform: scale(1);
+  }
+}
+
+@keyframes scale-out {
+  from {
+    transform: scale(1);
+  }
+
+  to {
+    transform: scale(0.9);
+  }
+}
+
 
 .hover\:text-white:hover {
   color: white !important;

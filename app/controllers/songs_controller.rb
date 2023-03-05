@@ -63,67 +63,59 @@ class SongsController < ApplicationController
   def user_songs
     @user_songs ||=
       current_user.songs.where(
-        id:
-          TrackedSong.select(:song_id).where(
-            user_id: current_user.id,
-            archived: false,
-          ),
+        id: TrackedSong.select(:song_id).where(
+          user_id: current_user.id,
+          archived: false,
+        ),
       )
   end
 
   def label_songs
     @label_songs ||=
       user_label.songs.where(
-        id:
-          TrackedSong.select(:song_id).where(
-            label_id: user_label.id,
-            archived: false,
-          ),
+        id: TrackedSong.select(:song_id).where(
+          label_id: user_label.id,
+          archived: false,
+        ),
       )
   end
 
   def current_songs
     @current_songs ||=
-      (
-        if user_label.nil?
-          current_user.songs.where(
-            id:
-              TrackedSong.select(:song_id).where(
-                user_id: user_id,
-                archived: false,
-              ),
-          )
-        else
-          user_label.songs.where(
-            id:
-              TrackedSong.select(:song_id).where(
-                label_id: user_label.id,
-                archived: false,
-              ),
-          )
-        end
-      )
+      (if user_label.nil?
+        current_user.songs.where(
+          id: TrackedSong.select(:song_id).where(
+            user_id: user_id,
+            archived: false,
+          ),
+        )
+      else
+        user_label.songs.where(
+          id: TrackedSong.select(:song_id).where(
+            label_id: user_label.id,
+            archived: false,
+          ),
+        )
+      end)
   end
 
   def label_archived_songs
     @label_archived_songs ||=
       user_label.songs.where(
-        id:
-          TrackedSong.select(:song_id).where(
-            label_id: user_label.id,
-            archived: true,
-          ),
+        id: TrackedSong.select(:song_id).where(
+          label_id: user_label.id,
+          archived: true,
+        ),
       )
   end
 
   def user_archived_songs
     @user_archived_songs ||=
       current_user.songs.where(
-        id:
-          TrackedSong.select(:song_id).where(
-            user_id: current_user.id,
-            archived: true,
-          ),
+        id: TrackedSong.select(:song_id).where(
+          user_id: current_user.id,
+          archived: true,
+        ),
       )
   end
 
@@ -161,16 +153,11 @@ class SongsController < ApplicationController
   def broadcast_label_selected
     Turbo::StreamsChannel.broadcast_replace_later_to(
       current_user,
-      target: "page_head",
-      partial: "shared/page_head",
+      target: "leaderboard_selector",
+      partial: "songs/leaderboard_selector",
       locals: {
-        selected_title: "Label",
+        is_label: true,
         path: root_stream_path,
-        is_archives: false,
-        hide_search: false,
-        title: "Leaderboard",
-        hide_selector: false,
-        user: current_user,
       },
     )
   end
@@ -178,16 +165,11 @@ class SongsController < ApplicationController
   def broadcast_personal_selected
     Turbo::StreamsChannel.broadcast_replace_later_to(
       current_user,
-      target: "page_head",
-      partial: "shared/page_head",
+      target: "leaderboard_selector",
+      partial: "songs/leaderboard_selector",
       locals: {
-        selected_title: "Personal",
+        is_label: false,
         path: label_leaderboard_stream_path,
-        is_archives: false,
-        hide_search: false,
-        title: "Leaderboard",
-        hide_selector: false,
-        user: current_user,
       },
     )
   end
