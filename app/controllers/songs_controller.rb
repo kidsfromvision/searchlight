@@ -200,7 +200,6 @@ class SongsController < ApplicationController
       locals: {
         is_label: !user_label.present?,
       },
-
     )
   end
 end
