@@ -1,35 +1,30 @@
 /* Container box to set the sides relative to */
 .selector {
-    line-height: 62px;
+  line-height: 62px;
 }
 
-
-
 .cube {
-    width: 15%;
-    text-align: center;
-    margin: 0 auto;
-    height: 50px;
-    transition: transform 0.5s;
-    transform-style: preserve-3d;
-    padding: 2px;
+  text-align: center;
+  height: 48px;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
 }
 
 .flippety,
 .flop {
-    r-radius: 5px;
-    height: 50%;
-    width: 100%;
+  r-radius: 5px;
+  height: 50%;
+  width: 100%;
 }
 
 .flippety {
-    transform: translateZ(25px);
+  transform: translateZ(25px);
 }
 
 .flop {
-    transform: rotateX(-90deg) translateZ(-25px);
+  transform: rotateX(-90deg) translateZ(-25px);
 }
 
 .cube:hover {
-    transform: rotateX(90deg);
+  transform: rotateX(90deg);
 }
