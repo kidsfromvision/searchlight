@@ -1,12 +1,17 @@
-<div id="leaderboard_table">
+<div id="archives_loading">
 	<table class="min-w-full divide-y divide-gray-300">
 		<thead>
 			<tr>
-				<%= render "songs/table_header", name: "name", title: "Song"%>
-				<%= render "songs/table_header", name: "daily_streams", title: "Daily Streams"%>
+				<th class="<%= archives_table_classes(:name)%>">Song</th>
+				<th class="<%= archives_table_classes(:artist)%>">Artist</th>
+				<% if is_label %>
+					<th class=<%= archives_table_classes(:added_by) %>>
+						Added by
+					</th>
+				<% end %>
 			</tr>
 		</thead>
-		<tbody id="<%= is_label ? "label_table" : "user_table" %>" class="divide-y divide-gray-200">
+		<tbody id="<%= is_label ? "label_archives_table" : "user_archives_table" %>" class="divide-y divide-gray-200">
 			<% 8.times do %>
 				<tr> 
 					<td class="w-96 whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">

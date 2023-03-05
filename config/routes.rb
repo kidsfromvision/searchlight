@@ -36,7 +36,11 @@ Rails.application.routes.draw do
 
   get "label", to: "songs#label", as: "label_leaderboard"
   get "label/archives", to: "songs#label_archives", as: "label_archives"
+  get "label/archives_stream",
+      to: "songs#label_archives_stream",
+      as: "label_archives_stream"
   get "archives", to: "songs#archives", as: "archives"
+  get "archives_stream", to: "songs#archives_stream", as: "archives_stream"
 
   get "label_leaderboard_stream",
       to: "songs#label_stream",
