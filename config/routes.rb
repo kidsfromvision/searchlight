@@ -35,7 +35,9 @@ Rails.application.routes.draw do
   end
 
   get "list", to: "songs#list", as: "list_songs"
+  get "list_streams", to: "songs#list_streams", as: "list_streams"
   get "label/list", to: "songs#label_list", as: "label_list_songs"
+  get "label/list_streams", to: "songs#label_list_streams", as: "label_list_streams"
 
   get "label", to: "songs#label", as: "label_leaderboard"
   get "label/archives", to: "songs#label_archives", as: "label_archives"

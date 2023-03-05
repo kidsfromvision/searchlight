@@ -30,6 +30,14 @@ class SongsController < ApplicationController
     @songs = label_archived_songs
   end
 
+  def list_streams
+    broadcast_sorted_table(is_label: false)
+  end
+
+  def label_list_streams
+    broadcast_sorted_table(is_label: true)
+  end
+
   def list
     render(
       partial: "songs/songs",
@@ -213,6 +221,19 @@ class SongsController < ApplicationController
       locals: {
         songs: user_songs,
         is_label: false,
+        user: current_user
+      },
+    )
+  end
+
+  def broadcast_sorted_table(is_label:)
+    Turbo::StreamsChannel.broadcast_replace_to(
+      current_user,
+      target: "leaderboard_table",
+      partial: "songs/songs",
+      locals: {
+        songs: sort_songs(is_label ? label_songs : user_songs, params),
+        is_label: is_label,
         user: current_user
       },
     )
