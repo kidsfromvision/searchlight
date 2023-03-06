@@ -1,0 +1,18 @@
+<div id="archive_selector" class="select-none leaderboard_selector cube flex flex-col gap-4 items-center align-center">
+  <div data-stream-enter-class="fade-in" data-stream-exit-class="fade-out"  class="items-center justify-center flex flippety font-semibold text-black">
+    <% if is_label %>
+      Label 
+    <% else %>
+      Personal
+    <% end %>
+  </div>
+  <div class="items-end justify-center flex flop font-medium text-gray-500">
+  	<%= button_to path, class: "font-medium h-12", aria: { label: "your archives" }, data: { turbo_stream: true }, method: :get do %>
+  	  <% if is_label %>
+  	    <%= "Personal" %>
+  	  <% else %>
+  	    <%= "Label" %>
+  	  <% end %>
+  	<% end %>
+	</div>
+</div>

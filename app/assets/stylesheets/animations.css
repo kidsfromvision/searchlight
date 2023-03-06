@@ -28,3 +28,29 @@
 .cube:hover {
   transform: rotateX(90deg);
 }
+
+
+
+/* tick  */
+.animation-ctn {
+  text-align: center;
+  margin-top: 5em;
+}
+
+@keyframes checkmark {
+  0% {
+    stroke-dashoffset: 100px
+  }
+
+  100% {
+    stroke-dashoffset: 0px
+  }
+}
+
+.inlinesvg .svg svg {
+  display: inline
+}
+
+.icon--order-success svg polyline {
+  animation: checkmark 0.1s ease-in-out 0.25s backwards
+}
