@@ -20,10 +20,10 @@ export default class extends Controller {
     buttons.forEach((button) => {
       console.log(button);
       button.classList.remove("text-black");
-      button.classList.add("text-gray-400");
+      button.classList.add("text-gray-500", "opacity-80");
     });
 
     event.srcElement.classList.add("text-black");
-    event.srcElement.classList.remove("text-gray-400");
+    event.srcElement.classList.remove("text-gray-500", "opacity-80");
   }
 }
