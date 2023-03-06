@@ -1,13 +1,13 @@
 <%= turbo_stream_from current_user %>
 <%= turbo_stream_from :streams %>
-<nav class="flex flex-col sm:flex-row w-full justify-between py-3 gap-y-4 items-center">
-	<div class="flex flex-row gap-x-4 sm:gap-x-8 items-center">
-		<%= button_to "Leaderboard", root_path, class: "text-black font-semibold", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "leaderboard"}, method: :get%>
+<nav class="flex flex-col sm:flex-row w-full justify-between py-3 gap-y-4 items-center" id="nav">
+	<div class="flex flex-row gap-x-4 sm:gap-x-8 items-center" data-controller="nav">
+		<%= button_to "Leaderboard", root_path, id: "leaderboard_link", class: "text-black font-semibold transition", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "leaderboard"}, method: :get%>
 		<% if current_user.role == "label_admin" then %>
-				<%= button_to "Admin", admin_root_path, class: "text-black font-semibold", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "admin"}, method: :get%>
+				<%= button_to "Admin", admin_root_path, id: "admin_link", class: "text-gray-400 font-semibold transition", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "admin"}, method: :get%>
 		<% end %>
-		<%= button_to "Account", account_path, class: "text-black font-semibold", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "account"}, method: :get %> 
-		<%= button_to "Archives", archives_path, class: "text-black font-medium", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "archives"}, method: :get %>
+		<%= button_to "Account", account_path, id: "account_link", class: "text-gray-400 font-semibold transition", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "account"}, method: :get %> 
+		<%= button_to "Archives", archives_path, id: "archives_link", class: "text-gray-400 font-semibold transition", data: { turbo_frame: "page", turbo_action: "advance" }, aria: { label: "archives"}, method: :get %>
 	</div>
 	<div class="flex flex-row items-center">
 		<%= form_with url: search_popover_path, data: { controller: "search", action: "input->search#submit", turbo_stream: true },  class: "flex flex-row items-center relative", method: :get do |form| %>
@@ -26,6 +26,4 @@
 			</svg>
 		<% end %>
 	</div>
-	
-
 </nav>
