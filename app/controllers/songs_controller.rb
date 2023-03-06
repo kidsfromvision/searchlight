@@ -41,7 +41,7 @@ class SongsController < ApplicationController
   def label_archives_stream
     broadcast_label_archives_loading
     broadcast_label_archives
-    broadcast_personal_selected archives_stream_path
+    broadcast_label_selected archives_stream_path
   end
 
   private
@@ -55,19 +55,18 @@ class SongsController < ApplicationController
       current_user
         .songs
         .where(
-          id:
-            TrackedSong.select(:song_id).where(
-              user_id: current_user.id,
-              archived: false,
-            ),
+          id: TrackedSong.select(:song_id).where(
+            user_id: current_user.id,
+            archived: false,
+          ),
         )
         .sort_by do |song|
-          if song.recent_daily_streams.nil? || song.stream_gap_days.nil?
-            0
-          else
-            (song.recent_daily_streams / song.stream_gap_days).to_i
-          end
+        if song.recent_daily_streams.nil? || song.stream_gap_days.nil?
+          0
+        else
+          (song.recent_daily_streams / song.stream_gap_days).to_i
         end
+      end
         .reverse
   end
 
@@ -76,64 +75,57 @@ class SongsController < ApplicationController
       user_label
         .songs
         .where(
-          id:
-            TrackedSong.select(:song_id).where(
-              label_id: user_label.id,
-              archived: false,
-            ),
+          id: TrackedSong.select(:song_id).where(
+            label_id: user_label.id,
+            archived: false,
+          ),
         )
         .sort_by do |song|
-          if song.recent_daily_streams.nil? || song.stream_gap_days.nil?
-            0
-          else
-            (song.recent_daily_streams / song.stream_gap_days).to_i
-          end
+        if song.recent_daily_streams.nil? || song.stream_gap_days.nil?
+          0
+        else
+          (song.recent_daily_streams / song.stream_gap_days).to_i
         end
+      end
         .reverse
   end
 
   def current_songs
     @current_songs ||=
-      (
-        if user_label.nil?
-          current_user.songs.where(
-            id:
-              TrackedSong.select(:song_id).where(
-                user_id: user_id,
-                archived: false,
-              ),
-          )
-        else
-          user_label.songs.where(
-            id:
-              TrackedSong.select(:song_id).where(
-                label_id: user_label.id,
-                archived: false,
-              ),
-          )
-        end
-      )
+      (if user_label.nil?
+        current_user.songs.where(
+          id: TrackedSong.select(:song_id).where(
+            user_id: user_id,
+            archived: false,
+          ),
+        )
+      else
+        user_label.songs.where(
+          id: TrackedSong.select(:song_id).where(
+            label_id: user_label.id,
+            archived: false,
+          ),
+        )
+      end)
   end
 
   def label_archived_songs
     @label_archived_songs ||=
       user_label.songs.where(
-        id:
-          TrackedSong.select(:song_id).where(
-            label_id: user_label.id,
-            archived: true,
-          ),
+        id: TrackedSong.select(:song_id).where(
+          label_id: user_label.id,
+          archived: true,
+        ),
       )
   end
 
   def user_archived_songs
     @user_archived_songs ||=
       current_user.songs.where(
-        id:
-          TrackedSong.select(:song_id).where(
-            user_id: current_user.id,
-            archived: true,
-          ),
+        id: TrackedSong.select(:song_id).where(
+          user_id: current_user.id,
+          archived: true,
+        ),
       )
   end
 
@@ -147,7 +139,7 @@ class SongsController < ApplicationController
       target: "archives",
       partial: "songs/archives_loading",
       locals: {
-        is_label: true,
+        is_label: false,
       },
     )
   end
@@ -192,7 +184,7 @@ class SongsController < ApplicationController
   def broadcast_label_selected(path)
     Turbo::StreamsChannel.broadcast_replace_later_to(
       current_user,
-      target: "leaderboard_selector",
+      target: "selector",
       partial: "songs/leaderboard_selector",
       locals: {
         is_label: true,
@@ -204,7 +196,7 @@ class SongsController < ApplicationController
   def broadcast_personal_selected(path)
     Turbo::StreamsChannel.broadcast_replace_later_to(
       current_user,
-      target: "leaderboard_selector",
+      target: "selector",
       partial: "songs/leaderboard_selector",
       locals: {
         is_label: false,
