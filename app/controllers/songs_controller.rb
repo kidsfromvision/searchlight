@@ -1,6 +1,12 @@
 class SongsController < ApplicationController
   before_action :authenticate_user!
-  before_action :require_label, only: %i[label label_archives]
+  before_action :require_label,
+                only: %i[
+                  label
+                  label_archives
+                  label_stream
+                  label_archives_stream
+                ]
 
   def index
     @label = user_label
@@ -182,7 +188,7 @@ class SongsController < ApplicationController
   end
 
   def broadcast_label_selected(path)
-    Turbo::StreamsChannel.broadcast_replace_later_to(
+    Turbo::StreamsChannel.broadcast_replace_to(
       current_user,
       target: "selector",
       partial: "songs/leaderboard_selector",
@@ -194,7 +200,7 @@ class SongsController < ApplicationController
   end
 
   def broadcast_personal_selected(path)
-    Turbo::StreamsChannel.broadcast_replace_later_to(
+    Turbo::StreamsChannel.broadcast_replace_to(
       current_user,
       target: "selector",
       partial: "songs/leaderboard_selector",
