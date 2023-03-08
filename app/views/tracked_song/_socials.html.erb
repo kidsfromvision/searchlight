@@ -1,0 +1,20 @@
+<div class="flex flex-row gap-x-4">
+    <% unless artist.instagram_url.nil? %>
+        <div class="flex flex-col items-center">
+            <%= link_to artist.instagram_url, class: "fa fa-instagram", target: "_blank" do %>
+            <% end %>
+        </div>
+    <% end %>
+    <% unless artist.twitter_url.nil? %>
+        <div class="flex flex-col items-center">
+            <%= link_to artist.twitter_url, class: "fa fa-twitter", target: "_blank" do %>
+            <% end %>
+        </div>
+    <% end %>   
+    <% unless artist.facebook_url.nil? %>
+        <div class="flex flex-col items-center">
+            <%= link_to artist.facebook_url, class: "fa fa-facebook", target: "_blank" do %>
+            <% end %>
+        </div>
+    <% end %>
+</div>
