@@ -3,7 +3,7 @@
 <% latest_genre_event = song.song_request_events.where(data_requested: "genres").last %>
 <% unless tracked_song.nil? %>
 <tr id="<%= dom_id(song) %>" class=<%= animate_in ? 'animate-element-in' : "search-result search-result-0" %>>
-		<td class="w-96 whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
+		<td class="w-80 whitespace-nowrap overflow-hidden py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0">
 			<%= link_to "/tracked_song/#{tracked_song.id}" do %>
 				<div class="flex flex-row gap-4 items-center justify-between group">
 					<div class="flex flex-row gap-4 items-center">
@@ -49,6 +49,9 @@
 					data: { "auto-submit-status-target": "statusSelect" }
 				}%> 
 			<% end %> 
+		</td>
+		<td class="whitespace-wrap py-4 px-3 text-black text-xs">
+			<%= song.last_updated_days_ago == 0 ? "Today" : song.last_updated_days_ago.to_s + "D" %>
 		</td>
 		<% if is_label then %>
 			<td id="added_by_<%= dom_id(song) %>" class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>

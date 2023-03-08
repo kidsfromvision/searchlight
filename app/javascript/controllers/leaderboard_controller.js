@@ -60,6 +60,8 @@ export default class extends Controller {
       this.sortByStatus(direction);
     } else if (columnName === "added_by") {
       this.sortByAddedBy(direction);
+    } else if (columnName === "updated_at") {
+      this.sortByUpdatedAt(direction);
     }
   }
 
@@ -142,6 +144,25 @@ export default class extends Controller {
   }
 
   sortByAddedBy(direction) {
+    var table = this.element;
+    var rows = Array.from(table.rows).slice(1);
+    var cols = Array.from(table.rows[0].cells).length;
+    var sortedRows = rows.sort((a, b) => {
+      if (direction === "asc") {
+        return a.cells[cols - 1].innerText.localeCompare(
+          b.cells[cols - 1].innerText
+        );
+      } else if (direction === "desc") {
+        return b.cells[cols - 1].innerText.localeCompare(
+          a.cells[cols - 1].innerText
+        );
+      }
+    });
+    rows.forEach((row) => row.remove());
+    sortedRows.forEach((row) => table.appendChild(row));
+  }
+
+  sortByUpdatedAt(direction) {
     var table = this.element;
     var rows = Array.from(table.rows).slice(1);
     var sortedRows = rows.sort((a, b) => {
