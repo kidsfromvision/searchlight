@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_03_08_210432) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_08_220734) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,20 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_210432) do
     t.string "spotify_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "instagram_url"
+    t.string "facebook_url"
+    t.string "twitter_url"
+  end
+
+  create_table "geographies", force: :cascade do |t|
+    t.string "country"
+    t.string "city"
+    t.integer "listeners"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "artist_id"
+    t.string "region"
+    t.index ["artist_id"], name: "index_geographies_on_artist_id"
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -67,15 +81,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_210432) do
 
   create_table "songs", force: :cascade do |t|
     t.string "name"
+    t.string "artist"
     t.string "spotify_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "art_url"
     t.string "icon_url"
+    t.string "artist_id"
     t.date "released"
     t.string "genres"
-    t.bigint "artist_id"
-    t.index ["artist_id"], name: "index_songs_on_artist_id"
   end
 
   create_table "spotify_api_tokens", force: :cascade do |t|
@@ -119,11 +133,11 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_210432) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "geographies", "artists"
   add_foreign_key "invitations", "labels"
   add_foreign_key "invitations", "users"
   add_foreign_key "song_request_events", "songs"
   add_foreign_key "song_streams", "songs"
-  add_foreign_key "songs", "artists"
   add_foreign_key "tracked_songs", "labels"
   add_foreign_key "tracked_songs", "songs"
   add_foreign_key "tracked_songs", "users"

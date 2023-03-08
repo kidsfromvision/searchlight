@@ -14,13 +14,14 @@ class SongController < ApplicationController
         spotify_id: artist_params[:artist_spotify_id],
       ) { |artist| artist.attributes = artist_params }
 
-    puts "HITTING HERE HITTING HERE", artist_params
     raise "Artist failed to save" unless artist.save
 
     song =
       Song.find_or_create_by(spotify_id: song_params[:spotify_id]) do |song|
         song.attributes = { artist_id: artist.id }.merge(song_params)
       end
+
+    EngineRequestManager.create_artist_metadata(artist.id)
 
     raise "Song failed to save" unless song.save
 
