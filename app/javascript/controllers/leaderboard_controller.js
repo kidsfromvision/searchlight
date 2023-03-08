@@ -167,9 +167,15 @@ export default class extends Controller {
     var rows = Array.from(table.rows).slice(1);
     var sortedRows = rows.sort((a, b) => {
       if (direction === "asc") {
-        return a.cells[4].innerText.localeCompare(b.cells[4].innerText);
+        return (
+          parseFloat(a.cells[4].innerText.replace("D", "")) -
+          parseFloat(b.cells[4].innerText.replace("D", ""))
+        );
       } else if (direction === "desc") {
-        return b.cells[4].innerText.localeCompare(a.cells[4].innerText);
+        return (
+          parseFloat(b.cells[4].innerText.replace("D", "")) -
+          parseFloat(a.cells[4].innerText.replace("D", ""))
+        );
       }
     });
     rows.forEach((row) => row.remove());
