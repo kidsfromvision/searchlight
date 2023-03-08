@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_20_231614) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_08_201413) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -20,6 +20,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_20_231614) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "provider"
+  end
+
+  create_table "artists", force: :cascade do |t|
+    t.string "name"
+    t.string "spotify_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "invitations", force: :cascade do |t|
@@ -60,15 +67,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_20_231614) do
 
   create_table "songs", force: :cascade do |t|
     t.string "name"
-    t.string "artist"
+    t.string "artist_name"
     t.string "spotify_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "art_url"
     t.string "icon_url"
-    t.string "artist_id"
+    t.string "artist_spotify_id"
     t.date "released"
     t.string "genres"
+    t.bigint "artist_id"
+    t.index ["artist_id"], name: "index_songs_on_artist_id"
   end
 
   create_table "spotify_api_tokens", force: :cascade do |t|
@@ -116,6 +125,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_20_231614) do
   add_foreign_key "invitations", "users"
   add_foreign_key "song_request_events", "songs"
   add_foreign_key "song_streams", "songs"
+  add_foreign_key "songs", "artists"
   add_foreign_key "tracked_songs", "labels"
   add_foreign_key "tracked_songs", "songs"
   add_foreign_key "tracked_songs", "users"

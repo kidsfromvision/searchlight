@@ -9,9 +9,17 @@ class SongController < ApplicationController
   def create
     broadcast_search_result_icon_loading
 
+    artist =
+      Artist.find_or_create_by(
+        spotify_id: artist_params[:artist_spotify_id],
+      ) { |artist| artist.attributes = artist_params }
+
+    puts "HITTING HERE HITTING HERE", artist_params
+    raise "Artist failed to save" unless artist.save
+
     song =
       Song.find_or_create_by(spotify_id: song_params[:spotify_id]) do |song|
-        song.attributes = song_params
+        song.attributes = { artist_id: artist.id }.merge(song_params)
       end
 
     raise "Song failed to save" unless song.save
@@ -35,15 +43,15 @@ class SongController < ApplicationController
 
   def song_params
     @song_params ||=
-      params.permit(
-        :name,
-        :artist,
-        :artist_id,
-        :art_url,
-        :icon_url,
-        :spotify_id,
-        :released,
-      )
+      params.permit(:name, :art_url, :icon_url, :spotify_id, :released)
+  end
+
+  def artist_params
+    request_params = params.permit(:artist_name, :artist_spotify_id)
+    @artist_params = {
+      name: request_params[:artist_name],
+      spotify_id: request_params[:artist_spotify_id],
+    }
   end
 
   def require_label

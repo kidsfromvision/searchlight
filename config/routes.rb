@@ -11,7 +11,7 @@ Rails.application.routes.draw do
 
   post "/invitation", to: "invitation#create", as: "create_invitation"
 
-  post "/song", to: "song#create"
+  post "/song", to: "song#create", as: "create_song"
 
   get "/tracked_song/:id", to: "tracked_song#index", as: "tracked_song"
   patch "/tracked_song/:id",
