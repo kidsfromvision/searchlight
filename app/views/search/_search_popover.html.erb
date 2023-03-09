@@ -42,7 +42,7 @@
               </tbody>
             </table>
             <div class="flex justify-center pt-4">
-              <%= link_to "View all results", search_path(query: query), class: "text-sm text-gray-400 hover:text-gray-500" %>
+              <%= link_to "View all results", search_path(query: URI.decode_uri_component(query)), class: "text-sm text-gray-400 hover:text-gray-500" %>
             </div>
           </div>
         </div>
