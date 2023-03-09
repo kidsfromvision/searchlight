@@ -51,7 +51,7 @@ class SearchController < ApplicationController
       locals: {
         results: results,
         previously_added_songs: previously_added_songs,
-        query: URI.encode_uri_component(params[:query]),
+        query: params[:query],
       },
     )
   end

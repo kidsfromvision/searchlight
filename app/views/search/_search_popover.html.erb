@@ -9,7 +9,6 @@
               <tbody>
                 <% results.each_with_index do |result, index| %>
                   <% unless result["album"]["images"].empty? %>
-
                     <tr class="search-result search-result-0">
                       <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-black sm:pl-6 md:pl-0 w-80">
                         <div class="flex flex-row gap-4 items-center">
@@ -42,7 +41,7 @@
               </tbody>
             </table>
             <div class="flex justify-center pt-4">
-              <%= link_to "View all results", search_path(query: URI.decode_uri_component(query)), class: "text-sm text-gray-400 hover:text-gray-500" %>
+              <%= link_to "View all results", search_path(query: query), class: "text-sm text-gray-400 hover:text-gray-500" %>
             </div>
           </div>
         </div>
