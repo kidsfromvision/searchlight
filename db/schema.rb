@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_220734) do
 
   create_table "geographies", force: :cascade do |t|
     t.string "country"
+    t.string "string"
     t.string "city"
     t.integer "listeners"
     t.datetime "created_at", null: false
@@ -130,7 +131,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_220734) do
     t.string "name"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["label_id"], name: "index_users_on_label_id"
-    t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["reset_password_token"],
+            name: "index_users_on_reset_password_token",
+            unique: true
   end
 
   add_foreign_key "geographies", "artists"
