@@ -1,28 +1,24 @@
 <%= render layout: "layouts/page" do %>
 	<% if @tracked_song then %>
 		<div class="w-full flex flex-col gap-y-4 items-center min-h-screen -mt-16 justify-center">
-			<div class="flex flex-row w-full justify-center">
-				<div class="flex flex-col items-center mr-20">
-					<div class="bg-slate-gray-100">
-						<%= render partial: "tracked_song/socials", locals: { artist: @tracked_song.song.artist } %>
-					</div>
-					<%= image_tag @tracked_song.song.art_url, class: "h-80 w-80 shadow-lg", alt: "#{@tracked_song.song.name} album art" %>
-
-					<div class= "text-xl font-medium">
+			<div class="flex flex-col items-center sm:items-start sm:flex-row w-full justify-center gap-16">
+				<div class="flex flex-col items-center">
+					<%= image_tag @tracked_song.song.art_url, class: "h-80 w-80 shadow-lg resize", alt: "#{@tracked_song.song.name} album art" %>
+					<div class= "text-xl font-medium mt-4">
 						<%= @tracked_song.song.name %>
 					</div>
-					<div class="text-gray-600">
+					<div class="text-gray-600 mb-4">
 						<%= @tracked_song.song.artist.name %>
 					</div>
-					<%= button_to "Untrack this song", update_tracked_song_path(@tracked_song), class: "text-red-700 font-bold", aria: { label: "remove from leaderboard"}, method: :delete %>
-					<%= button_to "Archive song", archive_tracked_song_path(@tracked_song), class: "text-black font-medium", method: :patch, params: { tracked_song: { archived: true } }, aria: { label: "archive"} %>
-			
+					<div class="flex flex-col items-center gap-y-2">
+						<%= button_to "Untrack this song", update_tracked_song_path(@tracked_song), class: "text-red-700 font-bold", aria: { label: "remove from leaderboard"}, method: :delete %>
+						<%= button_to "Archive song", archive_tracked_song_path(@tracked_song), class: "text-black font-medium", method: :patch, params: { tracked_song: { archived: true } }, aria: { label: "archive"} %>
+						<%= render partial: "tracked_song/socials", locals: { artist: @tracked_song.song.artist } %>
+					</div>
 				</div>
-				<div class="w-96 h-96 bg-slate-gray-100 mr-20 ">
+				<div class="w-96 bg-slate-gray-100">
 					<%= render partial: "tracked_song/geographies_table", locals: { artist: @tracked_song.song.artist } %>
 				</div>
-				
-
 			</div>
 		</div>
 	<% else %>

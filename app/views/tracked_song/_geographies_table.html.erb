@@ -1,27 +1,24 @@
-<div> 
-    <table class="min-w-full divide-y divide-gray-300">
-		<thead>
+<table class="min-w-full divide-y divide-gray-300">
+	<thead>
+		<tr>
+			<th class="text-left font-medium text-sm pb-2">City</th>
+			<th class="text-left font-medium text-sm pb-2">Country</th>
+			<th class="text-left font-medium text-sm pb-2">Listeners</th>
+		</tr>
+	</thead>
+	<tbody>
+		<% artist.geographies.each do |geography| %>
 			<tr>
-				<%= render "songs/table_header", name: "city", title: "City" %>
-				<%= render "songs/table_header", name: "country", title: "Country" %>
-                <%= render "songs/table_header", name: "listeners", title: "Listeners" %>
+				<td class="py-4">
+						<%= geography.city %>
+				</td>
+				<td class="px-1 py-4">
+						<%= geography.country %>
+				</td>
+				<td class="px-1 py-4">
+						<%= number_with_delimiter(geography.listeners) %>
+				</td>
 			</tr>
-		</thead>
-		<tbody>
-            <% artist.geographies.each do |geography| %>
-                <tr>
-                    <td class="px-2 py-4">
-                        <%= geography.city %>
-                    </td>
-                    <td class="px-6 py-4">
-                        <%= geography.country %>
-                    </td>
-                    <td class="px-2 py-4">
-                        <%= number_with_delimiter(geography.listeners) %>
-                    </td>
-                </tr>
-            <% end %>
-        </tbody>
-
-    </table>
-</div>
+		<% end %>
+	</tbody>
+</table>
