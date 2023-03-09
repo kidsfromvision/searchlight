@@ -34,7 +34,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_08_220734) do
 
   create_table "geographies", force: :cascade do |t|
     t.string "country"
-    t.string "string"
     t.string "city"
     t.integer "listeners"
     t.datetime "created_at", null: false
