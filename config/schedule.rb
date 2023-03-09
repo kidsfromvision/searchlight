@@ -18,13 +18,3 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-
-ENV.each_key { |key| env key.to_sym, ENV[key] }
-
-set :environment, ENV["RAILS_ENV"]
-
-set :output, "log/cron_log.log"
-
-every 1.day at: "9:00 am" do
-  runner "ChartmetricAllStreamsJob.perform_now"
-end

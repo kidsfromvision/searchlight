@@ -16,7 +16,7 @@ class SearchController < ApplicationController
   private
 
   def get_results(limit = 10)
-    query = params[:query]
+    query = URI.encode_uri_component(params[:query])
     if query.blank?
       @results = []
     else
@@ -51,7 +51,7 @@ class SearchController < ApplicationController
       locals: {
         results: results,
         previously_added_songs: previously_added_songs,
-        query: params[:query],
+        query: URI.encode_uri_component(params[:query]),
       },
     )
   end
