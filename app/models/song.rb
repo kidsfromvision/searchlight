@@ -77,10 +77,6 @@ class Song < ApplicationRecord
     stream_gap_days == 1 && present_gap_days == 0
   end
 
-  def last_updated_days_ago
-    ((Time.now - self.updated_at) / 60 / 60 / 24).to_i
-  end
-
   private
 
   def recent_streams

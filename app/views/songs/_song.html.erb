@@ -51,7 +51,7 @@
 			<% end %> 
 		</td>
 		<td class="whitespace-wrap py-4 px-3 text-black text-xs">
-			<%= song.last_updated_days_ago == 0 ? "Today" : song.last_updated_days_ago.to_s + "D" %>
+			<%= tracked_song.last_updated_days_ago == 0 ? "Today" : tracked_song.last_updated_days_ago.to_s + "D" %>
 		</td>
 		<% if is_label then %>
 			<td id="added_by_<%= dom_id(song) %>" class="whitespace-wrap py-4 px-3 text-sm text-black"><%=User.find(tracked_song.user_id).name.split.map(&:first).join%></td>

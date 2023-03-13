@@ -81,4 +81,8 @@ class TrackedSong < ApplicationRecord
       )
     end
   end
+
+  def last_updated_days_ago
+    ((Time.now - self.updated_at) / 60 / 60 / 24).to_i
+  end
 end
