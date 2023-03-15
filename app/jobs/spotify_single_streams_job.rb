@@ -21,6 +21,7 @@ class SpotifySingleStreamsJob < ApplicationJob
       stream_event.status = "failure"
       stream_event.save
     end
+
     song.broadcast_streams
   end
 end

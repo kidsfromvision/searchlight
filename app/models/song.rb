@@ -67,9 +67,13 @@ class Song < ApplicationRecord
 
   def stream_gap_days
     unless recent_streams.nil?
-      (
+      if (
+           (recent_streams.first.date - recent_streams.last.date) / 60 / 60 / 24
+         ).to_i == 0
+        1
+      else
         (recent_streams.first.date - recent_streams.last.date) / 60 / 60 / 24
-      ).to_i
+      end
     end
   end
 
