@@ -38,7 +38,6 @@ class SongController < ApplicationController
 
     ChartmetricSingleStreamsJob.perform_later(song)
     ChartmetricGenresJob.perform_later(song)
-    SpotifySingleStreamsJob.perform_later(song)
   end
 
   private

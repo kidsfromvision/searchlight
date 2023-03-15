@@ -12,5 +12,6 @@ class ChartmetricSingleStreamsJob < ActiveJob::Base
       )
     end
     song.broadcast_streams
+    SpotifySingleStreamsJob.perform_later(song)
   end
 end
