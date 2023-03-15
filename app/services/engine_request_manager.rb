@@ -6,5 +6,12 @@ class EngineRequestManager
       response = HTTParty.post(url)
       response.parsed_response
     end
+
+    def get_song_playcount(spotify_id)
+      url = "http://127.0.0.1:3010/spotify/song/#{spotify_id}/playcount"
+      response = HTTParty.get(url)
+      puts "RESPONSE, #{response.parsed_response["playcount"]}"
+      response.parsed_response["playcount"]
+    end
   end
 end
